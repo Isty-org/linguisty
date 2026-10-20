@@ -26,9 +26,11 @@
 - [x] `.me` локальна и содержит @tsyzhman / Никита Цыжман / human; generated files, caches и credentials исключены из Git.
 - [x] Авторство README, metadata, BOARD и текущей документации согласовано; Git author настроен на подтверждённый GitHub noreply аккаунта @tsyzhman.
 - [x] Typecheck, lint, unit/native/manifest tests, обе production builds и доступные browser smoke выполнены; ограничения записаны.
-- [ ] Chrome/Firefox ZIP сверены с проверенными сборками, опубликованы checksums и корректные инструкции установки.
-- [ ] Source commit и tag опубликованы, GitHub Release доступен и содержит ожидаемые assets; проверены ресурсы, дубли и cleanup собственных процессов.
+- [x] Chrome/Firefox ZIP сверены с проверенными сборками, опубликованы checksums и корректные инструкции установки.
+- [x] Source commit и tag опубликованы, GitHub Release доступен и содержит ожидаемые assets; проверены ресурсы, дубли и cleanup собственных процессов.
 
 ## Result
 
-Локальная подготовка завершена: 780 unit / 15 native / 9 manifest-hygiene tests PASS, typecheck/lint/builds/manifests/fixtures PASS, полные browser smoke 14/14 на каждой платформе, mock ChatGPT Chrome PASS / Firefox 8 PASS, long-batch 2 PASS. Mozilla 0/0/0. ZIP проверены побайтно, после browser runs все 112 production-файлов неизменны. QA: `docs/QA-RELEASE-2026-10-20.md`. Source scan и ссылки/канон прошли; `.me` и generated artifacts не staged. Открытая лицензия не выбрана и не добавлена. Следующий шаг — initial commit/tag, публикация и проверка GitHub assets; завершение WI после фактического результата.
+Опубликован [первый релиз v0.4.9](https://github.com/Isty-org/linguisty/releases/tag/v0.4.9), initial commit `c23c3c977b70ea97a8041559c833048f32367f60`, default branch `main`. GitHub подтвердил author/committer/release author `Tsyzhman`; Git name — Никита Цыжман, email — GitHub noreply. Публичный source tree содержит 333 файла без `.me`, credentials и generated folders. Все три assets скачаны с GitHub и совпали по SHA-256 с локальными файлами; GitHub asset digests совпадают тоже.
+
+780 unit / 15 native / 9 manifest-hygiene tests PASS, typecheck/lint/builds/manifests/fixtures PASS, полные browser smoke 14/14 на каждой платформе, mock ChatGPT Chrome PASS / Firefox 8 PASS, long-batch 2 PASS. Mozilla 0/0/0. ZIP проверены побайтно, после browser runs все 112 production-файлов неизменны. QA: `docs/QA-RELEASE-2026-10-20.md`. Source scan, 146 локальных ссылок и 642 spec references прошли; связанных helper-процессов нет. Ограничения реального provider access, подписи/магазинов, отсутствие выбранной открытой лицензии и исходные whitespace diagnostics зафиксированы без объявления непроведённых проверок успешными.
