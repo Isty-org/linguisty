@@ -1,0 +1,54 @@
+{
+  "name": "linguisty",
+  "version": "0.4.9",
+  "private": true,
+  "description": "Linguisty — page translation through your API or ChatGPT subscription",
+  "author": { "name": "Никита Цыжман", "url": "https://github.com/tsyzhman" },
+  "repository": { "type": "git", "url": "https://github.com/Isty-org/linguisty.git" },
+  "homepage": "https://github.com/Isty-org/linguisty",
+  "bugs": { "url": "https://github.com/Isty-org/linguisty/issues" },
+  "type": "module",
+  "engines": { "node": ">=22.12.0" },
+  "scripts": {
+    "postinstall": "wxt prepare",
+    "dev:chrome": "wxt -b chrome --mv3",
+    "dev:firefox": "wxt -b firefox --mv3",
+    "typecheck": "wxt prepare && tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:native": "node --test --test-concurrency=2 tests/native/runtime.test.mjs",
+    "build:chrome": "wxt build -b chrome --mv3",
+    "build:firefox": "wxt build -b firefox --mv3",
+    "check:manifests": "node scripts/check-manifests.mjs",
+    "check:hygiene": "node scripts/check-hygiene.mjs",
+    "zip:chrome": "wxt zip -b chrome --mv3",
+    "zip:firefox": "wxt zip -b firefox --mv3",
+    "zip:cli": "powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File native-host/pack.ps1"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.37.0",
+    "@playwright/test": "^1.56.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/chrome": "^0.1.24",
+    "@types/node": "^22.19.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@wxt-dev/module-react": "1.2.2",
+    "eslint": "^9.37.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "fake-indexeddb": "^6.2.4",
+    "globals": "^16.4.0",
+    "jsdom": "^26.1.0",
+    "sharp": "^0.35.5",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.0",
+    "vitest": "^5.0.3",
+    "wxt": "0.21.4"
+  }
+}
+

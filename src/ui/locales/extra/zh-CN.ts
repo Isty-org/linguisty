@@ -1,0 +1,23 @@
+/** @spec spec://modules/interface/FEAT-003-controls#languages */
+export const cli = ['请一次性安装扩展包中的 Linguisty 连接器，并登录所选 CLI。这里无需 API 密钥。模型在云端运行，翻译会消耗账户额度。',
+    '使用 default 选择 CLI 默认模型，或输入可用的模型 ID。',
+    '连接器已连接，已找到 CLI。尚未检查账户登录和模型响应。',
+    'CLI 设置已保存。请使用连接测试按钮检查连接器。',
+    'CLI 翻译会在一批文本处理完成后显示。', '安装连接器所需的扩展 ID',
+    '未找到 CLI 连接器。请安装并重启浏览器。',
+    '未找到所选 CLI。请先安装 CLI，再重新安装连接器。',
+    '请登录所选 CLI，然后重试翻译。', 'CLI 未完成翻译。请检查版本、登录状态和模型 ID。'] as const;
+export const codex = ['连接 ChatGPT', '连接 ChatGPT 订阅', '登录自己的 ChatGPT 账号，使用可用套餐翻译。无需 API 密钥。',
+    '点击“通过 ChatGPT 登录”。在打开的 OpenAI 官方页面登录自己的账号。',
+    '允许 Linguisty 使用 ChatGPT 套餐额度。如果账号或套餐不支持，OpenAI 可能拒绝连接。',
+    '登录后检查访问权限并从列表中选择模型。此检查不会发送翻译请求。',
+    '返回设置，打开需要的网页，在 Linguisty 中点击“翻译”。',
+    '请保持此标签页打开。令牌仅保存在该页内存中；关闭或重启浏览器后需要重新登录。',
+    '模型在 OpenAI 云端运行。网页文字会发送给 OpenAI；翻译共享 ChatGPT 账号额度。',
+    '通过 ChatGPT 登录', '使用其他账号', '取消登录', '断开 ChatGPT', '检查访问权限', '返回设置',
+    '等待在 ChatGPT 标签页登录…', 'ChatGPT 未连接。', 'ChatGPT 登录已验证。',
+    '登录已验证，模型列表可用。尚未测试模型回答。', '已断开 ChatGPT 并撤销 OpenAI 授权。',
+    '已在此处断开 ChatGPT。OpenAI 授权撤销未确认；请在 ChatGPT 设置中检查应用访问。',
+    'default 使用套餐中第一个可用模型。检查访问权限后可选择具体模型。', 'ChatGPT 设置已保存。请连接账号并保持连接页面打开。',
+    '收到整批文字的完整回答后显示翻译。', '请在设置中连接 ChatGPT，并保持连接页面打开。',
+    '无法验证 ChatGPT 登录。请重新连接 ChatGPT。', 'ChatGPT 未允许使用套餐翻译。请检查访问权限及 Linguisty 授权，或在设置中选择 API 服务商。'] as const;

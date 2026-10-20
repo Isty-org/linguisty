@@ -1,0 +1,28 @@
+/** @spec spec://modules/interface/FEAT-003-controls#languages */
+export const cli = [
+    'Install the Linguisty connector from the extension package once and sign in to your chosen CLI. No API key is needed here. The model runs in the cloud; translation uses your account limits.',
+    'Keep default for the CLI default model, or enter a model ID available to your CLI.',
+    'Connector connected; CLI found. Account sign-in and a model response were not checked.',
+    'CLI settings saved. Use “Test connection” to check the connector.',
+    'CLI translations appear after a text batch is complete.',
+    'Extension ID for connector installation',
+    'CLI connector not found. Install the Linguisty connector and restart the browser.',
+    'Selected CLI not found. Install it, then install the connector again.',
+    'Sign in to your selected CLI, then retry translation.',
+    'CLI did not complete translation. Check its version, sign-in, and model ID.',
+  ] as const;
+export const codex = ['Connect ChatGPT', 'Connect your ChatGPT subscription', 'Sign in to your ChatGPT account to translate using your eligible plan. No API key is needed.',
+    'Select “Sign in with ChatGPT”. The official OpenAI page opens. Sign in to your own account.',
+    'Allow Linguisty to use your ChatGPT plan allowance. OpenAI may decline if your account or plan does not support this connection.',
+    'After signing in, check access and choose a model from the returned list. This check does not send text for translation.',
+    'Return to settings, open the page you want, and select “Translate” in Linguisty.',
+    'Keep this tab open. Tokens live only in its memory: closing it or restarting the browser requires signing in again.',
+    'The model runs in the OpenAI cloud. Page text is sent to OpenAI; translations share your ChatGPT account limits.',
+    'Sign in with ChatGPT', 'Use another account', 'Cancel sign-in', 'Disconnect ChatGPT', 'Check access', 'Return to settings',
+    'Waiting for sign-in in the ChatGPT tab…', 'ChatGPT is not connected.', 'ChatGPT sign-in verified.',
+    'Sign-in verified; model list available. A model response was not tested.', 'ChatGPT disconnected; OpenAI permission revoked.',
+    'ChatGPT disconnected here. OpenAI revocation is unconfirmed; check app access in ChatGPT settings.',
+    'default selects the first available plan model. Check access to choose a specific model.',
+    'ChatGPT settings saved. Connect your account and keep the connection tab open.', 'Translations appear after a complete text batch response.',
+    'Connect ChatGPT in settings and keep the connection page open.', 'ChatGPT sign-in could not be verified. Connect ChatGPT again.',
+    'ChatGPT did not allow plan use for translation. Check plan access and Linguisty permission. You can select an API provider in settings.'] as const;

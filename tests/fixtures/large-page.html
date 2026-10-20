@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><title>CJK article regression fixture</title>
+<style>body{font:18px/1.5 Arial,sans-serif;max-width:850px;margin:24px auto}nav{display:flex;gap:12px}nav a{font:14px/20px Arial,sans-serif;white-space:nowrap}#inline a,#inline span{font:inherit}button{font:14px/20px Arial,sans-serif}input{font:inherit}#bulk p{margin:16px 0}</style>
+</head><body>
+<nav><a href="#inline">人工智能</a><a href="#bulk">研究</a></nav>
+<h1>人工智能</h1>
+<p id="inline">人工<a id="inline-link" href="#bulk">智能</a>可以<span>学习。</span><sup>[1]</sup></p>
+<button id="click-test">操作</button><input id="typed" value="Original form value">
+<div id="bulk"></div><p id="long"></p>
+<script src="large-page.js"></script>
+</body></html>

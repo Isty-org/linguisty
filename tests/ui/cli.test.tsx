@@ -1,0 +1,57 @@
+/** @spec spec://modules/platform/INFRA-004-codex-connection#settings */
+import { afterEach, beforeEach, expect, it, vi } from 'vitest';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { browserMock, messagesOf, resetBrowser } from './browserMock';
+import { Options } from '../../src/ui/Options';
+import { Popup } from '../../src/ui/Popup';
+import { CODEX_CONNECTION_MESSAGE } from '../../src/codex/protocol';
+beforeEach(resetBrowser);
+afterEach(cleanup);
+it('selects ChatGPT subscription alongside APIs and saves before opening the connection guide without a key', async () => {
+  browserMock.secret.hasKey = false;
+  render(<Options />);
+  const service = await screen.findByRole('combobox', { name: 'Сервис перевода' });
+  expect(Array.from((service as HTMLSelectElement).options).map(item => item.value)).toEqual(['openrouter', 'openai-compatible', 'codex']);
+  expect(screen.getByRole('option', { name: 'Подписка ChatGPT' })).toBeTruthy();
+  fireEvent.change(service, { target: { value: 'codex' } });
+  expect(screen.queryByLabelText('API-ключ')).toBeNull();
+  expect(screen.queryByLabelText('Base URL')).toBeNull();
+  expect(screen.queryByDisplayValue('abcdefghijklmnopabcdefghijklmnop')).toBeNull();
+  expect(screen.getByText(/Оставьте эту вкладку открытой/)).toBeTruthy();
+  expect((screen.getByLabelText('ID модели') as HTMLInputElement).value).toBe('default');
+  fireEvent.click(screen.getByRole('button', { name: 'Подключить ChatGPT' }));
+  await screen.findByText(/Настройки ChatGPT сохранены/);
+  expect(browserMock.request).toHaveBeenCalledWith({ origins: ['https://api.openai.com/*'] });
+  const saved = messagesOf('SAVE_SETTINGS')[0]!;
+  expect(saved.apiKey).toBeUndefined();
+  expect(saved.settings).toMatchObject({ providerId: 'codex', model: 'default', concurrency: 1, requestTimeoutMs: 120000, streaming: false });
+  await vi.waitFor(() => expect(messagesOf('OPEN_CODEX_CONNECTION')).toHaveLength(1));
+  expect(browserMock.flow.indexOf('SAVE_SETTINGS')).toBeLessThan(browserMock.flow.indexOf('OPEN_CODEX_CONNECTION'));
+  fireEvent.change(service, { target: { value: 'openrouter' } });
+  expect(screen.getByLabelText('API-ключ')).toBeTruthy();
+});
+it('shows an older CLI setup as a ChatGPT form and shows verified discovery honestly', async () => {
+  browserMock.settings.providerId = 'codex-cli';
+  browserMock.settings.model = 'default';
+  browserMock.secret.hasKey = false;
+  browserMock.connection.message = CODEX_CONNECTION_MESSAGE;
+  const view = render(<Options />);
+  const service = await screen.findByRole('combobox', { name: 'Сервис перевода' });
+  expect((service as HTMLSelectElement).value).toBe('codex');
+  expect(screen.getByRole('button', { name: 'Подключить ChatGPT' })).toBeTruthy();
+  fireEvent.click(screen.getByRole('button', { name: 'Проверить подключение' }));
+  await screen.findByText(/Вход подтверждён.*Ответ модели не проверялся/);
+  expect(messagesOf('TEST_CONNECTION')[0]?.apiKey).toBeUndefined();
+  view.unmount();
+  browserMock.settings.providerId = 'codex'; browserMock.codexConnected = true;
+  render(<Popup />);
+  await screen.findByRole('button', { name: 'Перевести страницу' });
+  expect(screen.queryByText('Добавьте API-ключ')).toBeNull();
+  expect(screen.getByText('Подписка ChatGPT')).toBeTruthy();
+});
+it('keeps the ChatGPT popup unconfigured until the connection page confirms a session', async () => {
+  browserMock.settings.providerId = 'codex'; browserMock.settings.model = 'default';
+  render(<Popup />);
+  await screen.findByText(/Подключите ChatGPT в настройках/);
+  expect(screen.queryByText(/Добавьте свой API-ключ/)).toBeNull();
+});

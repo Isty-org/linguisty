@@ -1,0 +1,23 @@
+/** @spec spec://modules/interface/FEAT-003-controls#languages */
+export const cli = ['Installieren Sie einmal den Linguisty-Connector aus dem Erweiterungspaket und melden Sie sich in der gewählten CLI an. Hier ist kein API-Schlüssel nötig. Das Cloud-Modell nutzt Ihr Kontolimit.',
+    'Behalten Sie default für das CLI-Standardmodell oder geben Sie eine verfügbare Modell-ID ein.',
+    'Connector verbunden, CLI gefunden. Anmeldung und Modellantwort wurden nicht geprüft.',
+    'CLI-Einstellungen gespeichert. Prüfen Sie den Connector mit der Verbindungstest-Schaltfläche.',
+    'CLI-Übersetzungen erscheinen nach Abschluss eines Textpakets.', 'Erweiterungs-ID zur Connector-Installation',
+    'CLI-Connector nicht gefunden. Installieren Sie ihn und starten Sie den Browser neu.',
+    'Gewählte CLI nicht gefunden. Installieren Sie sie und danach den Connector erneut.',
+    'Melden Sie sich in der gewählten CLI an und versuchen Sie es erneut.', 'CLI-Übersetzung fehlgeschlagen. Prüfen Sie Version, Anmeldung und Modell-ID.'] as const;
+export const codex = ['ChatGPT verbinden', 'ChatGPT-Abonnement verbinden', 'Melden Sie sich mit Ihrem ChatGPT-Konto an, um Ihren verfügbaren Tarif für Übersetzungen zu nutzen. Kein API-Schlüssel nötig.',
+    'Wählen Sie „Mit ChatGPT anmelden“. Die offizielle OpenAI-Seite öffnet sich. Melden Sie sich mit Ihrem Konto an.',
+    'Erlauben Sie Linguisty, Ihr ChatGPT-Kontingent zu nutzen. OpenAI kann ablehnen, wenn Konto oder Tarif diese Verbindung nicht unterstützt.',
+    'Prüfen Sie nach der Anmeldung den Zugang und wählen Sie ein Modell aus der Liste. Dabei wird kein Text übersetzt.',
+    'Kehren Sie zu den Einstellungen zurück, öffnen Sie die gewünschte Seite und wählen Sie „Übersetzen“ in Linguisty.',
+    'Lassen Sie diesen Tab offen. Tokens bleiben nur in seinem Speicher. Nach Schließen oder Browser-Neustart erneut anmelden.',
+    'Das Modell läuft in der OpenAI-Cloud. Seitentext wird an OpenAI gesendet; Übersetzungen teilen Ihre ChatGPT-Limits.',
+    'Mit ChatGPT anmelden', 'Anderes Konto verwenden', 'Anmeldung abbrechen', 'ChatGPT trennen', 'Zugang prüfen', 'Zu den Einstellungen',
+    'Warte auf Anmeldung im ChatGPT-Tab…', 'ChatGPT ist nicht verbunden.', 'ChatGPT-Anmeldung bestätigt.',
+    'Anmeldung bestätigt; Modellliste verfügbar. Eine Modellantwort wurde nicht getestet.', 'ChatGPT getrennt; OpenAI-Berechtigung widerrufen.',
+    'ChatGPT hier getrennt. Widerruf bei OpenAI unbestätigt; prüfen Sie App-Zugriffe in ChatGPT.',
+    'default wählt das erste verfügbare Tarifmodell. Prüfen Sie den Zugang zur Modellauswahl.', 'ChatGPT-Einstellungen gespeichert. Konto verbinden und Verbindungstab offen lassen.',
+    'Übersetzungen erscheinen nach der vollständigen Antwort für einen Textblock.', 'Verbinden Sie ChatGPT in den Einstellungen und lassen Sie den Verbindungstab offen.',
+    'ChatGPT-Anmeldung konnte nicht bestätigt werden. Verbinden Sie ChatGPT erneut.', 'ChatGPT erlaubt keine Übersetzung mit diesem Tarif. Zugang und Linguisty-Berechtigung prüfen oder API-Anbieter wählen.'] as const;

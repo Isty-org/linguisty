@@ -1,0 +1,23 @@
+/** @spec spec://modules/interface/FEAT-003-controls#languages */
+export const cli = ['Instala una vez el conector Linguisty incluido con la extensión e inicia sesión en el CLI elegido. Aquí no hace falta una clave API. El modelo en la nube consume los límites de tu cuenta.',
+    'Deja default para el modelo predeterminado del CLI o introduce un ID disponible.',
+    'Conector conectado; CLI encontrado. No se comprobaron el inicio de sesión ni la respuesta del modelo.',
+    'Configuración del CLI guardada. Comprueba el conector con el botón de prueba de conexión.',
+    'Las traducciones del CLI aparecen al finalizar un lote de texto.', 'ID de extensión para instalar el conector',
+    'No se encontró el conector CLI. Instálalo y reinicia el navegador.',
+    'No se encontró el CLI elegido. Instálalo y vuelve a instalar el conector.',
+    'Inicia sesión en el CLI elegido y vuelve a intentar la traducción.', 'El CLI no terminó la traducción. Revisa la versión, la sesión y el ID del modelo.'] as const;
+export const codex = ['Conectar ChatGPT', 'Conectar tu suscripción de ChatGPT', 'Inicia sesión en tu cuenta de ChatGPT para traducir con tu plan compatible. No necesitas clave API.',
+    'Pulsa «Iniciar sesión con ChatGPT». Se abrirá la página oficial de OpenAI. Usa tu propia cuenta.',
+    'Permite que Linguisty use los límites de tu plan ChatGPT. OpenAI puede rechazarlo si tu cuenta o plan no admite esta conexión.',
+    'Tras iniciar sesión, comprueba el acceso y elige un modelo de la lista. La comprobación no traduce texto.',
+    'Vuelve a los ajustes, abre la página deseada y pulsa «Traducir» en Linguisty.',
+    'Mantén esta pestaña abierta. Los tokens solo están en su memoria; al cerrarla o reiniciar el navegador debes volver a iniciar sesión.',
+    'El modelo funciona en la nube de OpenAI. El texto se envía a OpenAI; la traducción comparte los límites de tu cuenta ChatGPT.',
+    'Iniciar sesión con ChatGPT', 'Usar otra cuenta', 'Cancelar inicio de sesión', 'Desconectar ChatGPT', 'Comprobar acceso', 'Volver a ajustes',
+    'Esperando inicio de sesión en la pestaña ChatGPT…', 'ChatGPT no está conectado.', 'Inicio de sesión ChatGPT verificado.',
+    'Inicio verificado; lista de modelos disponible. No se probó una respuesta del modelo.', 'ChatGPT desconectado; permiso de OpenAI revocado.',
+    'ChatGPT desconectado aquí. Revocación en OpenAI sin confirmar; revisa los accesos de aplicaciones en ChatGPT.',
+    'default elige el primer modelo disponible. Comprueba el acceso para elegir otro.', 'Ajustes de ChatGPT guardados. Conecta tu cuenta y mantén abierta la pestaña.',
+    'Las traducciones aparecen tras una respuesta completa al lote de texto.', 'Conecta ChatGPT en ajustes y mantén abierta la página de conexión.',
+    'No se pudo verificar el inicio de sesión ChatGPT. Conecta ChatGPT de nuevo.', 'ChatGPT no permite usar el plan. Comprueba el acceso y el permiso de Linguisty o elige un proveedor API.'] as const;

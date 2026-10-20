@@ -1,0 +1,23 @@
+/** @spec spec://modules/interface/FEAT-003-controls#languages */
+export const cli = ['Installez une fois le connecteur Linguisty fourni avec l’extension et connectez-vous au CLI choisi. Aucune clé API n’est nécessaire ici. Le modèle cloud utilise les limites de votre compte.',
+    'Gardez default pour le modèle du CLI ou saisissez un ID de modèle disponible.',
+    'Connecteur connecté, CLI trouvé. La connexion au compte et la réponse du modèle n’ont pas été vérifiées.',
+    'Paramètres CLI enregistrés. Vérifiez le connecteur avec le bouton de test de connexion.',
+    'Les traductions CLI apparaissent à la fin d’un lot de texte.', 'ID de l’extension pour installer le connecteur',
+    'Connecteur CLI introuvable. Installez-le et redémarrez le navigateur.',
+    'CLI choisi introuvable. Installez-le, puis réinstallez le connecteur.',
+    'Connectez-vous au CLI choisi, puis réessayez.', 'Le CLI n’a pas terminé la traduction. Vérifiez la version, la connexion et l’ID du modèle.'] as const;
+export const codex = ['Connecter ChatGPT', 'Connecter votre abonnement ChatGPT', 'Connectez-vous à votre compte ChatGPT pour traduire avec votre forfait éligible. Aucune clé API nécessaire.',
+    'Cliquez sur « Se connecter avec ChatGPT ». La page officielle OpenAI s’ouvre. Connectez-vous à votre compte.',
+    'Autorisez Linguisty à utiliser votre forfait ChatGPT. OpenAI peut refuser si votre compte ou forfait ne permet pas cette connexion.',
+    'Après connexion, vérifiez l’accès et choisissez un modèle dans la liste. Cette vérification ne traduit aucun texte.',
+    'Revenez aux paramètres, ouvrez la page souhaitée et cliquez sur « Traduire » dans Linguisty.',
+    'Gardez cet onglet ouvert. Les jetons restent seulement en mémoire : après fermeture ou redémarrage du navigateur, reconnectez-vous.',
+    'Le modèle fonctionne dans le cloud OpenAI. Le texte est envoyé à OpenAI ; les traductions partagent les limites de votre compte ChatGPT.',
+    'Se connecter avec ChatGPT', 'Utiliser un autre compte', 'Annuler la connexion', 'Déconnecter ChatGPT', 'Vérifier l’accès', 'Retour aux paramètres',
+    'En attente de connexion dans l’onglet ChatGPT…', 'ChatGPT n’est pas connecté.', 'Connexion ChatGPT vérifiée.',
+    'Connexion vérifiée ; liste des modèles disponible. Aucune réponse du modèle testée.', 'ChatGPT déconnecté ; autorisation OpenAI révoquée.',
+    'ChatGPT déconnecté ici. Révocation OpenAI non confirmée ; vérifiez les accès des applications dans ChatGPT.',
+    'default choisit le premier modèle disponible. Vérifiez l’accès pour choisir un modèle.', 'Paramètres ChatGPT enregistrés. Connectez le compte et gardez l’onglet ouvert.',
+    'La traduction apparaît après la réponse complète pour un lot de texte.', 'Connectez ChatGPT dans les paramètres et gardez la page de connexion ouverte.',
+    'Connexion ChatGPT non vérifiée. Reconnectez ChatGPT.', 'ChatGPT refuse l’utilisation du forfait. Vérifiez l’accès et l’autorisation Linguisty ou choisissez un fournisseur API.'] as const;

@@ -1,0 +1,23 @@
+/** @spec spec://modules/interface/FEAT-003-controls#languages */
+export const cli = ['請先安裝擴充套件包中的 Linguisty 連接器，並登入所選 CLI。這裡不需要 API 金鑰。模型在雲端執行，翻譯會消耗帳戶額度。',
+    '使用 default 選擇 CLI 預設模型，或輸入可用的模型 ID。',
+    '連接器已連線，已找到 CLI。尚未檢查帳戶登入和模型回應。',
+    'CLI 設定已儲存。請使用連線測試按鈕檢查連接器。',
+    'CLI 翻譯會在一批文字處理完成後顯示。', '安裝連接器所需的擴充套件 ID',
+    '找不到 CLI 連接器。請安裝並重新啟動瀏覽器。',
+    '找不到所選 CLI。請先安裝 CLI，再重新安裝連接器。',
+    '請登入所選 CLI，然後重試翻譯。', 'CLI 未完成翻譯。請檢查版本、登入狀態和模型 ID。'] as const;
+export const codex = ['連接 ChatGPT', '連接 ChatGPT 訂閱', '登入自己的 ChatGPT 帳號，使用可用方案翻譯。無需 API 金鑰。',
+    '點選「透過 ChatGPT 登入」。在開啟的 OpenAI 官方頁面登入自己的帳號。',
+    '允許 Linguisty 使用 ChatGPT 方案額度。如果帳號或方案不支援，OpenAI 可能拒絕連接。',
+    '登入後檢查存取權限，並從清單選擇模型。此檢查不會傳送翻譯要求。',
+    '返回設定，開啟需要的網頁，在 Linguisty 點選「翻譯」。',
+    '請保持此分頁開啟。權杖僅保存在該頁記憶體；關閉或重啟瀏覽器後需要重新登入。',
+    '模型在 OpenAI 雲端執行。網頁文字會傳送給 OpenAI；翻譯共用 ChatGPT 帳號額度。',
+    '透過 ChatGPT 登入', '使用其他帳號', '取消登入', '中斷 ChatGPT', '檢查存取權限', '返回設定',
+    '等待在 ChatGPT 分頁登入…', 'ChatGPT 未連接。', 'ChatGPT 登入已驗證。',
+    '登入已驗證，模型清單可用。尚未測試模型回答。', '已中斷 ChatGPT 並撤銷 OpenAI 授權。',
+    '已在此處中斷 ChatGPT。OpenAI 授權撤銷未確認；請在 ChatGPT 設定檢查應用程式存取。',
+    'default 使用方案中第一個可用模型。檢查存取權限後可選擇具體模型。', 'ChatGPT 設定已儲存。請連接帳號並保持連接頁面開啟。',
+    '收到整批文字的完整回答後顯示翻譯。', '請在設定連接 ChatGPT，並保持連接頁面開啟。',
+    '無法驗證 ChatGPT 登入。請重新連接 ChatGPT。', 'ChatGPT 未允許使用方案翻譯。請檢查存取權限及 Linguisty 授權，或在設定選擇 API 服務商。'] as const;

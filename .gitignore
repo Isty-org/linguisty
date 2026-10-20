@@ -1,0 +1,37 @@
+# Dependencies and generated builds
+node_modules/
+.output/
+.wxt/
+dist/
+
+# Local checks, browser profiles, and caches
+coverage/
+test-results/
+playwright-report/
+.cache/
+output/
+*.log
+*.tsbuildinfo
+
+# Local identities and credentials
+.me
+specs/.me
+.env
+.env.*
+!.env.example
+.npmrc
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+
+# Editor and operating system leftovers
+*.tmp
+*.bak
+*.orig
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/

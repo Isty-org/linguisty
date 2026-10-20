@@ -1,0 +1,15 @@
+Linguisty bundles these fonts locally; extension pages never fetch remote fonts.
+
+Onest variable (100–900), original upstream font under SIL OFL 1.1:
+https://github.com/google/fonts/tree/main/ofl/onest
+https://raw.githubusercontent.com/google/fonts/main/ofl/onest/Onest%5Bwght%5D.ttf
+Copyright 2021 The Onest Project Authors (https://github.com/simpals/onest)
+License: Onest-OFL.txt
+
+JetBrains Mono Regular, original upstream webfont under SIL OFL 1.1:
+https://github.com/JetBrains/JetBrainsMono
+https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/fonts/webfonts/JetBrainsMono-Regular.woff2
+Copyright 2020 The JetBrains Mono Project Authors
+License: JetBrainsMono-OFL.txt
+
+Downloaded 2026-10-08. Other scripts use local system font fallbacks.

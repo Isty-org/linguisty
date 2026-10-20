@@ -1,0 +1,23 @@
+/** @spec spec://modules/interface/FEAT-003-controls#languages */
+export const cli = ['Uzantı paketindeki Linguisty bağlayıcısını bir kez kurun ve seçtiğiniz CLI’da oturum açın. Burada API anahtarı gerekmez. Bulut modeli hesabınızın kullanım limitlerini tüketir.',
+    'CLI’ın varsayılan modeli için default bırakın veya kullanılabilir bir model kimliği girin.',
+    'Bağlayıcı bağlı, CLI bulundu. Hesap girişi ve model yanıtı kontrol edilmedi.',
+    'CLI ayarları kaydedildi. Bağlantı testi düğmesiyle bağlayıcıyı kontrol edin.',
+    'CLI çevirileri metin grubu tamamlandığında görünür.', 'Bağlayıcı kurulumu için uzantı kimliği',
+    'CLI bağlayıcısı bulunamadı. Kurun ve tarayıcıyı yeniden başlatın.',
+    'Seçili CLI bulunamadı. CLI’ı kurun, ardından bağlayıcıyı tekrar kurun.',
+    'Seçili CLI’da oturum açıp çeviriyi yeniden deneyin.', 'CLI çeviriyi tamamlamadı. Sürümü, oturum girişini ve model kimliğini kontrol edin.'] as const;
+export const codex = ['ChatGPT’yi bağla', 'ChatGPT aboneliğini bağla', 'Uygun planınızla çeviri için ChatGPT hesabınıza giriş yapın. API anahtarı gerekmez.',
+    '“ChatGPT ile giriş yap”ı seçin. Resmî OpenAI sayfası açılır. Kendi hesabınıza giriş yapın.',
+    'Linguisty’nin ChatGPT plan limitlerini kullanmasına izin verin. Hesap veya plan bağlantıyı desteklemiyorsa OpenAI reddedebilir.',
+    'Girişten sonra erişimi kontrol edip listeden model seçin. Kontrol sırasında metin çevrilmez.',
+    'Ayarlara dönün, istediğiniz sayfayı açın ve Linguisty’de “Çevir”i seçin.',
+    'Bu sekmeyi açık tutun. Tokenlar yalnızca belleğinde kalır; kapatınca veya tarayıcı yeniden başlayınca tekrar giriş gerekir.',
+    'Model OpenAI bulutunda çalışır. Metin OpenAI’ye gönderilir; çeviriler ChatGPT hesap limitlerini paylaşır.',
+    'ChatGPT ile giriş yap', 'Başka hesap kullan', 'Girişi iptal et', 'ChatGPT bağlantısını kes', 'Erişimi kontrol et', 'Ayarlara dön',
+    'ChatGPT sekmesinde giriş bekleniyor…', 'ChatGPT bağlı değil.', 'ChatGPT girişi doğrulandı.',
+    'Giriş doğrulandı; model listesi mevcut. Model yanıtı test edilmedi.', 'ChatGPT bağlantısı kesildi; OpenAI izni iptal edildi.',
+    'ChatGPT yerelde ayrıldı. OpenAI iptali doğrulanmadı; ChatGPT’de uygulama erişimini kontrol edin.',
+    'default ilk kullanılabilir modeli seçer. Model seçmek için erişimi kontrol edin.', 'ChatGPT ayarları kaydedildi. Hesabı bağlayıp sekmeyi açık tutun.',
+    'Çeviri, metin grubu için tam yanıttan sonra görünür.', 'ChatGPT’yi ayarlardan bağlayın ve bağlantı sayfasını açık tutun.',
+    'ChatGPT girişi doğrulanamadı. ChatGPT’yi yeniden bağlayın.', 'ChatGPT plan kullanımına izin vermedi. Erişimi ve Linguisty iznini kontrol edin veya API sağlayıcısı seçin.'] as const;

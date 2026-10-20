@@ -1,0 +1,23 @@
+/** @spec spec://modules/interface/FEAT-003-controls#languages */
+export const cli = ['Zainstaluj raz łącznik Linguisty z pakietu rozszerzenia i zaloguj się w wybranym CLI. Klucz API nie jest tu potrzebny. Model w chmurze zużywa limity Twojego konta.',
+    'Zostaw default dla domyślnego modelu CLI lub wpisz dostępny identyfikator modelu.',
+    'Łącznik połączony, CLI znaleziony. Logowanie i odpowiedź modelu nie zostały sprawdzone.',
+    'Ustawienia CLI zapisane. Sprawdź łącznik przyciskiem testu połączenia.',
+    'Tłumaczenia CLI pojawiają się po ukończeniu partii tekstu.', 'ID rozszerzenia do instalacji łącznika',
+    'Nie znaleziono łącznika CLI. Zainstaluj go i uruchom ponownie przeglądarkę.',
+    'Nie znaleziono wybranego CLI. Zainstaluj go, a potem ponownie łącznik.',
+    'Zaloguj się w wybranym CLI i ponów tłumaczenie.', 'CLI nie ukończył tłumaczenia. Sprawdź wersję, logowanie i ID modelu.'] as const;
+export const codex = ['Połącz ChatGPT', 'Połącz subskrypcję ChatGPT', 'Zaloguj się na swoje konto ChatGPT, aby tłumaczyć z dostępnym planem. Nie potrzebujesz klucza API.',
+    'Wybierz „Zaloguj przez ChatGPT”. Otworzy się oficjalna strona OpenAI. Użyj własnego konta.',
+    'Zezwól Linguisty na korzystanie z limitów planu ChatGPT. OpenAI może odmówić, jeśli konto lub plan nie obsługuje połączenia.',
+    'Po zalogowaniu sprawdź dostęp i wybierz model z listy. Sprawdzenie nie tłumaczy tekstu.',
+    'Wróć do ustawień, otwórz stronę i wybierz „Tłumacz” w Linguisty.',
+    'Zostaw tę kartę otwartą. Tokeny są tylko w jej pamięci; po zamknięciu lub ponownym uruchomieniu przeglądarki zaloguj się ponownie.',
+    'Model działa w chmurze OpenAI. Tekst jest wysyłany do OpenAI; tłumaczenia zużywają wspólne limity ChatGPT.',
+    'Zaloguj przez ChatGPT', 'Użyj innego konta', 'Anuluj logowanie', 'Rozłącz ChatGPT', 'Sprawdź dostęp', 'Wróć do ustawień',
+    'Oczekiwanie na logowanie w karcie ChatGPT…', 'ChatGPT niepołączony.', 'Logowanie ChatGPT zweryfikowane.',
+    'Logowanie zweryfikowane; lista modeli dostępna. Nie testowano odpowiedzi modelu.', 'ChatGPT rozłączony; uprawnienie OpenAI cofnięte.',
+    'ChatGPT rozłączony lokalnie. Cofnięcie w OpenAI niepotwierdzone; sprawdź dostęp aplikacji w ChatGPT.',
+    'default wybiera pierwszy dostępny model. Sprawdź dostęp, aby wybrać model.', 'Ustawienia ChatGPT zapisane. Połącz konto i zostaw kartę otwartą.',
+    'Tłumaczenie pojawia się po pełnej odpowiedzi dla pakietu tekstu.', 'Połącz ChatGPT w ustawieniach i zostaw stronę połączenia otwartą.',
+    'Nie można potwierdzić logowania ChatGPT. Połącz ChatGPT ponownie.', 'ChatGPT nie pozwolił użyć planu. Sprawdź dostęp i zgodę Linguisty lub wybierz dostawcę API.'] as const;

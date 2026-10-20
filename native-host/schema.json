@@ -1,0 +1,1 @@
+{"type":"object","additionalProperties":false,"required":["translations"],"properties":{"translations":{"type":"array","maxItems":40,"items":{"type":"object","additionalProperties":false,"required":["id","text"],"properties":{"id":{"type":"string"},"text":{"type":"string"}}}}}}

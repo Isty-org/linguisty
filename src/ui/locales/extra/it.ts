@@ -1,0 +1,23 @@
+/** @spec spec://modules/interface/FEAT-003-controls#languages */
+export const cli = ['Installa una volta il connettore Linguisty incluso nell’estensione e accedi al CLI scelto. Qui non serve una chiave API. Il modello cloud utilizza i limiti del tuo account.',
+    'Mantieni default per il modello predefinito del CLI o inserisci un ID disponibile.',
+    'Connettore collegato, CLI trovato. Accesso e risposta del modello non verificati.',
+    'Impostazioni CLI salvate. Verifica il connettore con il pulsante di test della connessione.',
+    'Le traduzioni CLI appaiono al termine di un gruppo di testo.', 'ID dell’estensione per installare il connettore',
+    'Connettore CLI non trovato. Installalo e riavvia il browser.',
+    'CLI scelto non trovato. Installalo, quindi reinstalla il connettore.',
+    'Accedi al CLI scelto e riprova la traduzione.', 'Il CLI non ha completato la traduzione. Controlla versione, accesso e ID del modello.'] as const;
+export const codex = ['Collega ChatGPT', 'Collega il tuo abbonamento ChatGPT', 'Accedi al tuo account ChatGPT per tradurre con il tuo piano idoneo. Non serve una chiave API.',
+    'Seleziona «Accedi con ChatGPT». Si apre la pagina ufficiale OpenAI. Accedi al tuo account.',
+    'Consenti a Linguisty di usare i limiti del piano ChatGPT. OpenAI può rifiutare se account o piano non supporta il collegamento.',
+    'Dopo l’accesso, verifica l’accesso ai modelli e scegline uno dalla lista. La verifica non traduce testo.',
+    'Torna alle impostazioni, apri la pagina desiderata e seleziona «Traduci» in Linguisty.',
+    'Lascia questa scheda aperta. I token restano solo in memoria: dopo chiusura o riavvio del browser devi accedere di nuovo.',
+    'Il modello funziona nel cloud OpenAI. Il testo viene inviato a OpenAI; le traduzioni condividono i limiti ChatGPT.',
+    'Accedi con ChatGPT', 'Usa un altro account', 'Annulla accesso', 'Scollega ChatGPT', 'Verifica accesso', 'Torna alle impostazioni',
+    'In attesa dell’accesso nella scheda ChatGPT…', 'ChatGPT non collegato.', 'Accesso ChatGPT verificato.',
+    'Accesso verificato; elenco modelli disponibile. Nessuna risposta del modello testata.', 'ChatGPT scollegato; autorizzazione OpenAI revocata.',
+    'ChatGPT scollegato qui. Revoca OpenAI non confermata; controlla gli accessi delle app in ChatGPT.',
+    'default sceglie il primo modello disponibile. Verifica l’accesso per scegliere un modello.', 'Impostazioni ChatGPT salvate. Collega l’account e lascia la scheda aperta.',
+    'La traduzione appare dopo la risposta completa a un gruppo di testo.', 'Collega ChatGPT nelle impostazioni e lascia aperta la pagina di collegamento.',
+    'Impossibile verificare l’accesso ChatGPT. Collega di nuovo ChatGPT.', 'ChatGPT non consente l’uso del piano. Verifica accesso e autorizzazione Linguisty o scegli un fornitore API.'] as const;

@@ -1,0 +1,25 @@
+<!doctype html>
+<!-- @spec spec://common/PROP-000-product#acceptance -->
+<html lang="fr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Appartement à Lyon — fixture Linguisty</title><link rel="stylesheet" href="fixture.css"><script src="fixture.js" defer></script></head>
+<body data-fixture="real-estate">
+  <header><a href="#annonce">Les annonces du quartier</a><span data-linguisty-test="brand" translate="no">Linguisty QA</span></header>
+  <main id="annonce">
+    <h1 id="listing-title">Appartement lumineux à Lyon</h1>
+    <p id="listing-description">  Appartement de 68 m², 3 pièces, situé au 2e étage avec balcon.  </p>
+    <p id="listing-price">Prix : 245 000 € — charges : 120 €/mois</p>
+    <p>Proche de la gare Part-Dieu. DPE : C. Référence : LY-2026-014.</p>
+    <a id="listing-link" href="#contact">Contacter l'agence</a>
+    <section aria-label="Galerie"><div id="gallery" class="gallery" data-photo="1"></div><button id="gallery-next" type="button">Photo suivante</button><output id="gallery-count" translate="no">1 / 3</output></section>
+    <section id="dynamic-region" aria-label="Autres annonces"></section>
+    <form id="contact">
+      <h2>Demander une visite</h2><label for="contact-name">Votre nom</label><input id="contact-name" name="name" value="Marie Dupont">
+      <label for="contact-note">Votre message</label><textarea id="contact-note" name="note">Je souhaite visiter samedi.</textarea>
+      <label for="contact-slot">Créneau</label><select id="contact-slot" name="slot"><option>Samedi matin</option><option>Dimanche après-midi</option></select>
+      <button id="contact-submit" type="submit">Envoyer la demande</button><output id="form-result" translate="no"></output>
+    </form>
+    <section class="below-fold"><h2 id="far-title">Informations sur le quartier</h2><p id="far-description">Les commerces et les écoles sont accessibles à pied.</p></section>
+    <footer>Agence Rhône Habitat — 12 rue de la République, Lyon</footer>
+  </main>
+</body>
+</html>
