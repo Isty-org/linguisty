@@ -11,7 +11,6 @@
 
 | Work | Title | Specs | Owner | Started | Blocker |
 |---|---|---|---|---|---|
-| [WI-039](work/WI-039-mit-license.md) | MIT и пакеты v0.4.10 | PROP-000, INFRA-001 | @tsyzhman | 2026-10-20 | — |
 
 ## Blocked
 
@@ -23,6 +22,7 @@
 
 | Work | Title | Owner | Date |
 |---|---|---|---|
+| [WI-039](work/archive/2026/WI-039-mit-license.md) | MIT и пакеты v0.4.10 | @tsyzhman | 2026-10-20 |
 | [WI-038](work/archive/2026/WI-038-first-github-release.md) | Первый релиз в GitHub | @tsyzhman | 2026-10-20 |
 | [WI-037](work/archive/2026/WI-037-active-request-lifetime.md) | Фон во время долгого запроса | @tsyzhman | 2026-10-13 |
 | [WI-033](work/archive/2026/WI-033-batch-message-budget.md) | Transport budget batch | @tsyzhman | 2026-10-13 |

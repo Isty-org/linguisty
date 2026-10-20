@@ -26,8 +26,10 @@ Linguisty опубликован под MIT с copyright Никиты Цыжма
 - [x] MIT содержит `Copyright (c) 2026 Никита Цыжман (@tsyzhman)`; сторонние copyright и OFL сохранены.
 - [x] Metadata и канон согласованы; Chrome/Firefox автоматически включают точные LICENSE/notices из корня.
 - [x] Проверки build/manifest, необходимые тесты и доступный browser smoke проходят; фактические ограничения записаны.
-- [ ] v0.4.10 опубликован; GitHub распознаёт MIT, скачанные assets совпадают по SHA-256, проверены ресурсы и дубли.
+- [x] v0.4.10 опубликован; GitHub распознаёт MIT, скачанные assets совпадают по SHA-256, проверены ресурсы и дубли.
 
 ## Result
 
-Локальная приёмка завершена: typecheck/lint, 780 unit, 15 native, 10 manifest/license contracts, обе сборки и целевой browser smoke Chrome/Firefox PASS; Mozilla 0/0/0. Все прежние runtime/assets совпадают с v0.4.9, manifest отличается только номером версии; каждый из двух ZIP содержит 58 проверенных файлов. Root MIT и original third-party notices сверены. QA: `docs/QA-MIT-2026-10-20.md`. Следующий шаг — commit/tag, публикация v0.4.10 и проверка GitHub license detection/assets; WI закрывается после фактической публикации.
+Опубликован [v0.4.10](https://github.com/Isty-org/linguisty/releases/tag/v0.4.10), commit `8862d27150d91ae6241c7c5b3aedfdae4b31ffc0`, автор Никита Цыжман / `Tsyzhman`. GitHub License API на tag распознаёт SPDX `MIT`; все три assets скачаны обратно и совпали по SHA-256. Source tree содержит 338 файлов без локальных `.me`, credentials и generated folders. Tag, commit и digests v0.4.9 сохранены.
+
+Typecheck/lint, 780 unit, 15 native, 10 manifest/license contracts, обе сборки и целевой browser smoke Chrome/Firefox PASS; Mozilla 0/0/0. Все прежние runtime/assets совпадают с v0.4.9, manifest отличается только номером версии; каждый из двух ZIP содержит 58 проверенных файлов. Root MIT и original third-party notices сверены. QA: `docs/QA-MIT-2026-10-20.md`. Проверены 161 локальная ссылка и 651 spec reference; source duplicates и оставшихся собственных browser helpers нет. Неповторённые полные browser/ChatGPT/long-batch сценарии и live provider access не объявляются новым успешным прогоном.
