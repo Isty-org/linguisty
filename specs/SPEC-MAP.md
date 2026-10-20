@@ -4,7 +4,7 @@
 
 | ID | Документ | Ответственность |
 |---|---|---|
-| PROP-000 | [product](common/PROP-000-product.md) | Продукт, название, платформы, границы |
+| PROP-000 | [product](common/PROP-000-product.md) | Продукт, название, платформы, границы, MIT |
 | PROP-001 | [contracts](common/PROP-001-contracts.md) | Общие типы, сообщения, архитектура |
 | PROP-002 | [quality](common/PROP-002-quality.md) | Приёмка, память, кэш, дубли |
 | INFRA-001 | [extension](modules/platform/INFRA-001-extension.md) | Сборка, разрешения, фон, сессии |

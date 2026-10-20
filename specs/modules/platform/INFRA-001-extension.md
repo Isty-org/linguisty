@@ -16,6 +16,8 @@ Node 22+, WXT 0.21.x, React, TypeScript. WXT browser-specific manifest: Chrome s
 
 UI использует React nodes и текстовые children. Production-сборка отключает два unused raw-HTML setter React DOM (обычный/custom element): ненулевой dangerouslySetInnerHTML вызывает явную ошибку вместо разбора HTML. Никакого динамического HTML sanitizer или альтернативного HTML parser для этого не добавляется. Build guard проверяет ожидаемую форму upstream кода и останавливает сборку при изменении; исходная dependency на диске не модифицируется. Константное создание инертного script element внутри React сохраняется. Обновление React требует проверки guard и браузерного smoke.
 
+Корневые `LICENSE` (MIT, Никита Цыжман @tsyzhman) и `THIRD_PARTY_NOTICES.txt` автоматически копируются в корень обеих сборок через WXT public assets hook. В Git хранится один источник каждого текста; в ZIP входят точные копии. Manifest/resource inspection отклоняет отсутствие или изменение этих файлов. OFL-лицензии шрифтов остаются в `fonts/` без изменения.
+
 ## Разрешения {#permissions}
 
 Для CLI объявлен optional nativeMessaging. Только пользовательское действие options/popup запрашивает его; перед вызовом CLI фон проверяет grant. Content не имеет прямого native канала. Одноразовая регистрация системного host закреплена в spec://modules/platform/INFRA-003-local-cli#acceptance.
@@ -47,6 +49,8 @@ Background подключает provider reporter к protected локально�
 `@spec` на background controller, entrypoint и manifest config. Оба production manifest валидны; UI→фон→контент→фон работает; key читает только фон; закрытие вкладки очищает состояние; Chrome SW и Firefox event page не смешаны; сборки не содержат development server.
 
 ## Связи и история {#changelog}
+
+- 2026-10-20: MIT и сторонние notices включаются в обе сборки и проверяются перед выпуском.
 
 - 2026-10-08: возврат Codex OAuth через временное правило собственной вкладки; declarativeNetRequestWithHostAccess требуется при установке, host-доступ запрашивается кнопкой.
 

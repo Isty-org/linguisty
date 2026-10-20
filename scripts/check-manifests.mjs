@@ -84,6 +84,14 @@ export async function inspectBuild(buildRoot, browserName) {
   }
 
   if (manifest.manifest_version !== 3) fail('manifest_version must be 3.');
+  // @spec spec://modules/platform/INFRA-001-extension#build
+  for (const name of ['LICENSE', 'THIRD_PARTY_NOTICES.txt']) {
+    asset(name);
+    if (available.has(name)) {
+      const [packaged, canonical] = await Promise.all([readFile(path.join(buildRoot, name)), readFile(path.join(projectRoot, name))]);
+      if (!packaged.equals(canonical)) fail(`${name}: packaged license differs from the canonical source.`);
+    }
+  }
   if (manifest.name !== 'Linguisty') fail('name must be Linguisty.');
   if (manifest.action?.default_title !== 'Linguisty') fail('action.default_title must be Linguisty.');
   if (!/^\d+(?:\.\d+){0,3}$/.test(manifest.version ?? '')) fail('Invalid extension version.');

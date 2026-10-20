@@ -1,9 +1,10 @@
 {
   "name": "linguisty",
-  "version": "0.4.9",
+  "version": "0.4.10",
   "private": true,
   "description": "Linguisty — page translation through your API or ChatGPT subscription",
   "author": { "name": "Никита Цыжман", "url": "https://github.com/tsyzhman" },
+  "license": "MIT",
   "repository": { "type": "git", "url": "https://github.com/Isty-org/linguisty.git" },
   "homepage": "https://github.com/Isty-org/linguisty",
   "bugs": { "url": "https://github.com/Isty-org/linguisty/issues" },

@@ -11,6 +11,7 @@ async function withBuild(run) {
   const root = await mkdtemp(path.join(os.tmpdir(), 'linguisty-manifest-check-'));
   try {
     await mkdir(path.join(root, 'icon'));
+    for (const name of ['LICENSE', 'THIRD_PARTY_NOTICES.txt']) await writeFile(path.join(root, name), await readFile(new URL(`../${name}`, import.meta.url)));
     for (const size of [16, 32, 48, 128]) await writeFile(path.join(root, 'icon', `${size}.png`), await readFile(new URL(`../public/icon/${size}.png`, import.meta.url)));
     for (const name of ['background.js', 'translate.js', 'popup.js', 'options.js', 'codex.js', 'codex-callback.js']) await writeFile(path.join(root, name), 'console.log("Linguisty fixture runtime");');
     for (const name of ['popup', 'options', 'codex', 'codex-callback']) await writeFile(path.join(root, `${name}.html`), `<html><head><title>Linguisty</title><script src="./${name}.js"></script></head><body></body></html>`);
@@ -39,13 +40,29 @@ test('accepts valid platform-specific packages and verifies real asset bytes', a
   await withBuild(async (root, manifest, save) => {
     const chrome = await inspectBuild(root, 'chrome');
     assert.equal(chrome.ok, true, chrome.errors.join('\n'));
-    assert.equal(chrome.files, 15);
+    assert.equal(chrome.files, 17);
     assert.ok(chrome.bytes > 3000);
     manifest.background = { scripts: ['background.js'], persistent: false };
     manifest.browser_specific_settings = { gecko: { id: 'linguisty@isty.local', strict_min_version: '142.0', data_collection_permissions: { required: ['websiteContent', 'browsingActivity', 'authenticationInfo'] } } };
     await save();
     const firefox = await inspectBuild(root, 'firefox');
     assert.equal(firefox.ok, true, firefox.errors.join('\n'));
+  });
+});
+
+/** @spec spec://modules/platform/INFRA-001-extension#build */
+test('requires complete, unchanged project and third-party licenses in each package', async () => {
+  await withBuild(async root => {
+    for (const name of ['LICENSE', 'THIRD_PARTY_NOTICES.txt']) {
+      const target = path.join(root, name);
+      const original = await readFile(target);
+      await rm(target);
+      assert.ok((await inspectBuild(root, 'chrome')).errors.some(error => error.includes(`missing asset ${name}`)));
+      await writeFile(target, 'MIT without the original copyright or full conditions');
+      assert.ok((await inspectBuild(root, 'chrome')).errors.some(error => error.includes(`${name}: packaged license differs`)));
+      await writeFile(target, original);
+    }
+    assert.equal((await inspectBuild(root, 'chrome')).ok, true);
   });
 });
 

@@ -11,6 +11,7 @@
 
 | Work | Title | Specs | Owner | Started | Blocker |
 |---|---|---|---|---|---|
+| [WI-039](work/WI-039-mit-license.md) | MIT и пакеты v0.4.10 | PROP-000, INFRA-001 | @tsyzhman | 2026-10-20 | — |
 
 ## Blocked
 

@@ -20,9 +20,11 @@ npm run zip:firefox
 
 `dev` запускается только для интерактивной отладки; для приёмки нужны production builds. Не оставлять лишние watch-процессы.
 
-Первый GitHub-релиз сохраняет текущую версию **0.4.9**: [страница выпуска](https://github.com/Isty-org/linguisty/releases/tag/v0.4.9). Пакеты — `.output/linguisty-0.4.9-chrome.zip` и `.output/linguisty-0.4.9-firefox.zip`; в release assets также публикуется `SHA256SUMS.txt`. Для готового ZIP сначала распакуйте архив, затем используйте установку ниже. Firefox ZIP не подписан. Полные исходники, включая тесты, доступны через GitHub Source code по tag `v0.4.9`; из корня выполнить `npm ci`, затем `npm run build:chrome` или `npm run build:firefox`. Локальная `.me`, credentials, результаты тестов и кэш в исходники не входят. Автор и владелец разработки — Никита Цыжман ([@tsyzhman](https://github.com/tsyzhman)); [AUTHORS](../AUTHORS.md).
+Текущий GitHub-релиз **0.4.10** включает MIT: [страница выпуска](https://github.com/Isty-org/linguisty/releases/tag/v0.4.10). Пакеты — `.output/linguisty-0.4.10-chrome.zip` и `.output/linguisty-0.4.10-firefox.zip`; в release assets также публикуется `SHA256SUMS.txt`. Для готового ZIP сначала распакуйте архив, затем используйте установку ниже. Firefox ZIP не подписан. Полные исходники, включая тесты, доступны через GitHub Source code по tag `v0.4.10`; из корня выполнить `npm ci`, затем `npm run build:chrome` или `npm run build:firefox`. Локальная `.me`, credentials, результаты тестов и кэш в исходники не входят. Автор и владелец разработки — Никита Цыжман ([@tsyzhman](https://github.com/tsyzhman)); [AUTHORS](../AUTHORS.md).
 
 Исторические проверки: [QA-2026-10-13](QA-2026-10-13.md), [QA-POPUP](QA-POPUP.md), [QA-SUBSCRIPTION](QA-SUBSCRIPTION.md), [QA-CODEX](QA-CODEX.md). Проверки первого опубликованного выпуска фиксируются отдельно в [QA-RELEASE-2026-10-20](QA-RELEASE-2026-10-20.md).
+
+MIT с авторством Никиты Цыжмана и сторонние notices включаются в исходники и оба пакета v0.4.10 автоматически; проверка текущего выпуска — [QA-MIT-2026-10-20](QA-MIT-2026-10-20.md).
 
 ## Chrome
 

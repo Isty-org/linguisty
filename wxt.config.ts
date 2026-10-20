@@ -1,10 +1,19 @@
 /** @spec spec://modules/platform/INFRA-001-extension#build */
 import { defineConfig } from 'wxt';
+import { resolve } from 'node:path';
 import { reactDomGuard } from './scripts/react-dom-guard';
 
 export default defineConfig({
   modules: ['@wxt-dev/module-react'],
   imports: false,
+  hooks: {
+    // @spec spec://modules/platform/INFRA-001-extension#build
+    'build:publicAssets': (wxt, files) => {
+      for (const name of ['LICENSE', 'THIRD_PARTY_NOTICES.txt']) {
+        files.push({ absoluteSrc: resolve(wxt.config.root, name), relativeDest: name });
+      }
+    },
+  },
   vite: ({ mode }) => ({ plugins: mode === 'production' ? [reactDomGuard()] : [] }),
   zip: {
     excludeSources: ['test-results/**', 'playwright-report/**', 'coverage/**', 'output/**', '.cache/**'],
@@ -14,7 +23,7 @@ export default defineConfig({
     author: 'Никита Цыжман (@tsyzhman)',
     homepage_url: 'https://github.com/Isty-org/linguisty',
     description: 'Перевод страниц через ваш API или подписку ChatGPT. Оригинал в один клик.',
-    version: '0.4.9',
+    version: '0.4.10',
     permissions: ['activeTab', 'scripting', 'storage', 'declarativeNetRequestWithHostAccess'],
     optional_permissions: ['nativeMessaging'],
     optional_host_permissions: ['https://*/*', 'http://localhost/*', 'http://127.0.0.1/*', 'http://[::1]/*'],
