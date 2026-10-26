@@ -20,7 +20,7 @@ export default defineConfig({
   },
   manifest: ({ browser }) => ({
     name: 'Linguisty',
-    author: 'Никита Цыжман (@tsyzhman)',
+    author: 'Nikita Tsyzhman (@tsyzhman)',
     homepage_url: 'https://github.com/Isty-org/linguisty',
     description: 'Перевод страниц через ваш API или подписку ChatGPT. Оригинал в один клик.',
     version: '0.4.10',

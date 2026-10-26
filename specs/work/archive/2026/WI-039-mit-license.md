@@ -23,7 +23,7 @@ Linguisty published under MIT with copyright credited to Никита Цыжма
 
 ## Acceptance
 
-- [x] MIT contains `Copyright (c) 2026 Никита Цыжман (@tsyzhman)`; third-party copyright and OFL preserved.
+- [x] MIT contains the author's 2026 copyright notice; third-party copyright and OFL preserved. The notice used the author's Cyrillic name at release acceptance; its current English spelling is `Copyright (c) 2026 Nikita Tsyzhman (@tsyzhman)`, requested on 2026-10-26.
 - [x] Metadata and canon aligned; Chrome/Firefox automatically include exact LICENSE/notices from root.
 - [x] Build/manifest checks, required tests, and available browser smoke pass; actual limitations recorded.
 - [x] v0.4.10 published; GitHub recognizes MIT; downloaded assets match by SHA-256; resources and duplicates checked.

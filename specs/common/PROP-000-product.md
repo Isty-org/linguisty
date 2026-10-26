@@ -32,7 +32,7 @@ Secrets are accessible only to privileged extension code. Translation sends text
 
 ## Authorship and license {#licensing}
 
-The author of current development is Nikita Tsyzhman (@tsyzhman). Following the user's explicit choice on 2026-10-20, Linguisty's own code and documentation use MIT; the complete license and original copyright are in the root `LICENSE`. Third-party dependencies and fonts retain their own copyrights and licenses. The project license does not change access terms for third-party APIs or subscriptions.
+The author of current development is Nikita Tsyzhman (@tsyzhman). Following the user's explicit choice on 2026-10-20, Linguisty's own code and documentation use MIT; the complete license and copyright are in the root `LICENSE`. The copyright notice and current author metadata use the user's requested English spelling, `Nikita Tsyzhman`. Third-party dependencies and fonts retain their own copyrights and licenses. The project license does not change access terms for third-party APIs or subscriptions.
 
 ## Product acceptance {#acceptance}
 
@@ -48,6 +48,7 @@ The name, platforms, sources, boundaries, invariants, and observable scenario ar
 
 ## Changelog {#changelog}
 
+- 2026-10-26: at the author's request, the copyright notice and current author metadata use Nikita Tsyzhman; MIT terms and third-party notices are unchanged.
 - 2026-10-26: translated into English and updated documentation locations; product behavior is unchanged.
 - 2026-10-20: the user chose MIT with Nikita Tsyzhman's authorship; third-party licenses remain intact.
 - 2026-10-08: following user clarification, Codex through ChatGPT replaces CLI selection in the UI; earlier adapters remain for compatibility.
