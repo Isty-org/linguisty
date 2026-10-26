@@ -1,11 +1,11 @@
-# WI-016: Устойчивое открытие интерфейса расширения
+# WI-016: Reliable extension interface startup
 
 - Kind: `fix`
 - Canon action: `direct-edit`
 
 ## Outcome
 
-Popup и настройки открываются при медленном старте фона и отказе кэша; ожидание ограничено, при ошибке доступны повторная загрузка и понятное сообщение.
+Popup and settings open despite slow background startup and cache failure; waiting is bounded, and errors offer reload and a clear message.
 
 ## Specs
 
@@ -16,22 +16,22 @@ Popup и настройки открываются при медленном с�
 
 ## Scope
 
-- In: bounded messaging/retry, независимая загрузка настроек/кэша, восстановление фона, bootstrap/render fallback, unit/UI/browser checks.
-- Out: платные API-запросы и обход browser CSP.
+- In: bounded messaging/retry, independent settings/cache loading, background recovery, bootstrap/render fallback, unit/UI/browser checks.
+- Out: paid API requests and bypassing browser CSP.
 
 ## Acceptance
 
-- [x] Зависание кэша воспроизводится тестом; оно не блокирует форму настроек.
-- [x] Медленный/недоступный фон завершает ожидание понятной ошибкой; read-only команды допускают ограниченный retry, mutations не дублируются.
-- [x] Отказ восстановления session snapshots не блокирует настройки и persistent secret status.
-- [x] React/bootstrap сбой показывает доступный fallback вместо пустого окна.
-- [x] Повторные открытия/unmount освобождают listeners и timers; late replies не заменяют новое состояние.
-- [x] Typecheck/lint/tests, обе сборки и browser smoke выполнены; ресурсы и дубли проверены.
+- [x] Hanging cache reproduced by a test; it does not block the settings form.
+- [x] Slow/unavailable background ends waiting with a clear error; read-only commands allow bounded retry; mutations are not duplicated.
+- [x] Session snapshot restoration failure does not block settings and persistent secret status.
+- [x] React/bootstrap failure shows an accessible fallback instead of an empty window.
+- [x] Repeated opens/unmount free listeners and timers; late replies do not replace newer state.
+- [x] Typecheck/lint/tests, both builds, and browser smoke completed; resources and duplicates checked.
 
 ## Result
 
-Было → стало: cache stats и session restore блокировали конфигурацию, чтения не имели deadline → форма независима от stats, конфигурация независима от snapshots, reads ограничены 5s, transient transport имеет один retry, mutations не повторяются. Abort при закрытии UI снимает ожидание/таймеры пользовательских действий; late replies не меняют новую загрузку. HTML startup fallback и React boundary дают безопасное сообщение с reload без raw error/form values.
+Before → after: cache stats and session restore blocked configuration; reads had no deadline → form independent of stats, configuration independent of snapshots, reads bounded at 5s, transient transport has one retry, mutations not retried. Abort on UI close removes waits/timers for user actions; late replies do not change a new load. HTML startup fallback and React boundary provide a safe message with reload without raw error/form values.
 
-Unit regression сначала подтвердил зависшую форму, затем прошёл с независимой загрузкой. Отдельный packaged Chromium run подтвердил pending cache, первый missing receiver и pending settings → timeout/error/retry → восстановленная форма. Typecheck/lint, 417 unit/contract/DOM tests/20 suites (<=2 workers), 7 manifest/hygiene tests и 5 fixtures PASS. Обе production build/ZIP/byte comparison, полный Chromium pipeline/UI/startup (12 Node tests с parent), 10 Firefox groups и 2 Firefox key lifecycle scenarios PASS. Mozilla package validation: 0 errors/notices/warnings. Evidence: test-results/linguisty-ui-startup/, стандартные browser reports и docs/QA-REPORT.md.
+Unit regression first confirmed the hanging form, then passed with independent loading. Separate packaged Chromium run confirmed pending cache, first missing receiver, and pending settings → timeout/error/retry → recovered form. Typecheck/lint, 417 unit/contract/DOM tests/20 suites (<=2 workers), 7 manifest/hygiene tests, and 5 fixtures PASS. Both production build/ZIP/byte comparison, full Chromium pipeline/UI/startup (12 Node tests with parent), 10 Firefox groups, and 2 Firefox key lifecycle scenarios PASS. Mozilla package validation: 0 errors/notices/warnings. Evidence: test-results/linguisty-ui-startup/, standard browser reports, and docs/QA-REPORT.md.
 
-После unmount нет transport timers/listeners; браузерные lifecycle checks подтверждают zero observers/timers/snapshots после завершения сессий, 0 активных mock requests и оставшихся собственных Firefox processes. RAM/filesystem snapshot и отсутствие source дублей проверены отдельно; чужие процессы и старый WI-011 cache не удалялись. Непроверенные signed install, browser executable upgrade и live provider оставлены явными в отчёте.
+No transport timers/listeners after unmount; browser lifecycle checks confirm zero observers/timers/snapshots after sessions finish, with 0 for both active mock requests and remaining own Firefox processes. RAM/filesystem snapshot and absence of source duplicates checked separately; others' processes and old WI-011 cache were not deleted. Unverified signed install, browser executable upgrade, and live provider remain explicit in the report.

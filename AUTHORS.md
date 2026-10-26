@@ -1,9 +1,9 @@
-# Авторство Linguisty
+# Linguisty authorship
 
-Автор и владелец текущей разработки Linguisty — **Никита Цыжман ([@tsyzhman](https://github.com/tsyzhman))**. Это относится к исходному коду, проектной документации, спецификациям и текущим work items первого релиза.
+**Nikita Tsyzhman ([@tsyzhman](https://github.com/tsyzhman))** is the author and owner of the current Linguisty development. This covers the source code, project documentation, specifications, and current work items for the first release.
 
-Разработка и проверки выполнялись с использованием AI-инструментов, включая Codex. Упомянутые в исторических отчётах модели и чаты обозначают инструменты выполнения и аудита; владельцем работы является @tsyzhman. Даты, фактические результаты проверок и их ограничения сохраняются.
+Development and verification used AI tools, including Codex. Models and chats mentioned in historical reports identify implementation and audit tools; @tsyzhman owns the work. Dates, actual verification results, and their limitations are preserved.
 
-Сторонние зависимости и bundled-шрифты сохраняют собственное авторство и лицензии. Лицензии шрифтов находятся в `public/fonts/Onest-OFL.txt` и `public/fonts/JetBrainsMono-OFL.txt`.
+Third-party dependencies and bundled fonts retain their own authorship and licenses. Font licenses are in `public/fonts/Onest-OFL.txt` and `public/fonts/JetBrainsMono-OFL.txt`.
 
-Собственный код и документация Linguisty распространяются под [MIT](LICENSE): `Copyright (c) 2026 Никита Цыжман (@tsyzhman)`. Сторонние notices собраны в [THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt); эти файлы также входят в пакеты Chrome и Firefox.
+Linguisty's own code and documentation are distributed under [MIT](LICENSE), with the original copyright notice preserved exactly: `Copyright (c) 2026 Никита Цыжман (@tsyzhman)`. Third-party notices are collected in [THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt); these files are also included in the Chrome and Firefox packages.

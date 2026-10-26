@@ -1,16 +1,16 @@
-# Linguisty: обзор проекта {#root}
+# Linguisty: project overview {#root}
 
-Linguisty — расширение перевода страниц для Firefox и Chrome. Канон создан из материалов пользователя и прямого поручения начать реализацию 7 октября 2026 года. Исходный baseline: два документа, один PNG, кода и Git-репозитория не было.
+Linguisty is a page translation extension for Firefox and Chrome. Its canonical requirements were derived from the user's materials and direct instruction to begin implementation on October 7, 2026. The initial baseline contained two documents and one PNG, with no code or Git repository.
 
-Автор и владелец текущей разработки — Никита Цыжман ([@tsyzhman](https://github.com/tsyzhman)); сведения об инструментах и сторонних материалах — в [AUTHORS](../../AUTHORS.md). По прямому поручению пользователя от 2026-10-20 локальная `specs/.me` и владельцы существующих работ приведены к @tsyzhman. Локальная идентичность не публикуется в Git.
+The author and owner of current development is Nikita Tsyzhman ([@tsyzhman](https://github.com/tsyzhman)); [AUTHORS](../../AUTHORS.md) describes development tools and third-party materials. Following the user's direct instruction on 2026-10-20, local `specs/.me` and ownership of existing work were aligned with @tsyzhman. The local identity is not published in Git.
 
-## Канон {#canon}
+## Canon {#canon}
 
-- [PROP-000: продукт](PROP-000-product.md)
-- [PROP-001: архитектура и контракты](PROP-001-contracts.md)
-- [PROP-002: качество](PROP-002-quality.md)
+- [PROP-000: product](PROP-000-product.md)
+- [PROP-001: architecture and contracts](PROP-001-contracts.md)
+- [PROP-002: quality](PROP-002-quality.md)
 - [SPEC-MAP](../SPEC-MAP.md)
-- [Техническая карта](structure.md)
+- [Technical map](structure.md)
 
-`status: active` означает действующее требование, а не утверждение о готовом коде. Текущий прогресс живёт только в [BOARD](../BOARD.md), WI и [WAL](../WAL.md).
+`status: active` identifies a current requirement, not a claim of completed code. Current progress lives only in the [BOARD](../BOARD.md), work items, and [WAL](../WAL.md).
 

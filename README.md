@@ -1,70 +1,67 @@
 # Linguisty
 
-Автор и владелец разработки — **Никита Цыжман ([@tsyzhman](https://github.com/tsyzhman))**. [Авторство и инструменты разработки](AUTHORS.md). Лицензия собственного кода и документации — [MIT](LICENSE).
+Linguisty translates web pages with your chosen language model while preserving buttons, forms, and page structure. It supports **Chrome and Firefox on desktop**, using your API key or an eligible ChatGPT subscription. Settings and the translation cache stay local; Linguisty has no server or telemetry.
 
-Linguisty переводит веб-страницы с помощью выбранной языковой модели, сохраняя кнопки, формы и структуру сайта. Расширение для **Chrome и Firefox desktop** использует API-ключ пользователя или подписку ChatGPT, с локальными настройками и кэшем, без нашего сервера.
+Created and maintained by **Nikita Tsyzhman ([@tsyzhman](https://github.com/tsyzhman))**. The project's own code and documentation are licensed under [MIT](LICENSE). See [authorship and development tools](AUTHORS.md).
 
-## Релиз — v0.4.10 (MIT)
+## Download and install
 
-[Скачать пакеты Chrome и Firefox](https://github.com/Isty-org/linguisty/releases/tag/v0.4.10). MIT с авторством Никиты Цыжмана включена в исходники и оба ZIP. Первый релиз v0.4.9 сохранён в истории. Для Chrome распакуйте `linguisty-0.4.10-chrome.zip` и загрузите папку через `chrome://extensions` в режиме разработчика. Для Firefox используйте временную установку через `about:debugging` → «Этот Firefox» → «Загрузить временное дополнение», выбрав `manifest.json` из распакованного Firefox ZIP. Firefox-пакет не подписан и не предназначен для постоянной установки в обычный Firefox.
+[Download v0.4.10 for Chrome or Firefox](https://github.com/Isty-org/linguisty/releases/tag/v0.4.10). Both ZIP packages include the MIT license and third-party notices; the first release, v0.4.9, remains available in the release history.
 
-Подключение ChatGPT требует доступного аккаунту плана и отдельного разрешения OpenAI; доступ всем подписчикам не гарантируется. Реальные вход, ответы платных моделей и языковая точность в автоматической приёмке не проверяются. Подробная установка — [DEVELOPMENT](docs/DEVELOPMENT.md), состав выпуска — [RELEASE-v0.4.9](docs/RELEASE-v0.4.10.md).
+- **Chrome 120+:** extract `linguisty-0.4.10-chrome.zip`, open `chrome://extensions`, enable Developer mode, and choose **Load unpacked**.
+- **Firefox 142+:** extract `linguisty-0.4.10-firefox.zip`, open `about:debugging` → **This Firefox** → **Load Temporary Add-on**, and select `manifest.json`. This package is unsigned and does not provide a permanent installation in standard Firefox.
 
-## Документация
+See the [installation guide](docs/guides/development.md) and [v0.4.10 release notes](docs/releases/v0.4.10.md).
 
-- [Проверка MIT и пакетов v0.4.10](docs/QA-MIT-2026-10-20.md)
-- [Приёмка версии 0.4.9: исправления аудита, Chrome/Firefox](docs/QA-2026-10-13.md)
-- [Независимый аудит Astra и проверка исправлений](docs/AUDIT-2026-10-12.md)
-- [Подключение подписки ChatGPT: шаги и ограничения](docs/CODEX-CONNECTION.md)
-- [Проверка названия и 16 языков версии 0.4.1](docs/QA-SUBSCRIPTION.md)
-- [Фактическая проверка Codex версии 0.4.0](docs/QA-CODEX.md)
-- [Исторический CLI-режим версии 0.3.0](docs/LOCAL-CLI.md)
-- [Продукт и границы первой версии](specs/common/PROP-000-product.md)
-- [План разработки и зависимости](docs/PLAN.md)
-- [Архитектура и общие контракты](specs/common/PROP-001-contracts.md)
-- [Сборка, установка и проверка](docs/DEVELOPMENT.md)
-- [Проверки и приёмка](docs/TESTING.md)
-- [Фактический отчёт проверки](docs/QA-REPORT.md)
-- [Проверка Firefox и её воспроизведение](docs/FIREFOX-QA.md)
-- [Исследование существующих решений](docs/RESEARCH.md)
-- [Текущая доска работ](specs/BOARD.md)
-- [Каталог спецификаций](specs/SPEC-MAP.md)
+## Translate a page
 
-Исходный план сохранён в [NEURAL_PAGE_TRANSLATOR_PLAN.md](NEURAL_PAGE_TRANSLATOR_PLAN.md), дизайн — в [DESIGN.md](DESIGN.md). Интерфейс использует Retro Orbit Editorial: violet/sage, бумажную и графитовую темы, локальные Onest/JetBrains Mono. Логотип Linguisty в шапке выбирается по теме из `public/brand/linguisty-{monochrome,color}.svg`; цветной вариант служит источником иконок расширения. Маленький авторский логотип `public/brand/isty-logo.svg` расположен внизу с локализованной подписью «Powered by». Проверки и границы отдельной сборки с логотипами: [QA-LOGOS](docs/QA-LOGOS.md).
+For ChatGPT, choose **ChatGPT subscription → Connect ChatGPT** in settings. A separate tab walks you through sign-in, an access check, and model selection. Keep that tab open: tokens exist only in its memory, so closing or reloading it requires signing in again. No CLI or connector installation is needed. The model runs in OpenAI's cloud and uses your ChatGPT account limits.
 
-## Основной сценарий
+This connection uses an official preview and requires an eligible account plan and OpenAI authorization. Availability to every subscriber is not guaranteed. Real sign-in, paid model responses, and translation accuracy have not been verified by the automated acceptance checks. Read the [connection guide and limitations](docs/guides/chatgpt-connection.md).
 
-Выберите **Подписка ChatGPT → Подключить ChatGPT**. Откроется отдельная вкладка с четырьмя шагами, входом через ChatGPT, проверкой доступа и выбором модели. Инструкция и возврат после входа доступны на всех 16 языках интерфейса. CLI и соединитель не устанавливаются. Вкладку нужно держать открытой: токены только в её памяти; после закрытия/перезапуска потребуется войти снова. Модель работает в облаке OpenAI, перевод расходует лимиты аккаунта ChatGPT. Реальная доступность этого preview для аккаунта не проверена: [подробности](docs/CODEX-CONNECTION.md).
+For an API provider:
 
-API-режим по-прежнему доступен:
+1. Open settings and choose OpenRouter or an OpenAI-compatible service.
+2. Enter your own API key, model ID, and translation languages.
+3. Grant access to the selected API origin.
+4. Open a web page and click **Translate page**.
+5. Cancel if needed, or switch between the original and translated text.
 
-1. Установите сборку своего браузера.
-2. В настройках выберите OpenRouter или OpenAI-совместимый сервис, укажите ключ и модель.
-3. Разрешите доступ только к выбранному API-сервису.
-4. Откройте страницу и нажмите «Перевести страницу».
-5. При необходимости отмените перевод, покажите оригинал или снова перевод.
+Visible text is translated first, followed by the rest of the page. New text added by the site is translated while translation mode is active. Cancellation stops new requests and leaves completed translations visible. Restoring the original or showing an already completed translation requires no API request.
 
-Сначала переводится видимый текст, затем остальная страница. Добавленный сайтом текст переводится во время активного режима. Отмена прекращает новые запросы; уже выполненный перевод остаётся на странице. Восстановление оригинала не требует API.
+Complete phrases can appear before the model finishes its response. Provisional text is rolled back on failure or cancellation; only fully validated responses enter the cache. You can disable streaming in settings, where a local API error log can also be copied or cleared. Font adjustments between CJK and alphabetic scripts are bounded and restore the original styling.
 
-Готовые фразы могут появляться до окончания ответа модели. Предварительный текст откатывается при ошибке или отмене; кэш получает только полностью проверенный ответ. Постепенный режим отключается в настройках. Там же находится локальный журнал ошибок API с копированием и очисткой. При переходе между CJK и буквенными системами размер текста корректируется по метрикам шрифта с ограничением и восстановлением оригинального оформления.
+The interface and target languages are independent. New profiles use the browser's preferred languages for translation and its interface language for the UI. Manual choices are retained, including target languages saved by older versions. The language catalog includes ISO 639-1 languages and common regional variants; additional valid BCP 47 codes can be entered manually. The UI has 16 bundled dictionaries, including English, Russian, Chinese, and Arabic with RTL support. A language's presence in the catalog does not establish the chosen model's accuracy.
 
-Язык интерфейса и язык перевода выбираются отдельно. Новый профиль подбирает язык перевода из предпочитаемых языков браузера, а интерфейс — из языка самого браузера. Ручной выбор сохраняется; язык перевода старой установки не сбрасывается при обновлении. Каталог включает ISO 639-1 и распространённые региональные варианты; валидный дополнительный BCP 47 код можно ввести вручную. Интерфейс имеет 16 локальных словарей, включая русский, английский, китайский и Arabic RTL. Выбор в каталоге не гарантирует языковую точность модели пользователя.
+## Documentation
 
-## Разработка
+Start with the [documentation index](docs/README.md) for guides, design references, research, release notes, and the full QA archive.
 
-Node.js 22.12+ либо 24+ и npm. Команды выполняются в этой папке; на Windows допустимо использовать `npm.cmd`.
+- [Development and installation](docs/guides/development.md)
+- [Testing and acceptance](docs/guides/testing.md)
+- [Product scope](specs/common/PROP-000-product.md)
+- [Architecture and contracts](specs/common/PROP-001-contracts.md)
+- [Specification catalog](specs/SPEC-MAP.md) and [work board](specs/BOARD.md)
+- [Contributor instructions](AGENTS.md)
+
+Repository documentation and contribution text use English. The extension remains multilingual.
+
+## Development
+
+Use Node.js 22.12+ or 24+ and npm. Run commands from the repository root; on Windows, `npm.cmd` can be used if PowerShell blocks `npm.ps1`.
 
 ```text
-npm install
+npm ci
 npm run typecheck
 npm run lint
 npm test
 npm run build:chrome
 npm run build:firefox
 npm run check:manifests
+npm run check:hygiene
 ```
 
-Версия считается проверенной только после фактически выполненных проверок в `docs/TESTING.md`. Статус разработки и результаты исполнителей — в WI и доске.
+Production output is written to `.output/chrome-mv3` and `.output/firefox-mv3`; release ZIPs use `.output/linguisty-0.4.10-{chrome,firefox}.zip`. Generated builds, local profiles, credentials, and caches are excluded from Git.
 
-Текущая локальная версия — **0.4.10** для Chrome 120+ и Firefox 142+ desktop. Каталоги — `.output/chrome-mv3` и `.output/firefox-mv3`; ZIP — `.output/linguisty-0.4.10-{chrome,firefox}.zip`. Словари загружаются по выбору языка; общий UI chunk уменьшен с 609125 до 260289 bytes. Исправлены гонка восстановления настроек, rollback частичных записей и возврат stale ключа. Исправлены deadline долгого batch, выгрузка Firefox во время запроса, повтор восстановления после ошибки и приватность журнала. Актуальные проверки — [QA-2026-10-13](docs/QA-2026-10-13.md). Завершённый текст потока подписки сохраняется даже при пустом последнем output; ошибка показывает безопасную причину. Проверки 1 340 фрагментов, кэша, протокола и 16 языков — [QA-SUBSCRIPTION](docs/QA-SUBSCRIPTION.md). Шестерёнка popup и защита новой модели от старой формы — [QA-POPUP](docs/QA-POPUP.md), исходное подключение — [QA-CODEX](docs/QA-CODEX.md), прежние API/дизайн проверки — [QA-REPORT](docs/QA-REPORT.md). Реальные вход ChatGPT, доступность плана, ответ/точность модели, ревью локализаций носителями, подпись и магазинная установка не объявляются проверенными. Для постоянной установки в обычный Firefox нужен подписанный пакет: [инструкция](docs/DEVELOPMENT.md).
+Acceptance requires the checks in the [testing guide](docs/guides/testing.md). Historical results distinguish browser runs, mocked provider tests, and unverified scenarios; two successful builds do not establish two working browser runtimes. Real ChatGPT access, model accuracy, native-speaker localization review, Firefox signing, and store installation remain separate checks.
 

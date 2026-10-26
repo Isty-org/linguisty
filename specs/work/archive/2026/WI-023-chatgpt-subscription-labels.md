@@ -1,11 +1,11 @@
-# WI-023: Название подписки ChatGPT и локализация возврата
+# WI-023: ChatGPT subscription naming and return localization
 
 - Kind: `change`
 - Canon action: `direct-edit`
 
 ## Outcome
 
-Пользователь выбирает «Подписка ChatGPT»; кнопки, инструкция и сообщения используют это понятное название. Страница подключения и возврат после входа поддерживают все 16 языков интерфейса.
+The user selects “ChatGPT subscription”; buttons, instructions, and messages use this clear name. The connection page and return after sign-in support all 16 interface languages.
 
 ## Specs
 
@@ -16,20 +16,20 @@
 
 ## Scope
 
-- In: локализованные названия сервиса, кнопок и сообщений; язык callback; актуальная инструкция; сборки и проверка Chrome/Firefox.
-- Out: изменение OAuth, provider ID, совместимости CLI, платные запросы, публикация.
+- In: localized service, button, and message names; callback language; current instructions; builds and Chrome/Firefox checks.
+- Out: OAuth changes, provider ID, CLI compatibility, paid requests, publication.
 
 ## Acceptance
 
-- [x] Все 16 языков содержат название, шаги, статусы и ошибки; новый пользовательский интерфейс не называет сервис Codex.
-- [x] Возврат после входа использует выбранный язык и RTL; очистка OAuth-кода сохраняется.
-- [x] Typecheck, lint, осмысленные tests, обе сборки, manifest/hygiene и браузерный сценарий выполнены; реальные вход и модель явно остаются непроверенными.
-- [x] Проверены кэш, дубли, память и отсутствие оставленных собственных процессов.
+- [x] All 16 languages contain naming, steps, statuses, and errors; the new user interface does not call the service Codex.
+- [x] Return after sign-in uses the selected language and RTL; OAuth code cleanup preserved.
+- [x] Typecheck, lint, meaningful tests, both builds, manifest/hygiene, and browser scenario completed; real sign-in and model explicitly remain unverified.
+- [x] Cache, duplicates, memory, and absence of own leftover processes checked.
 
 ## Result
 
-Linguisty 0.4.1: локализованная «Подписка ChatGPT» в selector/options/popup/guide, подключение и отключение ChatGPT, все статусы и ошибки; callback поддерживает выбранный язык и RTL без загрузки полного UI словаря. Внутренний provider ID `codex`, имена entrypoints и протокол не менялись. Канон и инструкция актуализированы; историческая QA-0.4.0 сохранена.
+Linguisty 0.4.1: localized “ChatGPT subscription” in selector/options/popup/guide, ChatGPT connection and disconnection, all statuses and errors; callback supports the selected language and RTL without loading the full UI dictionary. Internal provider ID `codex`, entrypoint names, and protocol unchanged. Canon and instructions updated; historical QA-0.4.0 preserved.
 
-TypeScript/ESLint PASS; 661 Vitest / 46 files / max 2 workers; 8 checker tests; production builds/ZIP двух платформ; manifest/hygiene PASS; Mozilla linter 0 errors/notices/warnings. Chrome — 6 групп, Firefox — 5, включая все 16 языков и fixture вход/перевод. Русский/арабский мобильные снимки просмотрены. Фактические live OAuth/eligibility/model и ревью носителями не объявлены проверенными. Evidence и ограничения: docs/QA-SUBSCRIPTION.md, test-results/linguisty-subscription/.
+TypeScript/ESLint PASS; 661 Vitest / 46 files / max 2 workers; 8 checker tests; production builds/ZIP for both platforms; manifest/hygiene PASS; Mozilla linter 0 errors/notices/warnings. Chrome — 6 groups, Firefox — 5, including all 16 languages and fixture sign-in/translation. Russian/Arabic mobile images reviewed. Actual live OAuth/eligibility/model and native-speaker review not declared checked. Evidence and limitations: docs/archive/QA-SUBSCRIPTION.md, test-results/linguisty-subscription/.
 
-Промежуточные и финальные hygiene snapshots без подозрительных файлов и дублей; защищённая .cache неизменна. Firefox собственные процессы 13 → 0; Chrome собственный context закрыт, созданные профили удалены. Размер общего UI chunk 608 410 bytes и callback shared chunk 11 492 bytes записаны в TD-002.
+Intermediate and final hygiene snapshots have no suspicious files or duplicates; protected .cache unchanged. Firefox own processes 13 → 0; Chrome own context closed, created profiles removed. Shared UI chunk size 608 410 bytes and callback shared chunk 11 492 bytes recorded in TD-002.

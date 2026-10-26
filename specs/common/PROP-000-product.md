@@ -2,57 +2,55 @@
 status: active
 ---
 
-# PROP-000: Продукт Linguisty {#root}
+# PROP-000: Linguisty product {#root}
 
-Linguisty переводит текст открытого сайта выбранной пользователем моделью и позволяет сразу вернуть оригинал. Собственный сервер не нужен; пользователь использует свой API-ключ или доступный план ChatGPT.
+Linguisty translates text on the current website using a model selected by the user and allows immediate restoration of the original. No project server is needed; the user supplies an API key or an eligible ChatGPT plan.
 
-## Источники и приоритет {#sources}
+## Sources and priority {#sources}
 
-Основа — `NEURAL_PAGE_TRANSLATOR_PLAN.md`, `DESIGN.md`, supplied SVG `public/brand/isty-logo.svg`. Пользователь 2026-10-07 уточнил название Linguisty и включил Chrome. Это отменяет прежнее имя и исключение Chrome из v1. Пользователь 2026-10-08 сменил визуальный источник на Retro Orbit Editorial и поручил расширить выбор языков с автоматическим определением по браузеру. Isty не становится именем расширения. Поручение включает подготовку документов, параллельную реализацию Sol 6.1/max и контроль результата.
+The sources are `docs/product/original-plan.md`, `docs/design/README.md`, and the supplied SVG `public/brand/isty-logo.svg`. On 2026-10-07, the user specified the name Linguisty and included Chrome. This overrides the former name and Chrome's exclusion from v1. On 2026-10-08, the user changed the visual source to Retro Orbit Editorial and requested broader language selection with automatic browser detection. Isty does not become the extension's name. The instruction includes documentation, parallel implementation with Sol 6.1/max, and result verification.
 
-## Первая версия {#scope.in}
+## First version {#scope.in}
 
-- Chrome desktop и Firefox desktop, Manifest V3, отдельные сборки из одной кодовой базы.
-- Перевод текстовых узлов основной страницы, viewport сначала; исходный язык auto или вручную, целевой язык вручную.
-- OpenRouter и произвольный OpenAI-совместимый endpoint; ручной ID модели работает без discovery.
-- По последнему поручению пользователя 2026-10-08: единственный новый keyless вариант — локализованная «Подписка ChatGPT» (English: ChatGPT subscription), кнопка подключения и отдельная страница шагов с официальным Sign in with ChatGPT. Инструкция и возврат после входа доступны на 16 языках UI. Токены только в памяти вкладки, CLI/соединитель не нужны. Канон: `spec://modules/platform/INFRA-004-codex-connection#root`. Прежние CLI adapters совместимы внутри runtime, но не предлагаются в UI.
-- Локальное хранение настроек и API-ключа: session или persistent, выбирает пользователь.
-- Natural / Accurate / Literal, необязательные пользовательские инструкции.
-- Прогресс, отмена, частичные ошибки, восстановление оригинала и повторный показ перевода без API.
-- Динамический DOM, защита от собственных мутаций, SPA-навигация, ограниченный локальный кэш, дедупликация и ограниченная очередь.
-- Настройки, popup, равноправные светлая и тёмная темы, системная тема по умолчанию.
+- Chrome desktop and Firefox desktop, Manifest V3, separate builds from one codebase.
+- Translation of main-page text nodes, viewport first; automatic or manual source language and a user-selectable target language.
+- OpenRouter and arbitrary OpenAI-compatible endpoints; manual model IDs work without discovery.
+- Under the user's latest 2026-10-08 instruction, the only new keyless option is localized **ChatGPT subscription**, with a connection button and a separate step-by-step page using official Sign in with ChatGPT. Instructions and the post-sign-in return flow are available in all 16 UI languages. Tokens live only in the tab's memory; no CLI/connector is needed. Canon: `spec://modules/platform/INFRA-004-codex-connection#root`. Previous CLI adapters remain runtime-compatible but are not offered in the UI.
+- Local storage of settings and the API key: session or persistent, chosen by the user.
+- Natural / Accurate / Literal styles and optional custom instructions.
+- Progress, cancellation, partial errors, original restoration, and showing a completed translation again without API access.
+- Dynamic DOM, protection from self-generated mutations, SPA navigation, a bounded local cache, deduplication, and a bounded queue.
+- Settings, popup, equally supported light and dark themes, with the system theme as default.
 
-## Следующие версии {#scope.out}
+## Later versions {#scope.out}
 
-Native Anthropic/Gemini и остальные адаптеры, bilingual mode, выделение текста, context menu, glossary, per-site auto translate, fallback chains, стоимость, PDF/OCR, субтитры, мобильные браузеры, Safari. Эти возможности есть в исходном плане, но не являются заданием первого прохода. Личный кабинет, наш backend, телеметрия и cloud sync отсутствуют.
+Native Anthropic/Gemini and other adapters, bilingual mode, selection translation, context menu, glossary, per-site automatic translation, fallback chains, cost reporting, PDF/OCR, subtitles, mobile browsers, and Safari. These appear in the original plan but are outside the first implementation pass. There is no project account system, backend, telemetry, or cloud sync.
 
-## Инварианты {#invariants}
+## Invariants {#invariants}
 
-Секреты доступны только привилегированному коду расширения. Переводчик передаёт текст и ограниченный контекст, не весь HTML. Модель возвращает текст по ID; результат вставляется только в Text.data. Кнопки, формы и JS-обработчики остаются теми же объектами. Числа, валюты, площади, URLs, имена и placeholders сохраняются по инструкциям модели; качество смысла требует отдельной живой проверки.
+Secrets are accessible only to privileged extension code. Translation sends text and limited context, not full HTML. The model returns text by ID; results are inserted only through Text.data. Buttons, forms, and JavaScript handlers remain the same objects. Model instructions require preserving numbers, currencies, areas, URLs, names, and placeholders; semantic accuracy requires a separate live check.
 
-## Авторство и лицензия {#licensing}
+## Authorship and license {#licensing}
 
-Автор текущей разработки — Никита Цыжман (@tsyzhman). По прямому выбору пользователя от 2026-10-20 собственный код и документация Linguisty распространяются под MIT; полный текст и copyright находятся в корневом `LICENSE`. Сторонние зависимости и шрифты сохраняют собственные copyright и лицензии. Лицензия проекта не меняет условия доступа к API и подпискам сторонних сервисов.
+The author of current development is Nikita Tsyzhman (@tsyzhman). Following the user's explicit choice on 2026-10-20, Linguisty's own code and documentation use MIT; the complete license and original copyright are in the root `LICENSE`. Third-party dependencies and fonts retain their own copyrights and licenses. The project license does not change access terms for third-party APIs or subscriptions.
 
-## Приёмка продукта {#acceptance}
+## Product acceptance {#acceptance}
 
-На французской странице недвижимости в каждом браузере пользователь настраивает OpenRouter, переводит на русский, получает первый видимый перевод, продолжение остальной страницы, рабочие ссылки/галерею/формы, перевод нового текста, моментальный оригинал и повторный перевод из памяти. Повторное посещение использует подходящий локальный кэш. Отмена и ошибки не разрушают страницу. Ключ уходит только выбранному провайдеру.
+On a French property listing page in each browser, the user configures OpenRouter, translates into Russian, receives the first visible translation followed by the rest of the page, retains working links/gallery/forms, sees new text translated, restores the original instantly, and shows the translation again from memory. A repeat visit uses the appropriate local cache. Cancellation and errors do not damage the page. The key is sent only to the selected provider.
 
-## Связи {#relationships}
+## Relationships {#relationships}
 
-`spec://common/PROP-001-contracts#root`, `spec://common/PROP-002-quality#root` и модульные спеки в SPEC-MAP.
+`spec://common/PROP-001-contracts#root`, `spec://common/PROP-002-quality#root`, and the module specs in SPEC-MAP.
 
-## Проверка заполнения {#checklist}
+## Completeness check {#checklist}
 
-Название, платформы, источники, границы, инварианты и наблюдаемый сценарий закреплены. Никакие выдуманные результаты тестов не включены.
+The name, platforms, sources, boundaries, invariants, and observable scenario are defined. No invented test results are included.
 
-## История {#changelog}
+## Changelog {#changelog}
 
-- 2026-10-20: пользователь выбрал MIT с авторством Никиты Цыжмана; сторонние лицензии сохраняются.
-
-- 2026-10-08: по уточнению пользователя новый Codex через ChatGPT заменяет CLI-выбор в UI; прежние адаптеры оставлены для совместимости.
-
-- 2026-10-07: канон из пользовательских материалов; Linguisty и Chrome включены по прямому указанию.
-- 2026-10-08: добавлен режим установленных CLI через Native Messaging.
-
-- 2026-10-08: уточнено пользовательское название «Подписка ChatGPT», включая все 16 языков инструкции и возврата после входа; внутренний provider ID сохранён.
+- 2026-10-26: translated into English and updated documentation locations; product behavior is unchanged.
+- 2026-10-20: the user chose MIT with Nikita Tsyzhman's authorship; third-party licenses remain intact.
+- 2026-10-08: following user clarification, Codex through ChatGPT replaces CLI selection in the UI; earlier adapters remain for compatibility.
+- 2026-10-07: canonical requirements derived from user materials; Linguisty and Chrome included by direct instruction.
+- 2026-10-08: added an installed-CLI mode through Native Messaging.
+- 2026-10-08: clarified the user-facing “ChatGPT subscription” name, including all 16 instruction and return-flow languages; internal provider ID retained.

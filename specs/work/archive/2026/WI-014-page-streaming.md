@@ -1,11 +1,11 @@
-# WI-014: Стриминг перевода на страницу — проверить и реализовать
+# WI-014: Streaming translation onto the page — investigate and implement
 
 - Kind: `change`
 - Canon action: `direct-edit`
 
 ## Outcome
 
-Перевод начинает появляться прямо на странице до завершения ответа модели. Сначала проверить осуществимость с текущим форматом переводов по ID; при возможности реализовать безопасный поток для Chrome и Firefox.
+Translation begins appearing directly on the page before the model response completes. First check feasibility with the current ID-based translation format; if possible, implement safe streaming for Chrome and Firefox.
 
 ## Specs
 
@@ -23,25 +23,25 @@
 
 ## Scope
 
-- In: исследование SSE и совместимости моделей/structured output; прототип incremental parsing; поток provider → background → page; раннее отображение проверяемых сегментов, отмена, ошибки и fallback на обычный запрос при отсутствии поддержки.
-- До реализации определить и закрепить правила проверки ID, отображения незавершённого текста, финализации и отката при повреждённом ответе. Сейчас stream=false и ошибочная batch атомарно отклоняется; переход на поток требует явного изменения этих контрактов.
-- Сохранить реальный прогресс, cache/dedup, переключение оригинала, защиту от устаревшей сессии и чужих изменений DOM.
-- Out: наш сервер, бессрочные соединения, платные API-проверки без отдельного поручения и ключа, вставка вывода модели как HTML.
+- In: researching SSE and model/structured output compatibility; incremental parsing prototype; provider → background → page stream; early display of verifiable segments, cancellation, errors, and fallback to a regular request when unsupported.
+- Define and establish rules for ID validation, unfinished text display, finalization, and rollback on a corrupted response before implementation. Currently stream=false and a failed batch is atomically rejected; streaming requires an explicit change to these contracts.
+- Preserve real progress, cache/dedup, original toggle, and protection from stale sessions and external DOM changes.
+- Out: our server, indefinite connections, paid API checks without a separate assignment and key, inserting model output as HTML.
 
 ## Acceptance
 
-- [x] Проверена осуществимость с форматом `{translations:[{id,text}]}`; ограничения моделей/API и выбранный способ раннего отображения описаны. Неподтверждённая поддержка не объявлена рабочей.
-- [x] На mock-потоке в Chrome и Firefox первый перевод появляется до окончания ответа; измерены время первого отображения и полного завершения относительно обычного запроса.
-- [x] Разрывы SSE/UTF-8/JSON, неизвестные/повторные/пропущенные ID, error event при HTTP 200 и обрыв соединения не оставляют некорректный перевод и не кэшируются как успешный результат.
-- [x] Cancel, show original, навигация, закрытие вкладки и изменение текста блокируют поздние фрагменты; возобновление не переводит уже переведённый текст повторно.
-- [x] Буферы, частота обновления DOM и очередь ограничены; fetch/readers, listeners и timers освобождаются, проверены память, кэш и дубли.
-- [x] Обычный запрос остаётся рабочим; пройдены необходимые contract/DOM/browser checks. Если безопасная реализация не получилась, конкретная причина записана в Result, функция не объявлена реализованной.
+- [x] Feasibility checked with `{translations:[{id,text}]}`; model/API limitations and selected early-display method described. Unconfirmed support is not declared working.
+- [x] In Chrome and Firefox mock streaming, first translation appears before the response ends; time to first display and full completion measured against a regular request.
+- [x] SSE/UTF-8/JSON splits, unknown/repeated/missing IDs, error event at HTTP 200, and dropped connections leave no invalid translation and are not cached as successful results.
+- [x] Cancel, show original, navigation, tab close, and text changes block late fragments; resume does not translate already translated text again.
+- [x] Buffers, DOM update frequency, and queue are bounded; fetch/readers, listeners, and timers are released; memory, cache, and duplicates checked.
+- [x] Regular requests remain working; required contract/DOM/browser checks passed. If safe implementation failed, the specific reason is recorded in Result and the feature is not declared implemented.
 
 ## Research starting points
 
-- [OpenRouter: streaming](https://openrouter.ai/docs/api_reference/streaming) — SSE, отмена и ошибки после начала ответа.
-- [Stack Overflow: JSON-фрагменты в ReadableStream](https://stackoverflow.com/questions/62927478/parse-json-data-chunk-from-readablestream-with-vanilla-js) — пример проблемы границ сетевых chunks.
-- [Reddit: ошибки потокового ответа OpenRouter](https://www.reddit.com/r/openrouter/comments/1r3zuow/openrouter_down/) — сценарии отказов для проверки, не доказательство поддержки конкретной модели.
+- [OpenRouter: streaming](https://openrouter.ai/docs/api_reference/streaming) — SSE, cancellation, and errors after the response starts.
+- [Stack Overflow: JSON fragments in ReadableStream](https://stackoverflow.com/questions/62927478/parse-json-data-chunk-from-readablestream-with-vanilla-js) — an example of the network chunk boundary problem.
+- [Reddit: OpenRouter streaming response errors](https://www.reddit.com/r/openrouter/comments/1r3zuow/openrouter_down/) — failure scenarios to check, not proof of support for a specific model.
 
 ## Dependencies
 
@@ -49,10 +49,10 @@
 
 ## Result
 
-2026-10-08: поток реализован provider → engine → background → page. Incremental SSE/UTF-8 и JSON parser показывает только целые валидные items; preview отделён от committed translation, cache и счётчиков. Любой отказ/retry/cancel откатывает preview и его оформление, сохраняя внешние изменения страницы. Cumulative snapshots ограничены одним pending update и последовательной отправкой раз в 100 ms. Wire/model ≤1 MiB, events ≤16 384. Engine remaps deduplicated IDs, отдаёт текущий preview поздним consumers и освобождает subscriptions/readers/timers.
+2026-10-08: streaming implemented provider → engine → background → page. Incremental SSE/UTF-8 and JSON parser shows only complete valid items; preview is separated from committed translation, cache, and counters. Any failure/retry/cancel rolls back preview and its styling while preserving external page changes. Cumulative snapshots limited to one pending update and serial sending every 100 ms. Wire/model ≤1 MiB, events ≤16 384. Engine remaps deduplicated IDs, gives current preview to late consumers, and frees subscriptions/readers/timers.
 
-Default streaming=true для перевода страницы; testConnection и выключенный флажок используют обычный запрос. Старые настройки получают default без изменения persistent key. HTTP200 JSON принимается сразу; explicit unsupported stream даёт один fallback в общем retry budget. Обработка DONE/stop, usage/comments, errors после HTTP200 и строгой финализации закреплена в каноне. Исследование/ограничения — docs/RESEARCH.md; совместимость SSE/schema конкретной модели без paid API не проверена.
+Default streaming=true for page translation; testConnection and an unchecked checkbox use regular requests. Old settings receive the default without changing the persistent key. HTTP200 JSON accepted immediately; explicit unsupported stream gives one fallback within the overall retry budget. Handling DONE/stop, usage/comments, errors after HTTP200, and strict finalization established in canon. Research/limitations: docs/RESEARCH.md; SSE/schema compatibility of a particular model without paid API is unverified.
 
-493 Vitest tests / 28 suites (max 2 workers), typecheck/lint, 7 manifest/hygiene contracts, обе production builds, 12 Chromium scenarios (13 PASS с parent), 13 Firefox groups, packaged UI/startup и 2 Firefox key lifecycle scenarios PASS. Mock browser checks проверяют duplicate/unknown/missing IDs, HTTP200 error, dropped connection, fallback, cancel/original/resume, source edits, route/tab close и отсутствие cache после invalid ответа. Unit tests дополнительно разрывают UTF-8/SSE/JSON, проверяют limits, remapping/late consumers, reader locks, coalescing/backpressure и cleanup. Полный production hash Firefox до/после одинаков.
+493 Vitest tests / 28 suites (max 2 workers), typecheck/lint, 7 manifest/hygiene contracts, both production builds, 12 Chromium scenarios (13 PASS with parent), 13 Firefox groups, packaged UI/startup, and 2 Firefox key lifecycle scenarios PASS. Mock browser checks cover duplicate/unknown/missing IDs, HTTP200 error, dropped connection, fallback, cancel/original/resume, source edits, route/tab close, and no cache after invalid response. Unit tests additionally split UTF-8/SSE/JSON and check limits, remapping/late consumers, reader locks, coalescing/backpressure, and cleanup. Full Firefox production hash identical before/after.
 
-Mock с ответом через 2.5 s: Chrome первая фраза 144 ms / полный показ 2516 ms против regular 2513 ms; Firefox 136 / 2527 против 2519 ms. DOM probe измеряет время от начала mock request; это не замер OpenRouter. После каждого полного browser run mock activeRequests/pendingTimers=0, собственные Firefox процессы=0, profiles удалены. .cache 203 426 930 bytes без роста; source duplicates=0; RAM snapshot 18.82 GB free. Предыдущий blocked cleanup WI-011 не затронут. Итоговые отчёт/ZIP/evidence: docs/QA-REPORT.md, .output/linguisty-0.2.0-{chrome,firefox}.zip и test-results/linguisty-0.2.0/.
+Mock with response after 2.5 s: Chrome first phrase 144 ms / full display 2516 ms versus regular 2513 ms; Firefox 136 / 2527 versus 2519 ms. DOM probe measures from mock request start; this is not an OpenRouter measurement. After each full browser run mock activeRequests/pendingTimers=0, own Firefox processes=0, profiles removed. .cache 203 426 930 bytes with no growth; source duplicates=0; RAM snapshot 18.82 GB free. Previous blocked WI-011 cleanup untouched. Final report/ZIP/evidence: docs/archive/QA-REPORT.md, .output/linguisty-0.2.0-{chrome,firefox}.zip, and test-results/linguisty-0.2.0/.

@@ -1,11 +1,11 @@
-# WI-012: Читаемый шрифт при переводе между системами письма
+# WI-012: Readable fonts when translating between writing systems
 
 - Kind: `change`
 - Canon action: `direct-edit`
 
 ## Outcome
 
-При переводе между CJK и буквенными системами письма текст автоматически получает читаемый размер шрифта, а страница сохраняет различия между основным текстом, заголовками и подписями. Основной сообщённый сценарий — японский → русский; обратное направление нужно проверить.
+When translating between CJK and alphabetic writing systems, text automatically receives a readable font size while the page preserves distinctions between body text, headings, and captions. The main reported scenario is Japanese → Russian; the reverse direction needs checking.
 
 ## Specs
 
@@ -17,30 +17,30 @@
 
 ## Scope
 
-- In: воспроизведение проблемы, измерение размера и метрик используемых шрифтов, выбор автоматической коррекции; DOM renderer и управление принадлежащими расширению стилями; восстановление оригинального оформления; браузерные проверки Chrome/Firefox.
-- Перед реализацией уточнить канон: сейчас renderer меняет только Text.data. Решение по размеру, fallback-шрифту и межстрочному интервалу выбрать по воспроизводящим страницам, без заранее заданного универсального коэффициента.
-- Out: масштабирование всей страницы, изменение текста или оформления непереводимых элементов, подключение удалённых шрифтов.
+- In: reproducing the problem, measuring size and metrics of the fonts used, choosing automatic correction; DOM renderer and management of extension-owned styles; restoration of original formatting; Chrome/Firefox browser checks.
+- Clarify canon before implementation: renderer currently changes only Text.data. Choose the size, fallback font, and line-height solution using reproducing pages, without a predetermined universal multiplier.
+- Out: scaling the entire page, changing text or styling of untranslated elements, loading remote fonts.
 
 ## Acceptance
 
-- [x] Японский → русский воспроизведён и зафиксирован примером до/после; русский → японский проверен отдельно, предположение не выдано за подтверждённый баг.
-- [x] На проверяемых примерах перевод не становится чрезмерно мелким или крупным; основные абзацы, заголовки и подписи читаемы, не обрезаются из-за коррекции. Критерии и измерения выбранного решения зафиксированы до приёмки.
-- [x] Переключение на оригинал восстанавливает исходные стили; повторные переключения, динамические вставки и внешние изменения DOM не накапливают коррекции и не ломают формы/события.
-- [x] Осмысленные regression tests и браузерные проверки Chrome/Firefox проходят; недоступные проверки явно указаны.
-- [x] Проверены освобождение ссылок на элементы, отсутствие цикла мутаций и дублей, кэш и память по PROP-002.
+- [x] Japanese → Russian reproduced and recorded with a before/after example; Russian → Japanese checked separately, an assumption not presented as a confirmed bug.
+- [x] Translation does not become excessively small or large on checked examples; main paragraphs, headings, and captions are readable and not clipped because of correction. Criteria and measurements of the selected solution recorded before acceptance.
+- [x] Switching to original restores original styles; repeated switches, dynamic inserts, and external DOM changes do not accumulate corrections or break forms/events.
+- [x] Meaningful regression tests and Chrome/Firefox browser checks pass; unavailable checks explicitly stated.
+- [x] Element reference release, absence of mutation loops and duplicates, cache, and memory checked under PROP-002.
 
 ## Research starting points
 
-- [Stack Overflow: различие видимого размера английского и японского текста](https://stackoverflow.com/questions/59677365/how-to-make-english-text-appear-the-same-size-as-japanese-text).
-- [Reddit: изменение минимального размера CJK-текста](https://www.reddit.com/r/ChineseLanguage/comments/hzcp96/).
-- [MDN: font-size-adjust и метрики шрифта](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/font-size-adjust). Возможность применения и поддержку выбранных значений проверить на наших браузерах; это отправная точка, а не уже выбранное исправление.
+- [Stack Overflow: differences in the apparent size of English and Japanese text](https://stackoverflow.com/questions/59677365/how-to-make-english-text-appear-the-same-size-as-japanese-text).
+- [Reddit: changing the minimum CJK text size](https://www.reddit.com/r/ChineseLanguage/comments/hzcp96/).
+- [MDN: font-size-adjust and font metrics](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/font-size-adjust). Check applicability and support for selected values in our browsers; this is a starting point, not an already selected fix.
 
 ## Result
 
-2026-10-08, до реализации: `tests/fixtures/fonts.html`, Times New Roman / Yu Gothic. Chromium 152: body 18 px, CJK ink 16 px, Cyrillic caps 12 px; heading 30 px, 27/20 px; caption 12 px, 11/9 px. Firefox 157: body 18 px, 16.031/12.190 px; heading 30 px, 27.451/20.273 px; caption 12 px, 10.688/8.127 px. Baseline: `test-results/linguisty-fonts/baseline.json`. Подтверждена разница метрик при одинаковом CSS-размере. Это воспроизводящий локальный пример, URL страницы пользователя не предоставлен.
+2026-10-08, before implementation: `tests/fixtures/fonts.html`, Times New Roman / Yu Gothic. Chromium 152: body 18 px, CJK ink 16 px, Cyrillic caps 12 px; heading 30 px, 27/20 px; caption 12 px, 11/9 px. Firefox 157: body 18 px, 16.031/12.190 px; heading 30 px, 27.451/20.273 px; caption 12 px, 10.688/8.127 px. Baseline: `test-results/linguisty-fonts/baseline.json`. Confirmed metric differences at identical CSS size. This is a reproducing local example; the user's page URL was not provided.
 
-Критерии до приёмки: буквенный перевод приближается к исходной видимой высоте (допуск 15% на абзаце/заголовке), масштаб максимум 1.4; caption остаётся меньше body, body меньше heading; CJK не уменьшается и имеет минимум 16/13 px в пределах 1.4; коррекция не увеличивает обрезанное переполнение; оригинальные два style-свойства возвращаются после повторных toggles и dispose. Обратное направление проверяется как самостоятельный сценарий, без заявления о ранее воспроизведённом обратном баге.
+Criteria before acceptance: alphabetic translation approaches original apparent height (15% tolerance for paragraph/heading), maximum scale 1.4; caption remains smaller than body, body smaller than heading; CJK is not reduced and has a 16/13 px minimum within 1.4; correction does not increase clipped overflow; the original two style properties return after repeated toggles and dispose. Reverse direction checked as an independent scenario, without claiming a previously reproduced reverse bug.
 
-Результат: PageTypography корректирует два свойства leaf-родителя. Chromium: абзац 18→24 px, Cyrillic ink 12→16 px; заголовок 30→40.5 px; подпись 12→14.667 px. Firefox: отдельные фактические числа в `test-results/linguisty-firefox/observations-focused-fonts.json`. Fixed-height блок остаётся 18 px после rollback. RU→JA: заголовок/абзац не уменьшаются, подпись 12→13 px. Оба браузера: пять toggles без сети/накопления, dynamic insert, external style, пользовательский input; screenshots проверены визуально.
+Result: PageTypography adjusts two properties of the leaf parent. Chromium: paragraph 18→24 px, Cyrillic ink 12→16 px; heading 30→40.5 px; caption 12→14.667 px. Firefox: separate actual numbers in `test-results/linguisty-firefox/observations-focused-fonts.json`. Fixed-height block remains 18 px after rollback. RU→JA: heading/paragraph do not shrink, caption 12→13 px. Both browsers: five toggles without network/accumulation, dynamic insert, external style, user input; screenshots visually reviewed.
 
-Проверки: 44 DOM/typography tests; typecheck; lint; обе production builds; focused browser smoke Chrome/Firefox. Собственные profiles/PID закрыты, Firefox remainingOwnedProcesses=0. Кэш вернулся к исходным 203 426 930 bytes/5 652 files; свободная RAM 16.98 GB. Не подтверждает качество реального API или любую произвольную страницу/шрифт.
+Checks: 44 DOM/typography tests; typecheck; lint; both production builds; focused Chrome/Firefox browser smoke. Own profiles/PIDs closed, Firefox remainingOwnedProcesses=0. Cache returned to the original 203 426 930 bytes/5 652 files; free RAM 16.98 GB. Does not confirm real API quality or any arbitrary page/font.

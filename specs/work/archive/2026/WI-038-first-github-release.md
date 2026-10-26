@@ -1,11 +1,11 @@
-# WI-038: Первый релиз Linguisty в GitHub
+# WI-038: First Linguisty release on GitHub
 
 - Kind: `migration`
 - Canon action: `none`
 
 ## Outcome
 
-В `Isty-org/linguisty` опубликован первый релиз v0.4.9 с проверенными пакетами Chrome/Firefox, исходниками и авторством Никиты Цыжмана @tsyzhman.
+First release v0.4.9 published in `Isty-org/linguisty` with verified Chrome/Firefox packages, sources, and authorship credited to Никита Цыжман @tsyzhman.
 
 ## Specs
 
@@ -16,21 +16,21 @@
 
 ## Scope
 
-- In: gitignore и исключение локальной `.me`; авторство и metadata; документация выпуска; текущие автоматические и браузерные проверки; initial commit, tag и GitHub Release с пакетами и SHA-256.
-- In: устранение воспроизведённой нестабильности `tests/storage/errorLog.test.ts`: случайный UUID совпал с PII sentinel `250`; production-логика журнала не меняется.
-- Out: публикация в магазинах, подпись Firefox, реальные платные API/ChatGPT-запросы, удаление старых временных файлов WI-011.
-- Версия 0.4.9 сохраняется. Лицензия добавляется только при выборе пользователя; отсутствие выбора не означает разрешение лицензирования.
+- In: gitignore and exclusion of local `.me`; authorship and metadata; release documentation; current automated and browser checks; initial commit, tag, and GitHub Release with packages and SHA-256.
+- In: fixing reproduced instability in `tests/storage/errorLog.test.ts`: random UUID matched PII sentinel `250`; production journal logic unchanged.
+- Out: store publication, Firefox signing, real paid API/ChatGPT requests, removal of old temporary WI-011 files.
+- Version 0.4.9 retained. License added only on user selection; no selection does not imply permission to license.
 
 ## Acceptance
 
-- [x] `.me` локальна и содержит @tsyzhman / Никита Цыжман / human; generated files, caches и credentials исключены из Git.
-- [x] Авторство README, metadata, BOARD и текущей документации согласовано; Git author настроен на подтверждённый GitHub noreply аккаунта @tsyzhman.
-- [x] Typecheck, lint, unit/native/manifest tests, обе production builds и доступные browser smoke выполнены; ограничения записаны.
-- [x] Chrome/Firefox ZIP сверены с проверенными сборками, опубликованы checksums и корректные инструкции установки.
-- [x] Source commit и tag опубликованы, GitHub Release доступен и содержит ожидаемые assets; проверены ресурсы, дубли и cleanup собственных процессов.
+- [x] `.me` is local and contains @tsyzhman / Никита Цыжман / human; generated files, caches, and credentials excluded from Git.
+- [x] Authorship in README, metadata, BOARD, and current documentation aligned; Git author configured to confirmed GitHub noreply of @tsyzhman account.
+- [x] Typecheck, lint, unit/native/manifest tests, both production builds, and available browser smoke performed; limitations recorded.
+- [x] Chrome/Firefox ZIPs matched against checked builds; checksums and correct installation instructions published.
+- [x] Source commit and tag published; GitHub Release accessible with expected assets; resources, duplicates, and own process cleanup checked.
 
 ## Result
 
-Опубликован [первый релиз v0.4.9](https://github.com/Isty-org/linguisty/releases/tag/v0.4.9), initial commit `c23c3c977b70ea97a8041559c833048f32367f60`, default branch `main`. GitHub подтвердил author/committer/release author `Tsyzhman`; Git name — Никита Цыжман, email — GitHub noreply. Публичный source tree содержит 333 файла без `.me`, credentials и generated folders. Все три assets скачаны с GitHub и совпали по SHA-256 с локальными файлами; GitHub asset digests совпадают тоже.
+Published [first release v0.4.9](https://github.com/Isty-org/linguisty/releases/tag/v0.4.9), initial commit `c23c3c977b70ea97a8041559c833048f32367f60`, default branch `main`. GitHub confirmed author/committer/release author `Tsyzhman`; Git name — Никита Цыжман, email — GitHub noreply. Public source tree contains 333 files without `.me`, credentials, or generated folders. All three assets downloaded from GitHub and matched local files by SHA-256; GitHub asset digests match too.
 
-780 unit / 15 native / 9 manifest-hygiene tests PASS, typecheck/lint/builds/manifests/fixtures PASS, полные browser smoke 14/14 на каждой платформе, mock ChatGPT Chrome PASS / Firefox 8 PASS, long-batch 2 PASS. Mozilla 0/0/0. ZIP проверены побайтно, после browser runs все 112 production-файлов неизменны. QA: `docs/QA-RELEASE-2026-10-20.md`. Source scan, 146 локальных ссылок и 642 spec references прошли; связанных helper-процессов нет. Ограничения реального provider access, подписи/магазинов, отсутствие выбранной открытой лицензии и исходные whitespace diagnostics зафиксированы без объявления непроведённых проверок успешными.
+780 unit / 15 native / 9 manifest-hygiene tests PASS, typecheck/lint/builds/manifests/fixtures PASS, full browser smoke 14/14 on each platform, mock ChatGPT Chrome PASS / Firefox 8 PASS, long-batch 2 PASS. Mozilla 0/0/0. ZIPs checked byte for byte; all 112 production files unchanged after browser runs. QA: `docs/archive/QA-RELEASE-2026-10-20.md`. Source scan, 146 local links, and 642 spec references passed; no related helper processes. Limitations of real provider access, signing/stores, absence of a selected open license, and original whitespace diagnostics recorded without declaring unperformed checks successful.

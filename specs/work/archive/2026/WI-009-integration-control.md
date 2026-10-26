@@ -1,11 +1,11 @@
-# WI-009: Координация и приёмка интеграции
+# WI-009: Coordination and integration acceptance
 
 - Kind: `implement`
 - Canon action: `direct-edit`
 
 ## Outcome
 
-Независимые результаты исполнителей соединены в проверяемую локальную версию Linguisty; документация, доска и фактическая готовность согласованы.
+Implementers' independent results are combined into a verifiable local Linguisty version; documentation, board, and actual readiness agree.
 
 ## Specs
 
@@ -16,33 +16,32 @@
 
 ## Scope
 
-- In: управление назначенными чатами, review результатов, исправления shared/config интеграции, return defects своим владельцам, финальные builds/checks, документы/доска/архив.
-- Owned: shared/config/package/lock/docs/specs как у координатора; production-owned paths при активном исполнителе не переписываются.
-- Out: future features, реальная языковая оценка без предоставленного ключа, публикация в магазинах.
+- In: managing assigned chats, reviewing results, fixing shared/config integration, returning defects to their owners, final builds/checks, documents/board/archive.
+- Owned: shared/config/package/lock/docs/specs as coordinator; production-owned paths are not rewritten while their implementer is active.
+- Out: future features, real language evaluation without a provided key, store publication.
 
 ## Dependencies
 
-- Depends on: WI-002; независимые модули WI-003…WI-008.
+- Depends on: WI-002; independent modules WI-003…WI-008.
 
 ## Acceptance
 
-- [x] Контракты совпадают; нет альтернативных типов/дублирующих модулей или конфликтов ownership.
-- [x] Промежуточные дефекты устранены и результаты исполнителей просмотрены.
-- [x] Финальные typecheck/lint/tests, Chrome/Firefox builds и manifest checks выполнены после исправлений.
-- [x] Browser smoke доступного runtime выполнен; непроведённые browser/real-provider проверки прямо указаны.
-- [x] Кэш/дубли/ресурсы проверены; нет забытых собственных helper/watch-процессов.
-- [x] Доска, WI Results, ссылки, документация и артефакты соответствуют фактам.
+- [x] Contracts agree; no alternative types/duplicate modules or ownership conflicts.
+- [x] Intermediate defects resolved and implementers' results reviewed.
+- [x] Final typecheck/lint/tests, Chrome/Firefox builds, and manifest checks performed after fixes.
+- [x] Browser smoke performed in the available runtime; unperformed browser/real-provider checks explicitly stated.
+- [x] Cache/duplicates/resources checked; no forgotten own helper/watch processes.
+- [x] Board, WI Results, links, documentation, and artifacts match the facts.
 
 ## Result
 
-Принято координатором 2026-10-07. Было: исходный план/дизайн без реализации и Chrome вне v1. Стало: Linguisty 0.1.0, общий канон, план, shared contracts, Chrome/Firefox production packages и проверенный локальный pipeline.
+Accepted by the coordinator on 2026-10-07. Before: original plan/design without implementation and Chrome outside v1. After: Linguisty 0.1.0, shared canon, plan, shared contracts, Chrome/Firefox production packages, and verified local pipeline.
 
-- Созданы и проконтролированы 7 локальных чатов gpt-6.1-sol / max: storage/cache, engine/providers, page DOM, background, UI, QA/assets и Firefox runtime. Пути не пересекались; одна node_modules/lock. Все результаты просмотрены, модули и acceptance приняты.
-- Root подготовил спецификации/контракты/сборку; согласовал включение Chrome и имя; Firefox min140/data consent, обновление зависимостей до 0 audit vulnerabilities. Интеграционные дефекты возвращались владельцам до проверки, а не маскировались изменением acceptance.
-- SPA loading/same-document, cancellation/original, secret migration rollback, contextual cache/dedup и stable group labels исправлены. Добавлены cacheHitIds для точного live-node progress; root синхронизировал UI raw authority/C0/DEL validation с чистой normalization, model200, key4096. Неподдерживаемое отсутствие session API не вызывает silent persistent fallback.
-- Финальные checks: typecheck PASS, lint PASS, 391 unit/contract/DOM tests PASS; 6 manifest/hygiene tests и 5 fixtures PASS; production build/zip обоих браузеров и manifest/assets/permission/CSP/heuristic credential checks PASS.
-- Browser final: 9 Chromium scenarios PASS на 152.0.7977.8 и 10 Firefox groups PASS на 157.0/geckodriver0.37.1. Обе неизменённые сборки использовали loopback mock, по52 requests/max2 concurrent; конец activeRequests/timers0, временные profiles/server и собственные процессы закрыты. Firefox три repeated lifecycle cycles обнуляют session timers/observers/listeners; closed snapshots удалены.
-- QA report, FIREFOX-QA, README, DEVELOPMENT, TESTING и PLAN согласованы. BOARD хранит Done текущего релиза, WAL без незавершённых checkpoints. Результаты и screenshots — ignored test-results. Derived folders исключены из source ZIP; ZIP contents сверяются с проверенными production bytes. Source archive дополнительно пересобирается с общей установкой dependencies.
-- Кэш/дубли/RAM проверены промежуточно и в конце; node_modules около184.6 MiB, QA driver cache4.1MB с metadata, без скачанного дубля ZIP или profiles. RAM snapshot не объявляется доказательством отсутствия всех утечек; lifecycle tests проверяют конкретные ресурсы. Чужие процессы/кэш не удалялись.
-- Real OpenRouter/semantic accuracy, native toolbar/activeTab-only, signed store install и полный accessibility audit остаются непроверенными и прямо перечислены в QA report. Crash-atomic перенос двух key stores — TD-001. Следующие продуктовые этапы сохранены в PLAN, автоматически не начаты.
-
+- Created and supervised 7 local gpt-6.1-sol / max chats: storage/cache, engine/providers, page DOM, background, UI, QA/assets, and Firefox runtime. Paths did not overlap; one node_modules/lock. All results reviewed, modules and acceptance accepted.
+- Root prepared specifications/contracts/build; agreed on Chrome inclusion and the name; Firefox min140/data consent, dependency updates to 0 audit vulnerabilities. Integration defects were returned to owners before verification rather than masked by changing acceptance.
+- Fixed SPA loading/same-document, cancellation/original, secret migration rollback, contextual cache/dedup, and stable group labels. Added cacheHitIds for exact live-node progress; root synchronized UI raw authority/C0/DEL validation with pure normalization, model200, key4096. Unsupported absence of session API does not cause silent persistent fallback.
+- Final checks: typecheck PASS, lint PASS, 391 unit/contract/DOM tests PASS; 6 manifest/hygiene tests and 5 fixtures PASS; production build/zip for both browsers and manifest/assets/permission/CSP/heuristic credential checks PASS.
+- Final browser results: 9 Chromium scenarios PASS on 152.0.7977.8 and 10 Firefox groups PASS on 157.0/geckodriver0.37.1. Both unmodified builds used a loopback mock,52 requests each/max2 concurrent; final activeRequests/timers0, temporary profiles/server and own processes closed. Three repeated Firefox lifecycle cycles zero session timers/observers/listeners; closed snapshots removed.
+- QA report, FIREFOX-QA, README, DEVELOPMENT, TESTING, and PLAN aligned. BOARD keeps Done for the current release; WAL has no unfinished checkpoints. Results and screenshots are in ignored test-results. Derived folders excluded from source ZIP; ZIP contents checked against verified production bytes. Source archive additionally rebuilt with the shared dependency installation.
+- Cache/duplicates/RAM checked at intermediate stages and at the end; node_modules about184.6 MiB, QA driver cache4.1MB with metadata, no duplicate downloaded ZIP or profiles. RAM snapshot is not claimed as proof of no leaks; lifecycle tests check specific resources. Others' processes/cache were not deleted.
+- Real OpenRouter/semantic accuracy, native toolbar/activeTab-only, signed store install, and full accessibility audit remain unverified and are explicitly listed in the QA report. Crash-atomic migration of two key stores is TD-001. Subsequent product stages are preserved in PLAN and were not started automatically.

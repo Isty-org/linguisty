@@ -1,11 +1,11 @@
-# WI-022: Подключение Codex из настроек
+# WI-022: Connecting Codex from settings
 
 - Kind: `change`
 - Canon action: `new-spec`
 
 ## Outcome
 
-В настройках пользователь выбирает Codex, нажимает «Подключить Codex» и получает отдельную страницу с инструкцией, входом через ChatGPT и проверенным состоянием подключения. Новый режим не требует Native Messaging host или установленного CLI.
+In settings, the user selects Codex, clicks “Connect Codex,” and gets a separate page with instructions, ChatGPT sign-in, and verified connection status. The new mode requires neither a Native Messaging host nor an installed CLI.
 
 ## Specs
 
@@ -17,24 +17,24 @@
 
 ## Scope
 
-- In: выбор Codex, страница шагов, официальный OSS OAuth с PKCE/OIDC, только память вкладки для токенов, Responses/SSE, отмена и ограниченные ресурсы, оба браузера, документация.
-- Out: прямой вход через подписки Claude/Antigravity/Grok; автоматическая публикация; запросы к реальной модели без отдельного тестового поручения.
+- In: Codex selection, steps page, official OSS OAuth with PKCE/OIDC, tokens in tab memory only, Responses/SSE, cancellation and bounded resources, both browsers, documentation.
+- Out: direct sign-in through Claude/Antigravity/Grok subscriptions; automatic publication; real model requests without a separate test assignment.
 
 ## Acceptance
 
-- [x] Dropdown содержит API-провайдеры и один новый Codex; другие CLI не предлагаются.
-- [x] Кнопка открывает/фокусирует одну собственную вкладку подключения с понятными шагами и ограничением её закрытия.
-- [x] OAuth проверяет state, PKCE, подпись/issuer/audience/nonce/expiry ID token и разрешение ChatGPT plan; access/refresh/ID tokens не записываются в storage, URL, журнал или сообщения фону.
-- [x] Callback перехватывается только для собственной попытки входа и освобождает временное правило/вкладку/таймер при завершении и отмене; фон очищает только собственные брошенные правила/вкладки.
-- [x] Provider реализует документированный Responses контракт, строгую проверку переводов, account scope постоянного кэша и отмену.
-- [x] Typecheck, lint, осмысленные tests, обе сборки/ZIP, manifest/hygiene и браузерный сценарий проходят; live OAuth/model отдельно помечены непроверенными при отсутствии ручного входа.
+- [x] Dropdown contains API providers and one new Codex; other CLIs are not offered.
+- [x] Button opens/focuses one own connection tab with clear steps and the consequence of closing it.
+- [x] OAuth verifies state, PKCE, ID token signature/issuer/audience/nonce/expiry, and ChatGPT plan eligibility; access/refresh/ID tokens are not written to storage, URL, journal, or background messages.
+- [x] Callback intercepted only for the own sign-in attempt and frees temporary rule/tab/timer on completion and cancellation; background cleans only its own abandoned rules/tabs.
+- [x] Provider implements the documented Responses contract, strict translation validation, account scope for persistent cache, and cancellation.
+- [x] Typecheck, lint, meaningful tests, both builds/ZIP, manifest/hygiene, and browser scenario pass; live OAuth/model separately marked unverified without manual sign-in.
 
 ## Result
 
-Реализован dropdown Codex → кнопка → отдельная страница с четырьмя шагами входа ChatGPT, проверкой списка моделей, выбором модели, отменой, отключением и возвратом. Инструкция и ошибки доступны на 16 языках. Новый режим не использует CLI/Native Messaging и хранит токены только в RAM открытой страницы. API-настройки и прежний ключ сохраняются; старые CLI больше не предлагаются в UI.
+Implemented dropdown Codex → button → separate page with four ChatGPT sign-in steps, model list check, model selection, cancellation, disconnection, and return. Instructions and errors available in 16 languages. New mode uses no CLI/Native Messaging and keeps tokens only in RAM of the open page. API settings and previous key preserved; old CLIs no longer offered in UI.
 
-Проверки: TypeScript/ESLint PASS; 644 Vitest / 45 files (2 workers max); 15 native mock tests; 8 manifest/hygiene tests; production builds/ZIP Chrome+Firefox; Mozilla Add-ons Linter 10.13.0 — 0 errors/notices/warnings. Неизменённые пакеты: Chrome Codex 5 групп, Firefox Codex 4 группы; API full smoke — 13 Chrome scenarios / 14 Node PASS и 14 Firefox groups, затем после account cache change — финальные focused API cache checks обоих браузеров. OAuth/JWKS/Responses используют только fixture, не реальные аккаунты/модели.
+Checks: TypeScript/ESLint PASS; 644 Vitest / 45 files (2 workers max); 15 native mock tests; 8 manifest/hygiene tests; production builds/ZIP Chrome+Firefox; Mozilla Add-ons Linter 10.13.0 — 0 errors/notices/warnings. Unmodified packages: Chrome Codex 5 groups, Firefox Codex 4 groups; API full smoke — 13 Chrome scenarios / 14 Node PASS and 14 Firefox groups, then after account cache change — final focused API cache checks in both browsers. OAuth/JWKS/Responses use fixtures only, not real accounts/models.
 
-При приёмке исправлены required DNR permission, Chrome duplicate tab/worker-wake lookup через собственный getContexts, разделение постоянного кэша по аккаунту и узкий заголовок. Защищённая .cache осталась 5 652 files / 203 426 930 B; source duplicates/suspicious=0; own QA processes=0, созданные профили удалены. UI chunk 614 710 B учтён в TD-002. Отчёт: docs/QA-CODEX.md; инструкция: docs/CODEX-CONNECTION.md; evidence: test-results/linguisty-codex/.
+Acceptance fixes: required DNR permission, Chrome duplicate tab/worker-wake lookup through own getContexts, persistent cache separation by account, and narrow header. Protected .cache remained 5 652 files / 203 426 930 B; source duplicates/suspicious=0; own QA processes=0, created profiles removed. UI chunk 614 710 B recorded in TD-002. Report: docs/archive/QA-CODEX.md; instructions: docs/guides/chatgpt-connection.md; evidence: test-results/linguisty-codex/.
 
-Реальные OAuth/eligibility/CORS, ответ/точность/расходы модели, разрешение магазинной публикации, signed install, native review локализаций и minimum-version browsers не проверены. Вкладка подключения должна оставаться открытой; модель облачная. Эти ограничения показаны в интерфейсе/документации; живые проверки и публикация вне scope.
+Real OAuth/eligibility/CORS, model response/accuracy/cost, store publication permission, signed install, native localization review, and minimum-version browsers not checked. Connection tab must stay open; the model is cloud-based. These limitations shown in UI/documentation; live checks and publication outside scope.

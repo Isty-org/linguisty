@@ -1,11 +1,11 @@
-# WI-019: Редизайн Retro Orbit Editorial
+# WI-019: Retro Orbit Editorial redesign
 
 - Kind: `change`
 - Canon action: `direct-edit`
 
 ## Outcome
 
-Popup и настройки Linguisty используют приложенную фиолетово-шалфейную дизайн-систему и SVG-знак; обе темы остаются читаемыми и работоспособными.
+Linguisty popup and settings use the supplied violet/sage design system and SVG mark; both themes remain readable and functional.
 
 ## Specs
 
@@ -15,10 +15,10 @@ Popup и настройки Linguisty используют приложенну�
 
 ## Scope
 
-- In: DESIGN.md, semantic CSS tokens, компактный popup, адаптивные настройки с навигацией по разделам, SVG branding/icons, локальные Onest/JetBrains Mono и лицензии, интеграционные проверки.
-- Out: смена названия продукта, лендинг, backend, изменение translation pipeline, платные запросы.
-- Assigned root: `src/ui/styles.css`, `src/ui/components.tsx`, `public/**`, `scripts/generate-icons.mjs`, `scripts/assets/linguisty-mark.svg`, `DESIGN.md`, канон, общие контракты/конфигурация и операционные документы.
-- Assigned UI executor: `src/ui/Popup.tsx`, `src/ui/Options.tsx`, `src/ui/ErrorJournal.tsx`, `src/ui/settingsForm.ts`, `src/ui/bootstrap.tsx`, `entrypoints/popup/**`, `entrypoints/options/**`, `tests/ui/**` кроме новых tests локализации, `tests/e2e/chromium-smoke.test.mjs` только язык UI test setup.
+- In: docs/design/README.md, semantic CSS tokens, compact popup, responsive settings with section navigation, SVG branding/icons, local Onest/JetBrains Mono and licenses, integration checks.
+- Out: product renaming, landing page, backend, translation pipeline changes, paid requests.
+- Assigned root: `src/ui/styles.css`, `src/ui/components.tsx`, `public/**`, `scripts/generate-icons.mjs`, `scripts/assets/linguisty-mark.svg`, `docs/design/README.md`, canon, shared contracts/configuration, and operational documents.
+- Assigned UI executor: `src/ui/Popup.tsx`, `src/ui/Options.tsx`, `src/ui/ErrorJournal.tsx`, `src/ui/settingsForm.ts`, `src/ui/bootstrap.tsx`, `entrypoints/popup/**`, `entrypoints/options/**`, `tests/ui/**` except new localization tests, `tests/e2e/chromium-smoke.test.mjs` only UI language test setup.
 
 ## Dependencies
 
@@ -26,16 +26,16 @@ Popup и настройки Linguisty используют приложенну�
 
 ## Acceptance
 
-- [x] Popup/options используют violet/sage, graphite/paper, editorial headings, supplied SVG.
-- [x] Светлая/тёмная тема, 320/390 px, keyboard/focus, 44 px targets, reduced motion проверены.
-- [x] Typecheck, lint, unit tests, Chrome/Firefox builds и manifest/resources checks пройдены.
-- [x] Проверен packaged browser UI; реальные API/языковая точность явно отделены от mock.
-- [x] Проверены размеры, дубли и освобождение собственных проверочных процессов.
+- [x] Popup/options use violet/sage, graphite/paper, editorial headings, supplied SVG.
+- [x] Light/dark themes, 320/390 px, keyboard/focus, 44 px targets, reduced motion checked.
+- [x] Typecheck, lint, unit tests, Chrome/Firefox builds, and manifest/resources checks passed.
+- [x] Packaged browser UI checked; real API/language accuracy explicitly distinguished from mock.
+- [x] Sizes, duplicates, and cleanup of own checking processes verified.
 
 ## Result
 
-Было → стало: Cloudline → Retro Orbit Editorial из пользовательского референса. DESIGN.md закрепляет адаптацию к расширению; полный референс и прежний дизайн сохранены в docs/design/. Popup и options используют semantic violet/sage/graphite/paper tokens, прямоугольные controls/cards, крупные italic headings, CSS orbit/texture, адаптивную навигацию и supplied SVG mask. Local Onest/JetBrains Mono содержат OFL и источник; PNG icons генерируются из того же SVG, прежний дублирующий mark удалён. Название продукта и BYOK границы сохранены.
+Before → after: Cloudline → Retro Orbit Editorial from the user's reference. docs/design/README.md establishes adaptation to the extension; full reference and previous design preserved in docs/design/. Popup and options use semantic violet/sage/graphite/paper tokens, rectangular controls/cards, large italic headings, CSS orbit/texture, responsive navigation, and supplied SVG mask. Local Onest/JetBrains Mono include OFL and source; PNG icons generated from the same SVG; previous duplicate mark removed. Product name and BYOK boundaries preserved.
 
-Проверки: typecheck/lint PASS, 566 unit/contract/DOM /33 files, 8 manifest/hygiene tests, 5 fixtures; обе production builds/ZIP (19 files each, byte match), 15 referenced assets. Chromium full smoke 14 PASS с parent, Firefox 14 PASS; packaged UI/startup 2 PASS, отдельные rebrand/language scenarios 2 PASS. Все 16 locales проверены в Chromium при 320/390/1280 px, Arabic RTL, loaded local fonts, contrast tokens ≥5.68:1, zero external UI resources/page errors. Визуально просмотрены paper/graphite popup/options, mobile и Arabic screenshots.
+Checks: typecheck/lint PASS, 566 unit/contract/DOM /33 files, 8 manifest/hygiene tests, 5 fixtures; both production builds/ZIP (19 files each, byte match), 15 referenced assets. Chromium full smoke 14 PASS with parent, Firefox 14 PASS; packaged UI/startup 2 PASS, separate rebrand/language scenarios 2 PASS. All 16 locales checked in Chromium at 320/390/1280 px, Arabic RTL, loaded local fonts, contrast tokens ≥5.68:1, zero external UI resources/page errors. Paper/graphite popup/options, mobile, and Arabic screenshots visually reviewed.
 
-Evidence/ограничения: docs/QA-REPORT.md, test-results/linguisty-rebrand/ и общие browser reports. Реальный API, смысловая точность, native toolbar geometry и полный WCAG audit не проверены. Vite warning общего UI chunk 566 974 bytes сохранён в TD-002; background только metadata. No dependencies/paid calls/publication. Source duplicates/suspicious copies 0, старый .cache не вырос, собственные профили удалены и runtime processes/timers освобождены. Чужие CUA helpers и WI-011 cleanup оставлены.
+Evidence/limitations: docs/archive/QA-REPORT.md, test-results/linguisty-rebrand/, and overall browser reports. Real API, semantic accuracy, native toolbar geometry, and full WCAG audit not checked. Vite shared UI chunk warning 566 974 bytes retained in TD-002; background has metadata only. No dependencies/paid calls/publication. Source duplicates/suspicious copies 0, old .cache did not grow, own profiles removed and runtime processes/timers released. Others' CUA helpers and WI-011 cleanup left in place.

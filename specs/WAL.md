@@ -1,13 +1,13 @@
-# Linguisty — контекст продолжения
+# Linguisty continuation context
 
 ## Active Checkpoints
 
-### WI-011: Предупреждения Mozilla package (@tsyzhman)
+### WI-011: Mozilla package warnings (@tsyzhman)
 - Work: [WI-011](work/WI-011-amo-warnings.md)
-- Updated: 2026-10-12
-- Checkpoint: Код, документация, обе сборки, браузерные проверки и Firefox ZIP готовы; Mozilla validation чистая. Остались только временные файлы инструмента и первого Firefox launch, процессы завершены.
-- Next: После изменения политики или ручного удаления проверить отсутствие только `.cache/amo-lint-npm`, `.cache/firefox-qa/profile-MaLnaU`, `.cache/firefox-qa/mozilla-temp-files`, `.cache/firefox-qa/tmp-w5y.xpi`, обновить evidence и закрыть WI. Не обходить отказ и не запрашивать повторно уже полученное разрешение.
-- Blocker: Пользователь явно разрешил перечисленное удаление 2026-10-12. Команда с проверкой границ каталога и использующих его процессов повторно отклонена automatic approval review: `blocked by policy`; подробная причина не предоставлена. Удаление не выполнено.
+- Updated: 2026-10-26
+- Checkpoint: Code, documentation, both builds, browser checks, and the Firefox ZIP were completed in the original run; Mozilla validation was clean. Only temporary tool files and first-launch Firefox residue remain; related processes have ended.
+- Next: After a policy change or manual removal, verify absence of only `.cache/amo-lint-npm`, `.cache/firefox-qa/profile-MaLnaU`, `.cache/firefox-qa/mozilla-temp-files`, and `.cache/firefox-qa/tmp-w5y.xpi`, update the evidence, and close the WI. Do not bypass the rejection or request authorization already provided.
+- Blocker: The user explicitly authorized this deletion on 2026-10-12 and requested cleanup again on 2026-10-26. A command checking directory boundaries and processes using the paths was again rejected by automatic approval review: `blocked by policy`; no detailed reason was supplied. Deletion was not performed.
 
 ## Cross-work
 

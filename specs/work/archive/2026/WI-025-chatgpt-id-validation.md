@@ -1,11 +1,11 @@
-# WI-025: Проверка подтверждения ChatGPT и точная причина отказа
+# WI-025: ChatGPT identity validation and precise failure reason
 
 - Kind: `fix`
 - Canon action: `direct-edit`
 
 ## Outcome
 
-Корректный ID token с единственным aud в массиве принимается после полной проверки подписи; ошибки подключения получают безопасную причину в собственной странице.
+A valid ID token with a single aud in an array is accepted after full signature verification; connection errors receive a safe reason on the own page.
 
 ## Specs
 
@@ -16,15 +16,15 @@
 
 ## Scope
 
-- In: OIDC audience/azp regression; ограниченная диагностика callback/token/discovery/JWKS/identity/models; отображение кода причины без внешних сообщений и секретов; обе сборки, тесты и ZIP.
-- Out: ослабление подписи/state/nonce, чтение пользовательских токенов, paid inference, утверждение причины реального сбоя без диагностики.
+- In: OIDC audience/azp regression; bounded callback/token/discovery/JWKS/identity/models diagnostics; displaying reason code without external messages or secrets; both builds, tests, and ZIPs.
+- Out: weakening signature/state/nonce, reading user tokens, paid inference, asserting the real failure's cause without diagnostics.
 
 ## Acceptance
 
-- [x] Тест воспроизводит отказ допустимого aud=[clientId]; исправление принимает его, отклоняет чужие audience/azp и сохраняет проверку подписи.
-- [x] Коды причин различают шаг/HTTP status/проверку claims; внешний текст, токены, URL callback и account data в них не попадают.
-- [x] Ошибка видна на странице подключения; браузерные проверки включают audience array и безопасный отказ.
-- [x] Typecheck/lint, тесты, обе сборки, package checks, ресурсная проверка и обновлённые ZIP готовы.
+- [x] Test reproduces rejection of valid aud=[clientId]; fix accepts it, rejects foreign audience/azp, and preserves signature validation.
+- [x] Reason codes distinguish step/HTTP status/claim validation; external text, tokens, callback URL, and account data do not enter them.
+- [x] Error visible on connection page; browser checks include audience array and safe rejection.
+- [x] Typecheck/lint, tests, both builds, package checks, resource check, and updated ZIPs ready.
 
 ## Dependencies
 
@@ -32,10 +32,10 @@
 
 ## Result
 
-Было: singleton audience array без azp ошибочно отвергался; общий текст скрывал этап отказа. Стало: допустимый audience проходит полную проверку, чужой azp/audience и неверная подпись отклоняются; собственная страница показывает только ограниченный LGT-код. Токены/внешние сообщения/claims не добавлены в UI, журнал или port contract. Причина именно реального сообщения пользователя пока не установлена; новый код предназначен для следующей попытки.
+Before: singleton audience array without azp incorrectly rejected; general text hid the failing step. After: valid audience passes full validation; foreign azp/audience and invalid signature rejected; own page shows only a bounded LGT code. Tokens/external messages/claims not added to UI, journal, or port contract. The cause of the user's actual message has not yet been established; the new code is intended for the next attempt.
 
-Проверки 2026-10-09: регрессия до исправления — FAIL, после — PASS; typecheck/lint; 685 Vitest tests / 47 files; 9 manifest/hygiene tests; обе production builds, manifest/secret/resource checks. Firefox 157.0.1 и Chromium 152.0.7977.8: по 7 browser-check групп с подписанным aud=[clientId], callback с OpenAI initiator, переводом fixture, очисткой и безопасным отказом (token HTTP 401 / неверный nonce). Визуально проверены сообщения в Firefox dark и Chrome light 360 px. Mozilla linter: 0 errors/notices/warnings. Пакеты 0.4.3: Firefox 28 files / 1 139 383 bytes, Chrome 28 / 1 139 220 bytes до сжатия; ZIP versions проверены.
+Checks on 2026-10-09: regression before fix — FAIL, after — PASS; typecheck/lint; 685 Vitest tests / 47 files; 9 manifest/hygiene tests; both production builds, manifest/secret/resource checks. Firefox 157.0.1 and Chromium 152.0.7977.8: 7 browser-check groups each with signed aud=[clientId], callback with OpenAI initiator, fixture translation, cleanup, and safe rejection (token HTTP 401 / invalid nonce). Messages visually checked in Firefox dark and Chrome light 360 px. Mozilla linter: 0 errors/notices/warnings. Packages 0.4.3: Firefox 28 files / 1 139 383 bytes, Chrome 28 / 1 139 220 bytes before compression; ZIP versions checked.
 
-Кэш до/между/после: .cache 5 652 files / 203 426 930 bytes; source duplicates/suspicious=0; watch/QA-процессов после проверки=0. Firefox освободил 12 собственных процессов / 1 387 491 328 bytes working set, свой профиль удалён. Зависимости не устанавливались, чужой кэш/процессы сохранены. Финальный снимок: test-results/linguisty-subscription/hygiene-final.json. Общий UI chunk 608 410 bytes по-прежнему учитывается в TD-002.
+Cache before/between/after: .cache 5 652 files / 203 426 930 bytes; source duplicates/suspicious=0; watch/QA processes after check=0. Firefox freed 12 own processes / 1 387 491 328 bytes working set; own profile removed. Dependencies not installed; others' cache/processes preserved. Final snapshot: test-results/linguisty-subscription/hygiene-final.json. Shared UI chunk 608 410 bytes still recorded in TD-002.
 
-Документация: docs/RESEARCH.md, docs/QA-SUBSCRIPTION.md, docs/CODEX-CONNECTION.md, docs/TESTING.md, docs/DEVELOPMENT.md. Живой вход пользователя, доступность его плана и ответы модели не проверены. Следующая пользовательская проверка: обновить расширение, начать новый вход и при отказе сообщить только текст с LGT-кодом.
+Documentation: docs/RESEARCH.md, docs/archive/QA-SUBSCRIPTION.md, docs/guides/chatgpt-connection.md, docs/guides/testing.md, docs/DEVELOPMENT.md. Live user sign-in, plan availability, and model responses not checked. Next user check: update the extension, start a new sign-in, and on failure report only the text containing the LGT code.

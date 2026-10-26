@@ -1,58 +1,58 @@
 # WORK-ITEM-PROTOCOL
 
-## 1. Назначение {#purpose}
+## 1. Purpose {#purpose}
 
-Work item — ограниченная единица работы с отдельным результатом и собственной проверкой готовности.
+A work item is a bounded unit of work with a separate outcome and its own readiness check.
 
-Спецификация фиксирует канон проекта. Work item фиксирует конкретный проход, который приводит код, тесты, документы или инфраструктуру к этому канону.
+A specification records project canon. A work item records a particular pass that brings code, tests, documents, or infrastructure into alignment with that canon.
 
-Одна спецификация может быть реализована несколькими work items. Один work item может ссылаться на несколько спецификаций, если они участвуют в одном проверяемом результате.
+One specification may be implemented through several work items. One work item may reference several specifications if they contribute to one verifiable outcome.
 
-## 2. Когда нужен work item {#when}
+## 2. When a work item is needed {#when}
 
-Создавай work item, если у работы есть хотя бы один из признаков:
-- отдельный scope или acceptance;
-- несколько содержательных шагов;
-- риск, блокер или зависимость;
-- отдельный owner или приоритет;
-- работа может продолжиться в следующей сессии;
-- нужна координация или явный статус для человека;
-- человек попросил поставить работу на доску.
+Create a work item if the work has at least one of these characteristics:
+- separate scope or acceptance;
+- several substantive steps;
+- risk, blocker, or dependency;
+- a separate owner or priority;
+- work may continue in the next session;
+- coordination or explicit status for the human is needed;
+- the human asked to put the work on the board.
 
-Мелкая одношаговая правка, которая завершается в текущей сессии, может выполняться без work item, `BOARD` и `WAL`.
+A small single-step change completed in the current session may proceed without a work item, `BOARD`, or `WAL`.
 
-Правило регистрации простое: если работа получает строку в `BOARD.md`, у неё есть файл `WI-NNN`.
+The registration rule is simple: if work receives a `BOARD.md` row, it has a `WI-NNN` file.
 
-## 3. Идентификатор и хранение {#naming}
+## 3. Identifier and storage {#naming}
 
-Work item использует отдельный namespace:
+Work items use a separate namespace:
 - `WI-001`
 - `WI-024`
 - `WI-105`
 
-Активный файл называется `specs/work/WI-NNN-short-slug.md`.
+An active file is named `specs/work/WI-NNN-short-slug.md`.
 
-Завершённый файл переносится в `specs/work/archive/YYYY/`. Недавняя строка `Done` в `BOARD.md` может ссылаться уже на архивный путь.
+A completed file is moved to `specs/work/archive/YYYY/`. A recent `Done` row in `BOARD.md` may already link to the archive path.
 
-Перед созданием нового work item:
-- просканируй `specs/work/**/*.md`;
-- проверь `BOARD.md` и `WAL.md`;
-- выбери следующий свободный `WI-NNN`;
-- не переиспользуй номера завершённых или отменённых items.
+Before creating a new work item:
+- scan `specs/work/**/*.md`;
+- check `BOARD.md` and `WAL.md`;
+- choose the next available `WI-NNN`;
+- do not reuse numbers from completed or canceled items.
 
-ID work item не совпадает с ID спеки. Связь хранится в секции `Specs` и в компактной колонке `Specs` доски.
+A work item ID is distinct from a spec ID. The relationship is stored in the `Specs` section and the board's compact `Specs` column.
 
-## 4. Минимальный формат {#format}
+## 4. Minimal format {#format}
 
 ```md
-# WI-024: Исправить пустые строки персонального отчёта
+# WI-024: Fix empty rows in the personal report
 
 - Kind: `fix`
 - Canon action: `none`
 
 ## Outcome
 
-Код соответствует каноническому поведению пустых строк.
+The code matches canonical empty-row behavior.
 
 ## Specs
 
@@ -60,86 +60,86 @@ ID work item не совпадает с ID спеки. Связь хранитс
 
 ## Scope
 
-- In: построение строки, отображение, regression test.
-- Out: состав показателей и права доступа.
+- In: row construction, rendering, regression test.
+- Out: metric selection and access permissions.
 
 ## Acceptance
 
-- [ ] Баг воспроизводится тестом.
-- [ ] Исправление проходит тест.
-- [ ] Сценарий с явным нулём сохраняется.
+- [ ] The bug is reproduced by a test.
+- [ ] The fix passes the test.
+- [ ] The explicit-zero scenario is preserved.
 
 ## Result
 
-Заполняется при завершении: итог, проверки, коммиты или release evidence.
+Filled in at completion: outcome, checks, commits, or release evidence.
 ```
 
-Обязательные части:
-- заголовок с `WI-NNN`;
+Required parts:
+- a heading with `WI-NNN`;
 - `Kind`;
 - `Canon action`;
-- один проверяемый `Outcome`;
-- ссылки на спеки;
-- границы текущего прохода;
-- acceptance work item;
-- `Result`, заполненный при завершении.
+- one verifiable `Outcome`;
+- links to specs;
+- boundaries of the current pass;
+- work item acceptance;
+- `Result`, populated at completion.
 
-Допустимые `Kind`:
-- `implement` — реализация уже описанного канона;
-- `fix` — приведение кода к действующей спеке;
-- `change` — согласованное изменение канона и реализации;
-- `migration` — переход между состояниями или контурами;
-- `research` — исследование с отдельным проверяемым результатом.
+Allowed `Kind` values:
+- `implement` — implementation of already described canon;
+- `fix` — bringing code into alignment with the current spec;
+- `change` — an agreed change to canon and implementation;
+- `migration` — transition between states or systems;
+- `research` — research with a separate verifiable outcome.
 
-Допустимые `Canon action`:
-- `none` — текст канона сохраняется;
-- `direct-edit` — обновляется текущая спека;
-- `new-spec` — результатом работы является новая спека;
-- `supersede` — одна или несколько спек заменяются или выводятся из активного канона.
+Allowed `Canon action` values:
+- `none` — canon text is preserved;
+- `direct-edit` — the current spec is updated;
+- `new-spec` — the work produces a new spec;
+- `supersede` — one or more specs are replaced or removed from active canon.
 
-## 5. Ссылки на спецификации {#specs}
+## 5. Links to specifications {#specs}
 
-Work item ссылается на точные `spec://...#anchor`.
+A work item links to exact `spec://...#anchor` addresses.
 
-Роли ссылок:
-- `Governing` — задаёт требуемое поведение;
-- `Affected` — меняется вместе с результатом;
-- `Constraint` — задаёт обязательное ограничение.
+Link roles:
+- `Governing` — defines required behavior;
+- `Affected` — changes along with the outcome;
+- `Constraint` — defines a mandatory constraint.
 
-Для `implement`, `fix`, `change` и `migration` нужна хотя бы одна `Governing`-спека, если действующий канон для результата уже существует.
+`implement`, `fix`, `change`, and `migration` require at least one `Governing` spec if current canon for the outcome already exists.
 
-WorkItem с `Canon action: new-spec` создаётся до файла новой спеки и использует:
-- существующий вышестоящий канон в `Governing`, если он есть;
-- действующие ограничения в `Constraint`;
-- планируемый полный адрес новой спеки с `#root` в `Affected`.
+A WorkItem with `Canon action: new-spec` is created before the new spec file and uses:
+- existing higher-level canon in `Governing`, if any;
+- current constraints in `Constraint`;
+- the planned full address of the new spec with `#root` in `Affected`.
 
-Первый spec-space может начать `new-spec` WorkItem без существующей `Governing`-ссылки. После регистрации и перевода новой спеки в `active` добавь её точный ответственный anchor в `Governing`, сохрани адрес создаваемого документа в `Affected` и актуализируй scope и acceptance до зависимой реализации.
+The first spec-space may start a `new-spec` WorkItem without an existing `Governing` link. After registering and moving the new spec to `active`, add its exact responsible anchor to `Governing`, keep the created document's address in `Affected`, and update scope and acceptance before dependent implementation.
 
-`research` может начинаться без найденной спеки. До реализации результата исследование должно разрешить owning spec или явно зафиксировать, что требуется `new-spec`.
+`research` may start without a resolved spec. Before implementing its outcome, research must resolve the owning spec or explicitly record that `new-spec` is required.
 
-Work item содержит границы текущего прохода и не копирует сценарии, модели данных и контракты из спецификаций.
+A work item contains the current pass's boundaries and does not copy scenarios, data models, or contracts from specifications.
 
-## 6. Размер и разбиение {#slicing}
+## 6. Size and splitting {#slicing}
 
-Один work item имеет:
-- один наблюдаемый outcome;
-- одно решение о завершении;
-- связанный набор проверок.
+One work item has:
+- one observable outcome;
+- one completion decision;
+- a related set of checks.
 
-Создавай отдельные work items, если части работы:
-- можно выпустить или откатить независимо;
-- можно проверить независимо;
-- могут оказаться в разных статусах;
-- имеют разные внешние блокеры;
-- принадлежат разным последовательным волнам.
+Create separate work items if parts of the work:
+- can be released or rolled back independently;
+- can be verified independently;
+- may be in different statuses;
+- have different external blockers;
+- belong to different sequential waves.
 
-Маленькая спека может получить один work item на реализацию всего `#root`.
+A small spec may receive one work item to implement its entire `#root`.
 
-Объёмная спека получает несколько work items со ссылками на конкретные anchors. Деление предпочтительно проводить по законченным пользовательским или runtime-результатам.
+A large spec receives several work items linked to specific anchors. Prefer divisions by complete user or runtime outcomes.
 
-Кросс-спековый work item допустим, когда несколько спек участвуют в одном атомарном результате. Несколько независимых результатов оформляются отдельными `WI-NNN`.
+A cross-spec work item is allowed when several specs contribute to one atomic outcome. Several independent outcomes receive separate `WI-NNN` items.
 
-Связи между work items указываются простыми ID:
+Relationships between work items use simple IDs:
 
 ```md
 ## Dependencies
@@ -148,78 +148,78 @@ Work item содержит границы текущего прохода и н�
 - Related: `WI-021`
 ```
 
-## 7. Уточнение и расширение активного work item {#expansion}
+## 7. Refining and expanding an active work item {#expansion}
 
-Перед регистрацией нового work item сравни дословную новую просьбу человека с `Outcome`, `Scope`, `Acceptance` и `Specs` текущего активного WI.
+Before registering a new work item, compare the human's exact new request with `Outcome`, `Scope`, `Acceptance`, and `Specs` of the current active WI.
 
-| Ситуация | Решение |
+| Situation | Decision |
 |---|---|
-| Сохраняется тот же атомарный outcome, а просьба добавляет небольшой объём: состояния, ошибки, адаптивность или проверки одного flow | Расширить текущий активный WI |
-| Появляется самостоятельный outcome, отдельная приёмка, выпуск или откат, другой owner или blocker либо реальная независимая параллельная работа | Создать связанный новый WI |
-| Текущий WI завершён | Создать связанный follow-up WI |
+| The same atomic outcome remains, and the request adds a small amount: states, errors, responsiveness, or checks for one flow | Expand the current active WI |
+| An independent outcome appears, with separate acceptance, release or rollback, another owner or blocker, or actual independent parallel work | Create a related new WI |
+| The current WI is completed | Create a related follow-up WI |
 
-При расширении outcome сохраняется. Объедини полный scope и spec links, затем добавь новые acceptance к полному прежнему списку. Удаление или ослабление прежнего acceptance допускается только по явному решению человека; решение и причина остаются в существующем comment/audit/history контуре.
+During expansion, the outcome is preserved. Merge the complete scope and spec links, then add new acceptance criteria to the complete previous list. Removing or weakening previous acceptance is allowed only by explicit human decision; the decision and reason remain in the existing comment/audit/history system.
 
-## 8. Исправления и изменение канона {#changes}
+## 8. Fixes and canon changes {#changes}
 
-Если код противоречит ясной активной спеке:
+If code contradicts a clear active spec:
 - `Kind: fix`;
 - `Canon action: none`;
-- ссылка ведёт на точный governing anchor;
-- acceptance включает воспроизведение и regression test;
-- спека меняется только при обнаружении реального пробела в каноне.
+- the link points to the exact governing anchor;
+- acceptance includes reproduction and a regression test;
+- the spec changes only if an actual gap in canon is found.
 
-Если желаемое поведение изменилось внутри прежней области ответственности:
+If desired behavior changes within the previous area of responsibility:
 - `Kind: change`;
 - `Canon action: direct-edit`;
-- спека обновляется до или вместе с реализацией;
-- changelog спеки фиксирует изменение.
+- the spec is updated before or together with implementation;
+- the spec changelog records the change.
 
-Если результат создаёт новую самостоятельную ответственность:
+If the outcome creates a new independent responsibility:
 - `Canon action: new-spec`;
-- WorkItem создаётся и запускается до authoring и может включать последующую реализацию того же атомарного outcome;
-- governing links и acceptance уточняются после готовности новой активной спеки и до кода;
-- отдельные implementation WorkItem создаются только при независимых результатах, отдельной приёмке или явной authoring-задаче.
+- the WorkItem is created and started before authoring and may include subsequent implementation of the same atomic outcome;
+- governing links and acceptance are refined once the new active spec is ready and before coding;
+- separate implementation WorkItems are created only for independent outcomes, separate acceptance, or an explicit authoring task.
 
-Если область ответственности заменяется, разделяется или выводится из продукта:
+If an area of responsibility is replaced, split, or removed from the product:
 - `Canon action: supersede`;
-- work item связывает старый и новый канон;
-- lifecycle и взаимные ссылки обновляются по `SPEC-PROTOCOL.md#lifecycle`.
+- the work item connects old and new canon;
+- lifecycle and reciprocal links are updated according to `SPEC-PROTOCOL.md#lifecycle`.
 
-Спорное место обрабатывается по `SPEC-PROTOCOL.md#conflict`.
+Disputed points follow `SPEC-PROTOCOL.md#conflict`.
 
-## 9. Связь с BOARD и WAL {#operations}
+## 9. Relationship to BOARD and WAL {#operations}
 
-`BOARD.md` — единственный источник статуса, owner и priority.
+`BOARD.md` is the only source of status, owner, and priority.
 
-Файл work item хранит outcome, specs, scope, acceptance, dependencies и result. Эти поля не повторяются в доске длинным текстом.
+The work item file stores outcome, specs, scope, acceptance, dependencies, and result. These fields are not repeated on the board as lengthy text.
 
-WAL-checkpoint создаётся только для незавершённой работы:
-- сессия заканчивается до закрытия WI;
-- нужен handoff;
-- исполнитель переключается на другой WI;
-- предстоит значимый деструктивный шаг;
-- важно сохранить следующий шаг или решение.
+A WAL checkpoint is created only for unfinished work:
+- the session ends before the WI is closed;
+- a handoff is needed;
+- the assignee switches to another WI;
+- a significant destructive step is imminent;
+- an important next step or decision needs preserving.
 
-Старт и завершение work item в одной сессии не требуют WAL.
+Starting and completing a work item in one session does not require WAL.
 
-## 10. Трассировка {#traceability}
+## 10. Traceability {#traceability}
 
-- Код и тесты содержат долговечные `@spec`.
-- Коммиты, PR и отчёты указывают `WI-NNN`.
-- Work item связывает операционную работу с одной или несколькими спеками.
-- Краткоживущий `WI-NNN` не добавляется в production-код как ownership-маркер.
+- Code and tests contain lasting `@spec` markers.
+- Commits, PRs, and reports mention `WI-NNN`.
+- A work item connects operational work to one or more specs.
+- A short-lived `WI-NNN` is not added to production code as an ownership marker.
 
-## 11. Завершение {#done}
+## 11. Completion {#done}
 
-Work item готов к `Done`, когда:
-- outcome достигнут;
-- acceptance пройден;
-- проверки перечислены в `Result`;
-- код, тесты и актуальные спеки согласованы;
-- changelog обновлён, если менялся канон;
-- `REVIEW` и `TECHDEBT` зафиксированы, если появились;
-- активный WAL-checkpoint удалён;
-- `BOARD.md` отражает завершение.
+A work item is ready for `Done` when:
+- its outcome is achieved;
+- acceptance has passed;
+- checks are listed in `Result`;
+- code, tests, and current specs are aligned;
+- the changelog is updated if canon changed;
+- `REVIEW` and `TECHDEBT` are recorded if any arose;
+- the active WAL checkpoint is removed;
+- `BOARD.md` reflects completion.
 
-После завершения файл переносится в `specs/work/archive/YYYY/`. `BOARD.md` хранит только недавние завершённые items, полная история остаётся в архиве WI и Git.
+After completion, the file is moved to `specs/work/archive/YYYY/`. `BOARD.md` keeps only recently completed items; complete history remains in the WI archive and Git.

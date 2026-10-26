@@ -2,37 +2,39 @@
 status: active
 ---
 
-# INFRA-003: Локальный CLI перевода {#root}
+# INFRA-003: Local translation CLI {#root}
 
-Linguisty использует официальный установленный CLI пользователя через небольшой Native Messaging host. Модели остаются сервисами выбранного CLI; офлайн-инференс не обещается. Браузер запускает host сам; постоянно слушающего сервера нет.
+Linguisty uses the user's officially installed CLI through a small Native Messaging host. Models remain services of the selected CLI; offline inference is not promised. The browser starts the host itself; there is no continuously listening server.
 
-## Режим и интерфейс {#settings}
+## Mode and interface {#settings}
 
-После WI-022 этот модуль обслуживает только совместимость ранее сохранённых конфигураций. Dropdown больше не предлагает четыре CLI. При загрузке прежних CLI-настроек форма показывает Codex по INFRA-004, но не перезаписывает настройки до явного сохранения/подключения. Описанная ниже установка host остаётся контрактом старого native transport, а не новым пользовательским сценарием.
+After WI-022, this module serves only compatibility with previously saved configurations. The dropdown no longer offers four CLIs. When loading old CLI settings, the form shows Codex under INFRA-004 but does not overwrite settings until explicit save/connect. The host installation below remains the old native transport contract rather than a new user scenario.
 
-Отдельные provider IDs: codex-cli, claude-code, antigravity-cli, grok-build. Собственный API-ключ расширения не нужен и не передаётся host. Вход выполняется пользователем в исходном CLI; токены не читаются, не копируются и не сохраняются Linguisty. Пустой model означает default модель CLI, вручную заданный ID передаётся отдельным аргументом. API-режимы сохраняют прежние контракты. CLI работает с финальным проверенным ответом batch; streaming UI для CLI отключён. Выбор CLI устанавливает concurrency=1 и timeout=120 s. Настройки явно объясняют установку host и расход лимитов аккаунта.
+Separate provider IDs: codex-cli, claude-code, antigravity-cli, grok-build. The extension needs no API key of its own and sends none to the host. The user signs in through the original CLI; Linguisty does not read, copy, or store tokens. An empty model means the CLI's default model; a manually specified ID is passed as a separate argument. API modes retain their previous contracts. CLI works with the final validated batch response; streaming UI is disabled for CLI. Selecting CLI sets concurrency=1 and timeout=120 s. Settings explicitly explain host installation and consumption of account limits.
 
 ## Native Messaging {#protocol}
 
-Имя host: com.linguisty.cli. Optional permission nativeMessaging запрашивается только пользовательским действием в UI. Один background client мультиплексирует ограниченные запросы по уникальному ID; версия протокола 1. Operations: status, translate, cancel. Host принимает только четыре provider IDs и ограниченные messages/model/timeout; путей программ, команд shell, секретов и произвольных флагов в wire нет. Ответ возвращает только ограниченный content или фиксированный error code. Никаких сырых stdout/stderr/учётных данных в журнале. Status проверяет существование CLI без inference и явно не подтверждает аккаунт/модель. Default model discovery не делает сетевых запросов.
+Host name: com.linguisty.cli. Optional nativeMessaging permission is requested only by a user action in the UI. One background client multiplexes bounded requests by unique ID; protocol version 1. Operations: status, translate, cancel. The host accepts only the four provider IDs and bounded messages/model/timeout; the wire contains no executable paths, shell commands, secrets, or arbitrary flags. A response returns only bounded content or a fixed error code. No raw stdout/stderr/credentials in the log. Status checks CLI existence without inference and explicitly does not confirm account/model access. Default model discovery makes no network requests.
 
-## CLI запуск {#execution}
+## CLI execution {#execution}
 
-Процессы запускаются без shell, скрыто на Windows, из отдельного временного рабочего каталога. Используются документированные headless/JSON режимы. Codex — ephemeral/read-only, shell/web/apps/MCP отключены; Claude — инструменты и MCP отключены, без persistence; Grok — без tools/subagents/web и auto-update; Antigravity — собственный workspace agent tools=[] и sandbox. Штатные бинарные CLI не изменяются. Windows npm cmd shims разрешаются в известный JS entrypoint пакета и запускаются через Node без shell. Не найденный бинарник даёт CLI_NOT_FOUND, отсутствующий host — CLI_HOST_MISSING, отказ авторизации — CLI_LOGIN_REQUIRED. Ни автологина, ни установки сторонних программ, ни взаимодействия с существующими чатами.
+Processes start without a shell, hidden on Windows, from a separate temporary working directory. Documented headless/JSON modes are used. Codex is ephemeral/read-only, with shell/web/apps/MCP disabled; Claude has tools and MCP disabled, without persistence; Grok has no tools/subagents/web or auto-update; Antigravity uses its own workspace agent with tools=[] and sandbox. Standard CLI binaries are not modified. Windows npm cmd shims resolve to a known package JS entrypoint and run through Node without a shell. A missing binary returns CLI_NOT_FOUND, a missing host CLI_HOST_MISSING, and authorization failure CLI_LOGIN_REQUIRED. No automatic sign-in, third-party software installation, or interaction with existing chats.
 
-## Ресурсы и отмена {#resources}
+## Resources and cancellation {#resources}
 
-Native frame максимум 900 KiB; CLI stdout максимум 4 MiB, stderr 32 KiB; финальный content/response bounded и строго проверяется прежним parser по ID. Host выполняет один перевод одновременно, очередь максимум 16; client максимум 16 pending. Общий timeout включает очередь. Cancel/timeout/disconnect завершают только созданное host дерево процессов, удаляют timers/listeners и принадлежащий запросу temp workspace. Кэш и dedup прежние; provider/model входят в scope. Idle native port закрывается, host не остаётся работать без запросов. Кэш/история сторонних CLI не очищаются и не обещаются отсутствующими, если CLI самостоятельно ведёт их.
+Native frames are limited to 900 KiB; CLI stdout to 4 MiB and stderr to 32 KiB; final content/response is bounded and strictly validated by the existing ID parser. The host performs one translation at a time, with a queue of at most 16; the client has at most 16 pending requests. The overall timeout includes queueing. Cancel/timeout/disconnect terminate only the process tree created by the host, remove timers/listeners, and remove the request-owned temporary workspace. Cache and dedup remain unchanged; provider/model are part of scope. The idle native port closes, and the host does not remain running without requests. Third-party CLI cache/history is not cleared and is not promised absent if the CLI maintains it independently.
 
-## Установка и проверка {#acceptance}
+## Installation and verification {#acceptance}
 
-Одноразовый Windows installer копирует только файлы host в LocalAppData/Linguisty, находит Node и CLI, регистрирует собственные HKCU native host manifests Chrome/Firefox. Chrome ID передаётся явно (или берётся из локального build smoke); Firefox ID стабилен. Чужие записи реестра не трогаются. Tests проверяют кадры, лимиты, адаптеры, отсутствие shell/секретов, отмену, missing executable/host, работу без API-ключа и API regression. Браузерный mock smoke проверяет native канал и перевод, не подтверждает смысловую точность. Реальные CLI-вызовы модели требуют отдельного тестового поручения пользователя.
+The one-time Windows installer copies only host files into LocalAppData/Linguisty, locates Node and CLIs, and registers owned HKCU native host manifests for Chrome/Firefox. The Chrome ID is passed explicitly (or taken from a local build smoke test); the Firefox ID is stable. Unrelated registry entries are untouched. Tests cover frames, limits, adapters, absence of shell/secrets, cancellation, missing executable/host, operation without an API key, and API regression. Browser mock smoke checks the native channel and translation, without establishing semantic accuracy. Real CLI model calls require a separate user test assignment.
 
-## Связи и история {#changelog}
+## Relationships and history {#changelog}
 
-- 2026-10-08: CLI-выбор убран из нового UI; модуль сохранён для совместимости, основной Codex-сценарий определяет INFRA-004.
+- 2026-10-26: translated into English and updated documentation paths; existing behavior, contracts, and limits preserved.
 
-Проверка Chrome native transport в headless использует отдельную временную копию пакета с nativeMessaging в required permissions; JS/assets остаются байтово теми же. Production optional grant и физический Chrome диалог не подтверждаются этим тестом. Firefox smoke проверяет неизменённый пакет и штатный optional permission prompt через privileged тестовую область. Оба smoke используют детерминированные переводы, не живую модель.
+- 2026-10-08: CLI choices removed from the new UI; the module remains for compatibility, while INFRA-004 defines the primary Codex scenario.
+
+The headless Chrome native transport check uses a separate temporary package copy with nativeMessaging in required permissions; JS/assets remain byte-identical. This test does not establish the production optional grant or the physical Chrome dialog. Firefox smoke checks the unchanged package and standard optional permission prompt through a privileged test context. Both smoke tests use deterministic translations, not a live model.
 
 Related: `spec://modules/translation/FEAT-001-engine#providers`, `spec://modules/storage/INFRA-002-local-data#cache.key`, `spec://modules/interface/FEAT-003-controls#options`, `spec://common/PROP-002-quality#resources`.
-- 2026-10-08: новый режим по прямому поручению пользователя.
+- 2026-10-08: new mode explicitly assigned by the user.

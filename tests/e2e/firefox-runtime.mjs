@@ -43,7 +43,7 @@ export async function launchIsolatedFirefox({ projectRoot, extensionPath, artifa
   const binary = process.env.LINGUISTY_FIREFOX_EXECUTABLE || path.join(process.env.LOCALAPPDATA || '', 'Mozilla Firefox/firefox.exe');
   const driverPath = process.env.LINGUISTY_GECKODRIVER || path.join(cacheRoot, 'driver/geckodriver.exe');
   assert.ok(existsSync(binary), `Firefox executable absent: ${binary}`);
-  assert.ok(existsSync(driverPath), `Official geckodriver absent: ${driverPath}. See docs/FIREFOX-QA.md.`);
+  assert.ok(existsSync(driverPath), `Official geckodriver absent: ${driverPath}. See docs/archive/FIREFOX-QA.md.`);
   await mkdir(cacheRoot, { recursive: true });
   await mkdir(artifactRoot, { recursive: true });
   const profile = await mkdtemp(path.join(cacheRoot, 'profile-'));

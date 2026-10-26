@@ -1,4 +1,4 @@
-> Update 2026-10-07: the product is **Linguisty**, and **Chrome desktop and Firefox desktop are both required in v1**. The original plan below is retained as source history. Current implementation canon, browser scope, parallel work and acceptance are in `specs/`, `docs/PLAN.md` and `AGENTS.md`; the former Chrome exclusion and former product name no longer apply.
+> Update 2026-10-07: the product is **Linguisty**, and **Chrome desktop and Firefox desktop are both required in v1**. The original plan below is retained as source history. Current implementation canon, browser scope, parallel work and acceptance are in `specs/`, `docs/archive/development-plan.md` and `AGENTS.md`; the former Chrome exclusion and former product name no longer apply.
 
 # Linguisty — Original Smart Development Plan
 
@@ -1149,6 +1149,8 @@ charges comprises
 climatisation réversible
 → реверсивный кондиционер / кондиционер с обогревом
 ```
+
+The two Russian target-language examples above mean “utility/maintenance charges included” and “reversible air conditioner / air conditioner with heating,” respectively. They are retained as localized translation samples.
 
 The translator should preserve useful original terminology where ambiguity matters.
 

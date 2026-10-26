@@ -2,13 +2,13 @@
 status: active
 ---
 
-# PROP-001: Архитектура и контракты {#root}
+# PROP-001: Architecture and contracts {#root}
 
-Контексты расширения взаимодействуют сообщениями: страница хранит ссылки на текстовые узлы, фон обращается к API, popup и настройки управляют процессом. Отдельная собственная страница Codex держит OAuth-сеанс только в памяти и исполняет запросы через проверенный внутренний port. Старые CLI adapters остаются совместимыми внутри runtime.
+Extension contexts communicate through messages: the page retains references to text nodes, the background calls APIs, and popup/settings control the process. A separate owned Codex page holds an OAuth session only in memory and executes requests through a validated internal port. Legacy CLI adapters remain compatible within the runtime.
 
-## Стек и границы {#architecture}
+## Stack and boundaries {#architecture}
 
-TypeScript strict, WXT, React для popup/options, нативный DOM для страницы, IndexedDB для кэша, browser API через `wxt/browser`, Vitest/jsdom/fake-indexeddb для тестов. Одна установка npm и один lockfile. Runtime API-запросы выполняются через fetch без большого provider SDK. Продукт не использует удалённый исполняемый код или удалённые шрифты.
+Strict TypeScript, WXT, React for popup/options, native DOM for page handling, IndexedDB for the cache, browser APIs through `wxt/browser`, and Vitest/jsdom/fake-indexeddb for tests. One npm installation and one lockfile. Runtime API requests use fetch without a large provider SDK. The product does not use remotely executed code or remote fonts.
 
 ```text
 Popup / Options → Background controller → Settings / Secrets
@@ -18,72 +18,72 @@ Injected page script ↔ Background controller → Translation engine → Provid
                    IndexedDB cache
 ```
 
-## Единственный контракт {#types}
+## Single contract {#types}
 
-`src/shared/contracts.ts` содержит Settings, ProviderConfig, TranslationInput/Result, TabTranslationState, RuntimeMessage и PublicError. Исполнители импортируют эти определения. Изменения согласует координатор; не создавать альтернативные модели данных. Не повторять полные TypeScript-типы в документах: исходный файл является проверяемым контрактом кода.
+`src/shared/contracts.ts` contains Settings, ProviderConfig, TranslationInput/Result, TabTranslationState, RuntimeMessage, and PublicError. Contributors import these definitions. The coordinator approves changes; do not create alternative data models. Do not duplicate full TypeScript types in documentation: the source file is the verifiable code contract.
 
-Settings содержит независимые targetLanguageMode (browser/manual) и uiLanguage (auto/поддержанная локаль). Результат loadSettings в browser режиме содержит разрешённый BCP 47 target, поэтому provider/cache/content продолжают использовать конкретный язык, без auto sentinel в prompt. Язык UI и mode не входят в cache key: на перевод влияет только конкретный source/target и смысловой контекст. Прежний сохранённый target без mode считается ручным выбором.
+Settings contains independent targetLanguageMode (browser/manual) and uiLanguage (auto/supported locale). In browser mode, loadSettings returns a resolved BCP 47 target, so providers/cache/content continue to use a concrete language without an auto sentinel in the prompt. UI language and mode are not part of the cache key: only concrete source/target languages and semantic context affect translation. A previously saved target without a mode is treated as a manual choice.
 
-CLI provider IDs и фиксированные ошибки описаны в spec://modules/platform/INFRA-003-local-cli#protocol. ProviderConfig сохраняет общий контракт; CLI нормализует apiKey в пустую строку, baseUrl в служебный cache namespace, пустой model в default и streaming в false. Ни URL, ни ключ не передаются native host. NativeRequester — внутренняя зависимость adapter/tests, UI продолжает использовать прежние runtime сообщения.
+CLI provider IDs and fixed errors are defined in `spec://modules/platform/INFRA-003-local-cli#protocol`. ProviderConfig retains the shared contract; CLI mode normalizes apiKey to an empty string, baseUrl to an internal cache namespace, an empty model to default, and streaming to false. Neither URL nor key is sent to the native host. NativeRequester is an internal adapter/test dependency; the UI continues using existing runtime messages.
 
-Новый provider codex фиксирует baseUrl=https://api.openai.com/v1, apiKey пустой, default model, concurrency=1, streaming=false для атомарной выдачи проверенного ответа Responses. ProviderConfig.accountScope — SHA-256 подтверждённых sub/client_id для изоляции кэша, без сохранения identity/token в настройках. Переводный port request обязан совпадать с текущим account scope страницы; смена аккаунта не записывает новый ответ в прежний кэш. Детали: spec://modules/platform/INFRA-004-codex-connection#requests.
+The new codex provider fixes baseUrl=https://api.openai.com/v1, an empty apiKey, default model, concurrency=1, and streaming=false for atomic delivery of a validated Responses result. ProviderConfig.accountScope is a SHA-256 of verified sub/client_id for cache isolation, without storing identity/token in settings. A translation port request must match the page's current account scope; switching accounts cannot write a new response into the previous cache. Details: `spec://modules/platform/INFRA-004-codex-connection#requests`.
 
-## Сообщения {#messages}
+## Messages {#messages}
 
-Каждое сообщение имеет `channel: 'linguisty'` и discriminant `type`. Ответ — `{ok:true,data}` или `{ok:false,error}`. Ошибка содержит фиксированный code, безопасное русское message и retryable; сырой ответ провайдера не выводится пользователю.
+Each message has `channel: 'linguisty'` and a `type` discriminant. Responses are `{ok:true,data}` or `{ok:false,error}`. Errors contain a fixed code, a safe Russian message, and retryable; raw provider responses are not shown to the user.
 
-Локализованный UI переводит известные безопасные сообщения или показывает локальное пояснение по code; русский UI сохраняет диагностическую конкретику исходного public message. Локальный журнал API хранит очищенные данные и не подменяется переводом сырого ответа модели.
+Localized UI translates known safe messages or shows a local explanation by code; Russian UI retains the diagnostic specificity of the original public message. The local API log stores sanitized data and is not replaced by a translation of raw model output.
 
 - GET_SETTINGS, GET_SECRET_STATUS, GET_TAB_STATE, GET_CACHE_STATS.
-- OPEN_CODEX_CONNECTION и GET_CODEX_STATUS — только собственный UI; одна вкладка и boolean подключения, без токенов.
-- GET_ERROR_LOG, CLEAR_ERROR_LOG разрешены только собственным extension pages; content не получает diagnostics.
-- SAVE_SETTINGS, REMOVE_API_KEY, TEST_CONNECTION, LIST_MODELS, CLEAR_CACHE разрешены только собственным extension pages.
-- START_TRANSLATION, CANCEL_TRANSLATION, SET_DISPLAY_MODE разрешены popup/options, а tabId проверяется фоном.
-- TRANSLATE_BATCH и PAGE_PROGRESS разрешены только injected script верхнего frame собственной активной сессии; tab берётся из sender, а не произвольного сообщения.
-- CONTENT_COMMAND направляет start/cancel/set-display/get-state/batch-progress в конкретную вкладку; TAB_STATE_CHANGED сообщает UI безопасный статус.
+- OPEN_CODEX_CONNECTION and GET_CODEX_STATUS: owned UI only; one tab and a connection boolean, without tokens.
+- GET_ERROR_LOG and CLEAR_ERROR_LOG: owned extension pages only; content cannot access diagnostics.
+- SAVE_SETTINGS, REMOVE_API_KEY, TEST_CONNECTION, LIST_MODELS, CLEAR_CACHE: owned extension pages only.
+- START_TRANSLATION, CANCEL_TRANSLATION, SET_DISPLAY_MODE: popup/options only, with tabId verified by the background.
+- TRANSLATE_BATCH and PAGE_PROGRESS: only the injected top-frame script of the owned active session; the tab comes from sender, not an arbitrary message.
+- CONTENT_COMMAND sends start/cancel/set-display/get-state/batch-progress to a specific tab; TAB_STATE_CHANGED sends safe status to the UI.
 
-Все payload валидируются в runtime. Ключ не возвращается ни одним чтением настроек, статуса или модели. TEST_CONNECTION может использовать введённый в options ключ без сохранения. Нет `externally_connectable` и обмена ключом через DOM/window.postMessage.
+All payloads are validated at runtime. No settings, status, or model read returns a key. TEST_CONNECTION can use a key entered in options without saving it. There is no `externally_connectable` or key exchange through DOM/window.postMessage.
 
-SAVE_SETTINGS принимает optional boolean preserveKeyMode: при true фон под своей очередью сохранений использует актуальный режим, игнорируя keyMode устаревшего UI. Popup всегда выставляет true; options выставляет true, если пользователь не изменял режим относительно загруженной формы. Явная смена режима продолжает переносить ключ.
+SAVE_SETTINGS accepts optional boolean preserveKeyMode: when true, the background uses the current mode inside its save queue and ignores a stale UI keyMode. Popup always sets it to true; options sets it to true if the user did not change the mode relative to the loaded form. An explicit mode change still transfers the key.
 
-Popup дополнительно выставляет optional boolean languagesOnly=true: фон под той же очередью применяет только sourceLanguage, targetLanguage и targetLanguageMode к последней конфигурации. Прежние provider/model/theme/keyMode и остальные параметры формы не перезаписывают новые значения. Передача apiKey в этом режиме отклоняется. Options сохраняет полную форму как раньше.
+Popup also sets optional boolean languagesOnly=true: within the same queue, the background applies only sourceLanguage, targetLanguage, and targetLanguageMode to the latest configuration. The form's old provider/model/theme/keyMode and other fields cannot overwrite newer values. apiKey is rejected in this mode. Options continues saving the complete form.
 
-## Границы модулей {#modules}
+## Module boundaries {#modules}
 
-`TranslationResult` содержит `translations`, `fromCache` и optional `cacheHitIds`. Engine всегда возвращает уникальные IDs исходных узлов, действительно взятых из кэша; их число равно `fromCache`. Content использует IDs для точного счётчика после внешних изменений/удаления узлов. Provider adapters с `fromCache=0` могут опускать список. Перед применением content проверяет IDs, дубли и соответствие количеству.
+`TranslationResult` contains `translations`, `fromCache`, and optional `cacheHitIds`. The engine always returns unique original-node IDs actually served from cache; their count equals `fromCache`. Content uses the IDs for accurate counting after external changes/node removal. Provider adapters with `fromCache=0` may omit the list. Before applying results, content validates IDs, duplicates, and count consistency.
 
-- `storage/settings.ts`: loadSettings/saveSettings; `storage/secrets.ts`: getApiKey/setApiKey/saveConfiguration/removeApiKey/getSecretStatus. saveConfiguration сохраняет нормализованные настройки вместе с ключом, сохраняя отдельные storage keys.
-- `cache/translationCache.ts`: getTranslationCache возвращает объект get/set/clear/stats/prune; `cache/cacheKey.ts`: buildCacheKey.
-- `translation/engine.ts`: TranslationEngine с cache и необязательным fetchImpl; translate(input, config, signal, onProgress?), testConnection(config, signal), listModels(config, signal).
-- `providers/registry.ts`: getProvider(providerId); единый TranslationProvider описан в contracts.
-- `content/controller.ts`: createPageController с start/cancel/setDisplayMode/progress/getState/dispose; `entrypoints/translate.ts` подключает единственный message listener.
-- `background/controller.ts`: registerBackgroundController; `entrypoints/background.ts` подключает listener синхронно внутри defineBackground.
-- Popup/options общаются с фоном, не импортируют secret store, provider или кэш напрямую. Codex connection page — отдельный привилегированный владелец только своего OAuth-сеанса по INFRA-004; токены не пересекают границу page→background.
+- `storage/settings.ts`: loadSettings/saveSettings; `storage/secrets.ts`: getApiKey/setApiKey/saveConfiguration/removeApiKey/getSecretStatus. saveConfiguration saves normalized settings together with the key while retaining separate storage keys.
+- `cache/translationCache.ts`: getTranslationCache returns an object with get/set/clear/stats/prune; `cache/cacheKey.ts`: buildCacheKey.
+- `translation/engine.ts`: TranslationEngine with cache and optional fetchImpl; translate(input, config, signal, onProgress?), testConnection(config, signal), listModels(config, signal).
+- `providers/registry.ts`: getProvider(providerId); the single TranslationProvider interface is defined in contracts.
+- `content/controller.ts`: createPageController with start/cancel/setDisplayMode/progress/getState/dispose; `entrypoints/translate.ts` registers the single message listener.
+- `background/controller.ts`: registerBackgroundController; `entrypoints/background.ts` registers the listener synchronously inside defineBackground.
+- Popup/options communicate with the background and do not directly import the secret store, providers, or cache. The Codex connection page separately owns only its own privileged OAuth session under INFRA-004; tokens do not cross the page→background boundary.
 
-## Сессия и отмена {#sessions}
+## Sessions and cancellation {#sessions}
 
-Каждый запуск получает sessionId, привязанный к tabId. batchId и исходный текст проверяются перед применением. Settings фиксируются на запуск. Поздний ответ после отмены/смены маршрута/смены оригинального текста не применяется. В памяти хранится ограниченное число запросов; runtime AbortController останавливает fetch. Browser session storage хранит безопасный snapshot сессий; не хранит DOM или исходные страницы. Если фон был остановлен, контент может продолжить текущую сессию по snapshot; завершённые/закрытые вкладки удаляются.
+Each run receives a sessionId tied to tabId. batchId and original text are checked before applying results. Settings are fixed at start. Late responses after cancellation, route changes, or original-text changes are not applied. Memory holds a bounded number of requests; a runtime AbortController stops fetch. Browser session storage keeps a safe session snapshot, not DOM or original pages. If the background stops, content can resume the current session from the snapshot; completed/closed tabs are removed.
 
-TranslationProgress — reset или cumulative segments с проверенными TranslationItem. Provider/engine optional callback не переносит секреты. CONTENT_COMMAND.batch-progress содержит sessionId/batchId/sequence/progress и проходит тот же background-only sender guard; старый sequence пропускается. Финальный TRANSLATE_BATCH сохраняет прежний ApiResult/TranslationResult контракт. Progress callbacks удаляются при settlement/отмене consumers.
+TranslationProgress is either reset or cumulative segments with validated TranslationItem entries. The optional provider/engine callback carries no secrets. CONTENT_COMMAND.batch-progress contains sessionId/batchId/sequence/progress and passes the same background-only sender guard; old sequence values are skipped. Final TRANSLATE_BATCH retains the existing ApiResult/TranslationResult contract. Progress callbacks are removed on consumer settlement/cancellation.
 
-## Политика ошибок {#errors}
+## Error policy {#errors}
 
-INVALID_API_KEY, PERMISSION_REQUIRED, RATE_LIMIT, PROVIDER_UNAVAILABLE, MODEL_NOT_FOUND, REQUEST_TIMEOUT, INVALID_MODEL_RESPONSE, NETWORK_ERROR, CONTEXT_TOO_LARGE, CANCELLED, INVALID_SETTINGS, RESTRICTED_PAGE, INTERNAL_ERROR. Для 401/403/ошибки модели и denied permission нет автоматического retry. Для 429/5xx/сети максимум 2 retry с bounded exponential backoff и Retry-After, отменяемый timer. Не более одного retry malformed JSON. Нет бесконечного retry и автоматического переключения провайдера.
+INVALID_API_KEY, PERMISSION_REQUIRED, RATE_LIMIT, PROVIDER_UNAVAILABLE, MODEL_NOT_FOUND, REQUEST_TIMEOUT, INVALID_MODEL_RESPONSE, NETWORK_ERROR, CONTEXT_TOO_LARGE, CANCELLED, INVALID_SETTINGS, RESTRICTED_PAGE, INTERNAL_ERROR. No automatic retry for 401/403, model errors, or denied permission. For 429/5xx/network errors, at most 2 retries with bounded exponential backoff, Retry-After, and a cancellable timer. At most one retry for malformed JSON. No infinite retry or automatic provider switching.
 
-## Связи и проверка {#relationships}
+## Relationships and verification {#relationships}
 
-Governing: `spec://common/PROP-000-product#invariants`. Модульные owning specs перечислены в SPEC-MAP. Проверка заполнения: определены контексты, общие типы, сообщения, security boundary, lifecycle, ошибки, точки импорта и владение.
+Governing: `spec://common/PROP-000-product#invariants`. Owning module specs are listed in SPEC-MAP. Completeness check: contexts, shared types, messages, security boundaries, lifecycle, errors, import points, and ownership are defined.
 
-## История {#changelog}
+## Changelog {#changelog}
 
-- 2026-10-08: страница Codex владеет токенами, фон получает проверенный account scope; добавлены UI-only открытие подключения и безопасный status.
-- 2026-10-09: languagesOnly сохраняет языки popup под очередью без отката новой модели/провайдера/предпочтений.
-
-- 2026-10-08: четыре CLI provider IDs, Native Messaging boundary и безопасные CLI errors; общий TranslationProvider без изменения page contract.
-- 2026-10-07: исходная архитектура и контракт параллельной реализации.
-- 2026-10-07: engine передаёт cacheHitIds для точного прогресса при внешнем изменении DOM.
-- 2026-10-08: сохранение конфигурации и preserveKeyMode защищают persistent выбор от раздельной записи и устаревших форм.
-- 2026-10-08: типы allowlist API diagnostics и UI-only сообщения GET_ERROR_LOG/CLEAR_ERROR_LOG.
-- 2026-10-08: optional translation progress и batch-progress command; transport не меняет cache context.
-- 2026-10-08: независимые browser/manual target и auto/manual UI locale; разрешённый язык поступает в прежний translation contract.
+- 2026-10-26: English translation; runtime contracts and existing diagnostic language remain unchanged.
+- 2026-10-08: the Codex page owns tokens; the background receives a verified account scope; added UI-only connection opening and safe status.
+- 2026-10-09: languagesOnly saves popup languages through the queue without reverting a newer model/provider/preferences.
+- 2026-10-08: four CLI provider IDs, Native Messaging boundary, and safe CLI errors; shared TranslationProvider without changing the page contract.
+- 2026-10-07: initial architecture and parallel implementation contract.
+- 2026-10-07: engine supplies cacheHitIds for accurate progress during external DOM changes.
+- 2026-10-08: configuration saving and preserveKeyMode protect persistent selection from separate writes and stale forms.
+- 2026-10-08: allowlisted API diagnostic types and UI-only GET_ERROR_LOG/CLEAR_ERROR_LOG messages.
+- 2026-10-08: optional translation progress and batch-progress command; transport does not change cache context.
+- 2026-10-08: independent browser/manual target and auto/manual UI locale; the resolved language enters the existing translation contract.
 

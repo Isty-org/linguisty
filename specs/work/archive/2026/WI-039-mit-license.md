@@ -1,11 +1,11 @@
-# WI-039: MIT с авторством Никиты Цыжмана
+# WI-039: MIT with authorship credited to Никита Цыжман
 
 - Kind: `change`
 - Canon action: `direct-edit`
 
 ## Outcome
 
-Linguisty опубликован под MIT с copyright Никиты Цыжмана @tsyzhman; исходники и пакеты Chrome/Firefox нового релиза v0.4.10 содержат лицензию.
+Linguisty published under MIT with copyright credited to Никита Цыжман @tsyzhman; sources and Chrome/Firefox packages of new release v0.4.10 contain the license.
 
 ## Specs
 
@@ -18,18 +18,18 @@ Linguisty опубликован под MIT с copyright Никиты Цыжма
 
 ## Scope
 
-- In: LICENSE, сторонние notices, metadata и version 0.4.10, автоматическое включение лицензий в build/ZIP, проверки пакетов, документация, tag и GitHub Release.
-- Out: изменение runtime-поведения, перезапись опубликованного v0.4.9, магазинная публикация, подпись Firefox, реальные платные запросы и чужой кэш.
+- In: LICENSE, third-party notices, metadata and version 0.4.10, automatic license inclusion in build/ZIP, package checks, documentation, tag, and GitHub Release.
+- Out: runtime behavior changes, overwriting published v0.4.9, store publication, Firefox signing, real paid requests, and others' cache.
 
 ## Acceptance
 
-- [x] MIT содержит `Copyright (c) 2026 Никита Цыжман (@tsyzhman)`; сторонние copyright и OFL сохранены.
-- [x] Metadata и канон согласованы; Chrome/Firefox автоматически включают точные LICENSE/notices из корня.
-- [x] Проверки build/manifest, необходимые тесты и доступный browser smoke проходят; фактические ограничения записаны.
-- [x] v0.4.10 опубликован; GitHub распознаёт MIT, скачанные assets совпадают по SHA-256, проверены ресурсы и дубли.
+- [x] MIT contains `Copyright (c) 2026 Никита Цыжман (@tsyzhman)`; third-party copyright and OFL preserved.
+- [x] Metadata and canon aligned; Chrome/Firefox automatically include exact LICENSE/notices from root.
+- [x] Build/manifest checks, required tests, and available browser smoke pass; actual limitations recorded.
+- [x] v0.4.10 published; GitHub recognizes MIT; downloaded assets match by SHA-256; resources and duplicates checked.
 
 ## Result
 
-Опубликован [v0.4.10](https://github.com/Isty-org/linguisty/releases/tag/v0.4.10), commit `8862d27150d91ae6241c7c5b3aedfdae4b31ffc0`, автор Никита Цыжман / `Tsyzhman`. GitHub License API на tag распознаёт SPDX `MIT`; все три assets скачаны обратно и совпали по SHA-256. Source tree содержит 338 файлов без локальных `.me`, credentials и generated folders. Tag, commit и digests v0.4.9 сохранены.
+Published [v0.4.10](https://github.com/Isty-org/linguisty/releases/tag/v0.4.10), commit `8862d27150d91ae6241c7c5b3aedfdae4b31ffc0`, author Никита Цыжман / `Tsyzhman`. GitHub License API at tag recognizes SPDX `MIT`; all three assets downloaded back and matched by SHA-256. Source tree contains 338 files without local `.me`, credentials, or generated folders. Tag, commit, and digests of v0.4.9 preserved.
 
-Typecheck/lint, 780 unit, 15 native, 10 manifest/license contracts, обе сборки и целевой browser smoke Chrome/Firefox PASS; Mozilla 0/0/0. Все прежние runtime/assets совпадают с v0.4.9, manifest отличается только номером версии; каждый из двух ZIP содержит 58 проверенных файлов. Root MIT и original third-party notices сверены. QA: `docs/QA-MIT-2026-10-20.md`. Проверены 161 локальная ссылка и 651 spec reference; source duplicates и оставшихся собственных browser helpers нет. Неповторённые полные browser/ChatGPT/long-batch сценарии и live provider access не объявляются новым успешным прогоном.
+Typecheck/lint, 780 unit, 15 native, 10 manifest/license contracts, both builds, and targeted Chrome/Firefox browser smoke PASS; Mozilla 0/0/0. All previous runtime/assets match v0.4.9; manifest differs only by version number; each of the two ZIPs contains 58 verified files. Root MIT and original third-party notices compared. QA: `docs/archive/QA-MIT-2026-10-20.md`. Checked 161 local links and 651 spec reference; no source duplicates or remaining own browser helpers. Full browser/ChatGPT/long-batch scenarios not repeated and live provider access are not declared a new successful run.

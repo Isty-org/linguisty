@@ -2,51 +2,51 @@
 
 Workflow mode: standalone
 
-Локальная адаптация skill-роутера Isty-org/prist. Операционные данные ведутся в этом репозитории. Сначала прочитай инструкции пользователя и проектный AGENTS.md; затем выбери маршрут ниже. Читай только нужный контекст.
+Local adaptation of the Isty-org/prist skill router. Operational data is maintained in this repository. First read the user's instructions and the project AGENTS.md; then select a route below. Read only the context you need.
 
-## Вход {#entry}
+## Entry {#entry}
 
-При явном `WI-NNN` открой его файл в `specs/work/` или `specs/work/archive/`, одну строку BOARD, checkpoint именно этой задачи при наличии и перечисленные governing/constraint/affected specs.
+When an explicit `WI-NNN` is given, open its file in `specs/work/` or `specs/work/archive/`, its single BOARD row, that task's checkpoint if present, and the listed governing/constraint/affected specs.
 
-Без WI ищи последовательно: активные строки BOARD, SPEC-MAP, `common/structure.md`, имена и заголовки спек, `@spec` в коде и тестах, затронутые модули. Остановись, когда ответственность понятна.
+Without a WI, search in order: active BOARD rows, SPEC-MAP, `common/structure.md`, spec names and headings, `@spec` markers in code and tests, and affected modules. Stop when responsibility is clear.
 
-Перед claim WI и изменением ownership, BOARD или WAL прочитай `specs/.me`. Сохрани существующую идентичность. Если агенту поручена настройка workflow, допускается создать отсутствующий файл из `.me.template` с известной идентичностью агента и ролью `agent`. Не подставляй выдуманные данные человека. Одношаговое изменение и чтение не требуют `.me`. Файл остаётся локальным и исключается из Git.
+Before claiming a WI or changing ownership, BOARD, or WAL, read `specs/.me`. Preserve the existing identity. If an agent is assigned to set up the workflow, a missing file may be created from `.me.template` with the agent's known identity and the role `agent`. Do not substitute invented human data. A single-step change and reading do not require `.me`. The file remains local and is excluded from Git.
 
-## Маршруты {#routing}
+## Routes {#routing}
 
-| Ситуация | Что прочитать | Что изменить |
+| Situation | What to read | What to change |
 |---|---|---|
-| Одношаговая работа, ясная owning spec, без handoff и отдельного учёта | ответственные спеки | результат и необходимые проверки; спеку только при изменении канона |
-| Существующий WI | [WORK-ITEM-PROTOCOL](WORK-ITEM-PROTOCOL.md), [BOARD-PROTOCOL](BOARD-PROTOCOL.md) | текущий WI и строку доски по событию |
-| Новая отслеживаемая работа | те же два протокола | один WI на атомарный результат и одну строку BOARD |
-| Новая или переработанная спека | [SPEC-AUTHORING-PROTOCOL](SPEC-AUTHORING-PROTOCOL.md), [SPEC-PROTOCOL](SPEC-PROTOCOL.md) | спеку, SPEC-MAP; structure при смене модуля или ownership |
-| Остановка, handoff, возобновление | [WAL-PROTOCOL](WAL-PROTOCOL.md) | один checkpoint незавершённого WI |
-| Осознанный инженерный компромисс | [TECHDEBT-PROTOCOL](TECHDEBT-PROTOCOL.md) | актуальную запись TECHDEBT |
-| Внедрение в существующий проект | [инструкцию внедрения](../../.human/adopt-existing-project-agent.md) | минимальный фактический baseline |
+| Single-step work, clear owning spec, no handoff or separate tracking | responsible specs | outcome and necessary checks; the spec only if canon changes |
+| Existing WI | [WORK-ITEM-PROTOCOL](WORK-ITEM-PROTOCOL.md), [BOARD-PROTOCOL](BOARD-PROTOCOL.md) | current WI and board row when an event requires it |
+| New tracked work | the same two protocols | one WI per atomic outcome and one BOARD row |
+| New or reworked spec | [SPEC-AUTHORING-PROTOCOL](SPEC-AUTHORING-PROTOCOL.md), [SPEC-PROTOCOL](SPEC-PROTOCOL.md) | spec, SPEC-MAP; structure if module or ownership changes |
+| Stop, handoff, resume | [WAL-PROTOCOL](WAL-PROTOCOL.md) | one checkpoint for an unfinished WI |
+| Deliberate engineering tradeoff | [TECHDEBT-PROTOCOL](TECHDEBT-PROTOCOL.md) | current TECHDEBT entry |
+| Adoption in an existing project | [adoption instructions](ADOPTION.md) | minimal factual baseline |
 
-Отдельный WI нужен для самостоятельных scope/acceptance, нескольких шагов, риска, зависимости, блокера, координации, продолжения между сессиями или по явной просьбе. Одношаговая работа не создаёт WI, BOARD и WAL.
+A separate WI is needed for independent scope/acceptance, multiple steps, risk, dependency, blocker, coordination, continuation between sessions, or an explicit request. Single-step work does not create a WI, BOARD row, or WAL checkpoint.
 
-## Порядок выполнения {#work}
+## Execution order {#work}
 
-1. Разреши owning spec и текущее намерение человека. Иерархия предметного решения: человек → спека → тесты → код.
-2. При ясной активной спеке и ошибке реализации воспроизведи расхождение и исправь код; `Canon action: none`. Не переписывай правильную спеку под баг.
-3. При новом поведении выбери `direct-edit`, `new-spec` или `supersede`. Для отслеживаемого `new-spec` сначала оформи WI с планируемым адресом в Affected; зарегистрируй и подготовь канон; актуализируй Governing, scope и acceptance до зависимой реализации. Одношаговое authoring обходится без WI.
-4. Сразу начатый WI помести в In Progress. Начальный checkpoint не нужен.
-5. Реализуй согласованный результат и выполни проверки, соответствующие acceptance.
-6. Добавь полный `@spec spec://modules/<module>/<TYPE-NNN-slug>#anchor` на новые или существенно изменённые точки ответственности кода и прямые contract tests. Малые helpers наследуют ownership ближайшего блока.
+1. Resolve the owning spec and the human's current intent. Decision priority: human → spec → tests → code.
+2. When an active spec is clear and implementation is wrong, reproduce the discrepancy and fix the code; `Canon action: none`. Do not rewrite a correct spec to match a bug.
+3. For new behavior, choose `direct-edit`, `new-spec`, or `supersede`. For tracked `new-spec` work, first create a WI with the planned address in Affected; register and prepare the canon; update Governing, scope, and acceptance before dependent implementation. Single-step authoring does not require a WI.
+4. Place a WI started immediately in In Progress. No initial checkpoint is needed.
+5. Implement the agreed outcome and perform checks appropriate to acceptance.
+6. Add full `@spec spec://modules/<module>/<TYPE-NNN-slug>#anchor` markers to new or substantially changed code responsibility points and direct contract tests. Small helpers inherit ownership from the nearest block.
 
-## Завершение {#finish}
+## Completion {#finish}
 
-Завершённый WI: acceptance фактически пройден; Result содержит результат и выполненные проверки; канон, код и тесты согласованы. Перенеси файл в `specs/work/archive/YYYY/`, обнови ссылку и статус в Done, убери его активный checkpoint. Изменённый канон получает changelog.
+Completed WI: acceptance has actually passed; Result contains the outcome and performed checks; canon, code, and tests are aligned. Move the file to `specs/work/archive/YYYY/`, update its link and status in Done, and remove its active checkpoint. Changed canon receives a changelog entry.
 
-Незавершённый WI: сохрани In Progress или Blocked; при остановке создай короткий checkpoint с текущим состоянием и следующим шагом. Не копируй туда scope и acceptance.
+Unfinished WI: retain In Progress or Blocked; when stopping, create a short checkpoint with the current state and next step. Do not copy scope or acceptance into it.
 
-Одношаговая работа: отчитайся о результате, изменённых файлах и проверках без операционного учёта.
+Single-step work: report the outcome, changed files, and checks without operational tracking.
 
-Не объявляй непроведённую обязательную проверку успешной. Если она недоступна, выполни доступные проверки и зафиксируй ограничение. Спорные детали помечай REVIEW; отдельное решение человека запрашивай только когда оно действительно необходимо и ещё не дано.
+Do not claim an unperformed mandatory check passed. If it is unavailable, perform the available checks and record the limitation. Mark disputed details REVIEW; ask for a separate human decision only when it is actually necessary and has not already been given.
 
-## Минимальные записи и память {#write-matrix}
+## Minimal records and memory {#write-matrix}
 
-SPEC-MAP хранит каталог и lifecycle; structure — модули, namespaces и связь с кодом; WI — outcome, scope, acceptance, result; BOARD — status, owner, priority; WAL — только актуальный контекст продолжения; TECHDEBT — инженерные компромиссы.
+SPEC-MAP stores the catalog and lifecycle; structure stores modules, namespaces, and links to code; WI stores outcome, scope, acceptance, and result; BOARD stores status, owner, and priority; WAL stores only current continuation context; TECHDEBT stores engineering tradeoffs.
 
-Не дублируй эти сведения между файлами. Архив — история завершённых WI; BOARD хранит недавние завершения согласно BOARD-PROTOCOL. После работы сообщи «было → стало», проверь ссылки, дубли и созданные временные файлы. Не удаляй чужой кэш или историю без основания.
+Do not duplicate these details between files. The archive is the history of completed WIs; BOARD keeps recent completions according to BOARD-PROTOCOL. After work, report “before → after” and check links, duplicates, and created temporary files. Do not delete others' caches or history without justification.

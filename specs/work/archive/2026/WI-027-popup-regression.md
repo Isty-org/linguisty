@@ -1,11 +1,11 @@
-# WI-027: Компактные настройки popup и проверка регрессий
+# WI-027: Compact popup settings and regression checks
 
 - Kind: `change`
 - Canon action: `direct-edit`
 
 ## Outcome
 
-Проверенная сборка Linguisty с шестерёнкой настроек в popup и исправленными воспроизведёнными регрессиями.
+A verified Linguisty build with a settings gear in the popup and fixes for reproduced regressions.
 
 ## Specs
 
@@ -17,17 +17,17 @@
 
 ## Scope
 
-- In: popup gear, доступное имя и tooltip, обзор и regression checks UI/перевода/кэша/отмены, исправление доказанных сбоев, production packages обеих платформ.
-- Out: платный inference, публикация/подпись Firefox, изменение выбранной пользователем Luna 6, очистка чужого кэша и WI-011.
+- In: popup gear, accessible name and tooltip, UI/translation/cache/cancellation review and regression checks, fixes for proven failures, production packages for both platforms.
+- Out: paid inference, Firefox publication/signing, changing the user's selected Luna 6, clearing others' cache and WI-011.
 
 ## Acceptance
 
-- [x] Шестерёнка вместо видимой подписи, локализованное доступное имя, click target 44 px; keyboard/theme/RTL проверены.
-- [x] Старый popup сохраняет только языки; новая модель, провайдер, режим ключа и остальные настройки не откатываются. Регрессия подтверждена тестом до/после.
-- [x] Выполнены typecheck, lint, осмысленные unit и browser regression проверки Chrome/Firefox; найденные баги описаны по фактам.
-- [x] Подготовлены и проверены ZIP обеих платформ с совпадающими manifest versions.
-- [x] Кэш, дубли, память и освобождение собственных QA ресурсов проверены в промежуточных и финальном этапах.
-- [x] Непроверенные live-сценарии явно указаны; Result и канон согласованы.
+- [x] Gear replaces visible text, localized accessible name, 44 px click target; keyboard/theme/RTL checked.
+- [x] Old popup saves only languages; new model, provider, key mode, and other settings are not rolled back. Regression confirmed with a before/after test.
+- [x] Typecheck, lint, meaningful unit and Chrome/Firefox browser regression checks completed; found bugs described factually.
+- [x] ZIPs for both platforms prepared and verified with matching manifest versions.
+- [x] Cache, duplicates, memory, and release of own QA resources checked at intermediate and final stages.
+- [x] Unchecked live scenarios explicitly stated; Result and canon aligned.
 
 ## Dependencies
 
@@ -35,12 +35,12 @@
 
 ## Result
 
-Было → стало: текстовая кнопка настройки → шестерёнка 44×44 px с локализованными aria-label/title и декоративным SVG. Обе темы, 16 локалей, RTL, клавиатурный focus и Enter проверены в обеих платформах.
+Before → after: text settings button → 44×44 px gear with localized aria-label/title and decorative SVG. Both themes, 16 locales, RTL, keyboard focus, and Enter checked on both platforms.
 
-Воспроизведён новый баг: язык из старого popup возвращал прежние provider/model/theme/instructions. До правки регрессия FAIL, после PASS. languagesOnly=true применяет только язык/режим поверх последней конфигурации под существующей очередью; ключ в этом режиме отклоняется. Новая модель Luna 6 не заменяется. Есть queue/security проверки и actual Chrome popup/Firefox background evidence.
+New bug reproduced: language from an old popup restored previous provider/model/theme/instructions. Regression before fix FAIL, after PASS. languagesOnly=true applies only language/mode over latest configuration under the existing queue; key rejected in this mode. New Luna 6 model not replaced. Queue/security checks and actual Chrome popup/Firefox background evidence included.
 
-Проверки: typecheck/lint PASS; 705 Vitest tests / 47 files, 15 Native fixtures, 9 manifest/hygiene tests PASS. Chrome: 13 групп общего smoke, Firefox: 14, все PASS. Подписка: по 8 групп, 1 340/1 340 узлов / 84 fixture requests, повтор целиком из кэша, incomplete отклонён и не кэшируется. Ошибка Chrome UI test с закрытым API URL исправлена на проверку tab IDs; production permissions не расширены.
+Checks: typecheck/lint PASS; 705 Vitest tests / 47 files, 15 Native fixtures, 9 manifest/hygiene tests PASS. Chrome: 13 overall smoke groups, Firefox: 14, all PASS. Subscription: 8 groups each, 1 340/1 340 nodes / 84 fixture requests, repeat entirely from cache, incomplete rejected and not cached. Chrome UI test error involving a closed API URL fixed by checking tab IDs; production permissions not expanded.
 
-Версия 0.4.5 совпадает в package.json/lock/WXT и ZIP manifest. ZIP Chrome 440 832 / Firefox 440 918 bytes; по 28 файлов совпадают через SHA-256 с проверенными сборками. Mozilla: 0 errors/notices/warnings. .cache 5 652 files / 203 426 930 bytes неизменён на контрольных этапах, source duplicates/suspicious=0, remaining QA/watch processes=0; собственные browser profiles удалены. Firefox working-set/lifecycle и RAM snapshots сохранены, отсутствие любых утечек не обещается. Sources ZIP исключает временные результаты/кэш; собственная документация и архив WI включены.
+Version 0.4.5 matches in package.json/lock/WXT and ZIP manifest. ZIP Chrome 440 832 / Firefox 440 918 bytes; 28 files each match checked builds through SHA-256. Mozilla: 0 errors/notices/warnings. .cache 5 652 files / 203 426 930 bytes unchanged at checkpoints, source duplicates/suspicious=0, remaining QA/watch processes=0; own browser profiles removed. Firefox working-set/lifecycle and RAM snapshots saved; absence of every leak not promised. Sources ZIP excludes temporary results/cache; own documentation and WI archive included.
 
-Полные факты: docs/QA-POPUP.md и test-results/linguisty-popup-regression/. Live Luna 6 и причина исходных 22 пользовательских отказов без реального ответа остаются неподтверждёнными. Firefox signing/store install/native Chrome toolbar geometry не выполнены; прежний UI chunk 608 946 bytes остаётся TD-002. WAL/WI-011 и чужие процессы/кэш сохранены.
+Full facts: docs/archive/QA-POPUP.md and test-results/linguisty-popup-regression/. Live Luna 6 and cause of the original 22 user failures remain unconfirmed without the real response. Firefox signing/store install/native Chrome toolbar geometry not performed; previous UI chunk 608 946 bytes remains TD-002. WAL/WI-011 and others' processes/cache preserved.

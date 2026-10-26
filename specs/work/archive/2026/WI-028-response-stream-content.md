@@ -1,11 +1,11 @@
-# WI-028: Сохранять завершённый текст Responses stream
+# WI-028: Preserve completed Responses stream text
 
 - Kind: `fix`
 - Canon action: `direct-edit`
 
 ## Outcome
 
-Завершённые сообщения из Responses SSE не теряются при пустом terminal output; отказ без текста имеет точный безопасный код.
+Completed messages from Responses SSE are not lost with empty terminal output; failure without text has a precise safe code.
 
 ## Specs
 
@@ -14,17 +14,17 @@
 
 ## Scope
 
-- In: reader Responses, fixed diagnostic labels, contract/security tests, реалистичные browser fixtures обеих платформ, production packages и QA.
-- Out: чтение пользовательских токенов/сырых ответов, live paid inference, смена Luna 6, ослабление parser/cache, публикация и WI-011 cleanup.
+- In: Responses reader, fixed diagnostic labels, contract/security tests, realistic browser fixtures for both platforms, production packages, and QA.
+- Out: reading user tokens/raw responses, live paid inference, changing Luna 6, weakening parser/cache, publication, and WI-011 cleanup.
 
 ## Acceptance
 
-- [x] До/после воспроизведена потеря final_answer из output_item.done при completed.output=[].
-- [x] Завершённый текст используется только после response.completed/status=completed, commentary/refusal/incomplete/abort не становятся успехом.
-- [x] При повторении aggregate/stream текст не дублируется; противоречия и malformed events отклоняются; ограничения bytes/reader cleanup сохранены.
-- [x] Остаточные content-ошибки имеют фиксированные причины без body/claims/токенов/текста страницы.
-- [x] Typecheck/lint/unit, Chrome/Firefox builds, browser fixture и manifest/пакеты проверены; live причина пользовательского отказа явно не выдумана.
-- [x] Кэш/дубли/RAM и освобождение QA ресурсов проверены до, между и после основной задачи.
+- [x] Before/after reproduction of final_answer loss from output_item.done when completed.output=[].
+- [x] Completed text used only after response.completed/status=completed; commentary/refusal/incomplete/abort do not become success.
+- [x] Repeated aggregate/stream does not duplicate text; conflicts and malformed events rejected; byte limits/reader cleanup preserved.
+- [x] Remaining content errors have fixed reasons without body/claims/tokens/page text.
+- [x] Typecheck/lint/unit, Chrome/Firefox builds, browser fixture, and manifest/packages checked; live cause of user failure explicitly not invented.
+- [x] Cache/duplicates/RAM and QA resource release checked before, between, and after main work.
 
 ## Dependencies
 
@@ -32,12 +32,12 @@
 
 ## Result
 
-Было → стало: reader игнорировал завершённые message events и использовал только terminal output → text из output_item.done сохраняется по output_index, подтверждается terminal response.completed/status=completed и объединяется с aggregate без дублей. До правки регрессия воспроизвела точный LGT-response-content; после PASS. Пустой aggregate больше не теряет завершённый текст. Commentary/raw deltas/refusal/incomplete не становятся переводом; conflicting items отвергаются. Map ≤128 slots, wire/output ≤1 MiB, reader cancel/release и очистка Map в finally.
+Before → after: reader ignored completed message events and used only terminal output → text from output_item.done saved by output_index, confirmed by terminal response.completed/status=completed, and merged with aggregate without duplicates. Before fix, regression reproduced exact LGT-response-content; after PASS. Empty aggregate no longer loses completed text. Commentary/raw deltas/refusal/incomplete do not become translation; conflicting items rejected. Map ≤128 slots, wire/output ≤1 MiB, reader cancel/release and Map cleanup in finally.
 
-Общий content код разделён на фиксированные output/message/phase/status/part/empty/commentary/conflict причины. Код проходит port/public progress/localization без arbitrary body, metadata или текста; parser/cache не ослаблены и выбранный gpt-6-luna сохранён.
+General content code split into fixed output/message/phase/status/part/empty/commentary/conflict reasons. Code passes through port/public progress/localization without arbitrary body, metadata, or text; parser/cache not weakened and selected gpt-6-luna preserved.
 
-Typecheck/lint, 739 Vitest tests / 47 files, 9 manifest/hygiene tests, обе production builds и ZIP PASS. По 28 файлов / 24 referenced assets; ZIP Chrome 441 258 / Firefox 441 344 bytes, manifest=0.4.6, все архивные файлы совпадают через SHA-256 с проверенными сборками. Mozilla: errors/notices/warnings=0. В каждой платформе 8 browser groups, 1 340/1 340 узлов / 84 fixture requests, repeat из кэша 1 340 / 0 requests. Incomplete и empty completed ошибки не меняют исходный DOM/cache, фиксированные коды доходят до progress, pending=0.
+Typecheck/lint, 739 Vitest tests / 47 files, 9 manifest/hygiene tests, both production builds and ZIP PASS. 28 files / 24 referenced assets each; ZIP Chrome 441 258 / Firefox 441 344 bytes, manifest=0.4.6; all archive files match checked builds through SHA-256. Mozilla: errors/notices/warnings=0. On each platform, 8 browser groups, 1 340/1 340 nodes / 84 fixture requests, repeat from cache 1 340 / 0 requests. Incomplete and empty completed errors do not change original DOM/cache; fixed codes reach progress, pending=0.
 
-.cache до/между/после 5 652 files / 203 426 930 bytes, source duplicates/suspicious=0; QA/watch=0. Firefox освобождает 13 своих процессов / 1 368 829 952 bytes working set и собственный profile; Chrome context/profile закрыты. RAM snapshots сохранены, отсутствие всех возможных утечек не обещается. Свидетельства: docs/QA-SUBSCRIPTION.md, test-results/linguisty-response-stream/. Прежний UI chunk TD-002 остаётся открытым: 609 125 bytes.
+.cache before/between/after 5 652 files / 203 426 930 bytes, source duplicates/suspicious=0; QA/watch=0. Firefox frees 13 own processes / 1 368 829 952 bytes working set and own profile; Chrome context/profile closed. RAM snapshots saved; absence of every possible leak not promised. Evidence: docs/archive/QA-SUBSCRIPTION.md, test-results/linguisty-response-stream/. Previous UI chunk TD-002 remains open: 609 125 bytes.
 
-Реальный ответ пользователя не получен; совпадение причины LGT-response-content и live inference/точность Luna 6 не утверждаются. Подпись/публикация и native Chrome toolbar geometry не выполнены. Чужие процессы/кэш и WAL/WI-011 сохранены.
+Real user response not obtained; a matching LGT-response-content cause and live Luna 6 inference/accuracy are not asserted. Signing/publication and native Chrome toolbar geometry not performed. Others' processes/cache and WAL/WI-011 preserved.

@@ -1,11 +1,11 @@
-# WI-001: Документация и план Linguisty
+# WI-001: Linguisty documentation and plan
 
 - Kind: `change`
 - Canon action: `new-spec`
 
 ## Outcome
 
-Исходные материалы превращены в однозначные спецификации Linguisty для Firefox и Chrome, план с независимыми результатами и правила безопасной параллельной разработки.
+The source materials have been turned into unambiguous Linguisty specifications for Firefox and Chrome, a plan with independent outcomes, and rules for safe parallel development.
 
 ## Specs
 
@@ -20,17 +20,16 @@
 
 ## Scope
 
-- In: уточнение названия и Chrome, спецификации, карта, доска, WI, исследование, план, правила координации.
-- Out: публикация в магазинах и проверка платного API чужим ключом.
+- In: clarifying the name and Chrome support, specifications, map, board, WI, research, plan, and coordination rules.
+- Out: store publication and testing a paid API with someone else's key.
 
 ## Acceptance
 
-- [x] Требования исходного плана и дизайна учтены; приоритет новой просьбы пользователя явно записан.
-- [x] Название продукта Linguisty и обе платформы закреплены.
-- [x] Контракты, владение файлами, зависимости и проверяемая готовность определены до запуска исполнителей.
-- [x] Ссылки, ID и доска проверены; исходные материалы сохранены.
+- [x] The original plan and design requirements are accounted for; the priority of the user's new request is explicitly recorded.
+- [x] The product name Linguisty and both platforms are established.
+- [x] Contracts, file ownership, dependencies, and verifiable readiness are defined before implementers start.
+- [x] Links, IDs, and the board have been checked; source materials are preserved.
 
 ## Result
 
-2026-10-07: создано 8 активных спецификаций, 8 WI, план волн, research/development/testing docs, ownership и протоколы. Исходный план сохранён с явным обновлением названия/Chrome. Проверены 39 Markdown-файлов: локальные ссылки и anchors канонических spec:// ссылок существуют; шаблонные примеры протоколов исключены из проверки реальных project ID. Foundation typecheck прошёл; документация не утверждает готовность реализации. Дубли canon ID отсутствуют. Производные папки исключены из Git.
-
+2026-10-07: created 8 active specifications, 8 WIs, a wave plan, research/development/testing docs, ownership, and protocols. The original plan is preserved with an explicit name/Chrome update. Checked 39 Markdown files: local links and anchors of canonical spec:// links exist; protocol template examples were excluded from the real project ID check. Foundation typecheck passed; the documentation does not claim implementation readiness. No duplicate canon IDs. Derived folders are excluded from Git.

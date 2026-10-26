@@ -2,66 +2,68 @@
 status: active
 ---
 
-# INFRA-002: Локальные настройки, секреты и кэш {#root}
+# INFRA-002: Local settings, secrets, and cache {#root}
 
-Настройки и переводы остаются на устройстве пользователя. Сохранение ключа выбирается явно; повторный перевод использует ограниченный кэш с полным контекстом.
+Settings and translations remain on the user's device. Key persistence is chosen explicitly; repeated translation uses a bounded cache with full context.
 
-## Управление и границы {#governing}
+## Governing specs and scope {#governing}
 
-`spec://common/PROP-000-product#invariants`, `spec://common/PROP-001-contracts#types`, `spec://common/PROP-002-quality#resources`. Входит settings schema/migration, secret modes, IndexedDB, stats/pruning. Cloud sync и import/export вне v1.
+`spec://common/PROP-000-product#invariants`, `spec://common/PROP-001-contracts#types`, `spec://common/PROP-002-quality#resources`. Scope includes settings schema/migration, secret modes, IndexedDB, stats/pruning. Cloud sync and import/export are outside v1.
 
-## Настройки {#settings}
+## Settings {#settings}
 
-CLI-режимы используют ту же schemaVersion=1. При нормализации служебный baseUrl не используется как HTTP endpoint; пустая модель становится default, concurrency=1 и streaming=false. Переключение в CLI не удаляет прежний API-ключ; новый ключ из CLI-настроек не сохраняется. Provider/model сохраняют разделение кэша. Токены сторонних CLI не читаются.
+CLI modes use the same schemaVersion=1. During normalization, the internal baseUrl is not used as an HTTP endpoint; an empty model becomes default, concurrency=1, and streaming=false. Switching to CLI does not remove the previous API key; a new key from CLI settings is not saved. Provider/model retain cache separation. Third-party CLI tokens are not read.
 
-Codex сохраняет ту же schemaVersion=1: фиксированный OpenAI baseUrl, пустая модель становится default, concurrency=1 и streaming=false. Предыдущий API-ключ сохраняется для возврата в API-режим. Только несекретные host/client регистрационные ID хранятся отдельно. Access/refresh/ID tokens не записываются в browser storage, DOM или журнал; sub/email не сохраняются в storage или журнал. Подтверждённый email можно показать на странице подключения. Account scope кэша поступает из проверенной RAM-сессии по INFRA-004 и не хранится в Settings.
+Codex retains the same schemaVersion=1: fixed OpenAI baseUrl, an empty model becomes default, concurrency=1, and streaming=false. The previous API key is retained for returning to API mode. Only nonsecret host/client registration IDs are stored separately. Access/refresh/ID tokens are not written to browser storage, DOM, or logs; sub/email are not persisted in storage or logs. A verified email may be shown on the connection page. The cache account scope comes from a verified RAM session under INFRA-004 and is not stored in Settings.
 
-Settings schemaVersion=1, defaults из shared/constants, provider/model/languages/style/instructions/theme/keyMode/concurrency/batch/timeouts. Settings не содержат apiKey. Валидировать enum, длины, HTTP(S) endpoint, отсутствие credentials/query/hash, max customInstructions 4 000 chars. targetLanguageMode=browser/manual и uiLanguage=auto/поддержанный UI locale — независимые настройки. Fresh target определяется из browser preferred languages с fallback en при загрузке; DEFAULT_SETTINGS имеет безопасный статический en. В browser режиме loadSettings возвращает актуальный target; manual сохраняет BCP 47 выбор, распознаваемый Intl.getCanonicalLocales. Прежний валидный target без mode мигрирует в manual; секреты/model/source не сбрасываются. Сохранять только нормализованные разрешённые поля, неизвестные отбрасывать. Старый/повреждённый state безопасно нормализуется или отклоняется с понятной ошибкой. Save не стирает ключ, если поле ключа пустое/не передано; удаление отдельным действием.
+Settings schemaVersion=1, defaults from shared/constants, provider/model/languages/style/instructions/theme/keyMode/concurrency/batch/timeouts. Settings contain no apiKey. Validate enum values, lengths, HTTP(S) endpoint, absence of credentials/query/hash, and customInstructions max 4 000 chars. targetLanguageMode=browser/manual and uiLanguage=auto/supported UI locale are independent settings. A fresh target is determined from browser preferred languages with fallback en on load; DEFAULT_SETTINGS has safe static en. In browser mode, loadSettings returns the current target; manual preserves a BCP 47 choice recognized by Intl.getCanonicalLocales. A previously valid target without a mode migrates to manual; secrets/model/source are not reset. Save only normalized allowed fields and discard unknown ones. Old/corrupt state is safely normalized or rejected with a clear error. Save does not erase the key if the key field is empty/omitted; deletion is a separate action.
 
-Settings.streaming — boolean, default true; отсутствующее поле прежней schemaVersion=1 получает default без изменения keyMode/секрета. Выбор транспорта не входит в cache key, потому что не меняет язык/контекст перевода.
+Settings.streaming is boolean, default true; a missing field in the previous schemaVersion=1 receives the default without changing keyMode/secret. Transport choice is not part of the cache key because it does not change translation language/context.
 
-## Секреты {#secrets}
+## Secrets {#secrets}
 
-`persistent` — browser.storage.local, `session` — browser.storage.session. Default session. Переключение mode переносит существующий ключ в новый store и удаляет старую копию; удаление очищает обе. Session переживает остановку service worker, но заканчивается с browser session. Если API session storage недоступен, нельзя молча сохранять persistent; показать ограничение. Chrome storage local/session accessLevel TRUSTED_CONTEXTS устанавливается, когда API доступен. Content script не импортирует секретный helper и не читает storage. getSecretStatus возвращает hasKey/mode, getApiKey разрешён только background caller. Никогда не обещать шифрование local storage.
+`persistent` uses browser.storage.local, `session` uses browser.storage.session. Default is session. Switching mode transfers the existing key to the new store and removes the old copy; deletion clears both. Session survives service worker termination but ends with the browser session. If session storage API is unavailable, do not silently persist the key; show the limitation. Chrome storage local/session accessLevel TRUSTED_CONTEXTS is set when the API is available. Content scripts do not import the secret helper or read storage. getSecretStatus returns hasKey/mode; getApiKey is allowed only for a background caller. Never promise local storage encryption.
 
-При сохранении конфигурации persistent ключ и settings.keyMode записываются вместе одной операцией browser.storage.local.set. Переход в session сначала подготавливает session ключ, затем одной local записью сохраняет настройки и удаляет persistent значение; допустим null tombstone с последующим remove. При отказе операции прежние ключ/настройки восстанавливаются. Обычный перезапуск браузера и обновление браузера/постоянно установленного расширения не меняют local ключ или стабильный Firefox gecko ID. Удаление расширения, очистка профиля и снятие temporary install имеют ограничения браузера: расширение не может отменить удаление своих данных Firefox.
+When saving configuration, the persistent key and settings.keyMode are written together in one browser.storage.local.set operation. Switching to session first prepares the session key, then saves settings and removes the persistent value in one local write; a null tombstone followed by remove is allowed. If the operation fails, restore the previous key/settings. Ordinary browser restart and browser/permanently installed extension updates do not change the local key or stable Firefox gecko ID. Extension removal, profile clearing, and removal of a temporary install have browser limitations: the extension cannot prevent Firefox from deleting its data.
 
-Устаревший popup или options без явного изменения режима не переносит persistent ключ в session; актуальный режим берётся фоном при сохранении.
+A stale popup or options page without an explicit mode change does not transfer a persistent key into session; the background uses the current mode when saving.
 
-## Ключ кэша {#cache.key}
+## Cache key {#cache.key}
 
-Codex дополнительно включает проверенный accountScope из RAM-сессии в hash контекста; отсутствие валидного scope отклоняется. Смена аккаунта не получает прежний перевод из постоянного кэша. Токены и email не входят в ключ; API-провайдеры сохраняют прежний digest.
+Codex additionally includes verified accountScope from the RAM session in the context hash; absence of valid scope is rejected. Switching accounts does not retrieve the previous translation from persistent cache. Tokens and email are not part of the key; API providers retain their previous digest.
 
-SHA-256 от JSON с версией prompt, точным исходным текстом (допустима безопасная нормализация пробелов только если сохранено whitespace отображения), source/target, providerId, canonical baseUrl, model, style, customInstructions hash, pageContext.title/domain/contentType и соседними текстами/семантическими группами входного batch без transient node IDs. Ключи API исключены. Контекст cache lookup одинаков с фактическим prompt context: фраза не получает перевод из другой группы/batch на той же странице. TranslationEngine выполняет conservative dedup внутри равного контекста и remaps IDs без слияния узлов.
+SHA-256 of JSON containing prompt version, exact source text (safe whitespace normalization is allowed only if display whitespace is preserved), source/target, providerId, canonical baseUrl, model, style, customInstructions hash, pageContext.title/domain/contentType, and neighboring texts/semantic groups from the input batch without transient node IDs. API keys are excluded. Cache lookup context matches actual prompt context: a phrase does not receive translation from a different group/batch on the same page. TranslationEngine performs conservative dedup within equal context and remaps IDs without merging nodes.
 
-## Данные и операции {#cache.data}
+## Data and operations {#cache.data}
 
-IndexedDB запись: key, translated text, createdAt, accessedAt, estimatedBytes; schema version 1. TTL 30 дней; <=10 000 entries/50 MiB; LRU eviction. При quota/IDB unavailable перевод продолжает работать без кэша, ошибка не превращается в провал перевода. stats сообщает entries/estimatedBytes/hits/misses, timestamps не выдумываются. Clear действительно удаляет записи. Очистка и запись сериализованы там, где требуется атомарность.
+IndexedDB record: key, translated text, createdAt, accessedAt, estimatedBytes; schema version 1. TTL 30 days; <=10 000 entries/50 MiB; LRU eviction. With quota/IDB unavailable, translation continues without cache; a cache error does not become a translation failure. Stats reports entries/estimatedBytes/hits/misses; timestamps are not invented. Clear actually removes records. Clear and write are serialized where atomicity is required.
 
-## Контракт и восстановление {#contracts}
+## Contract and recovery {#contracts}
 
-Локальный журнал API хранится отдельной allowlist-записью в protected browser.storage.local: максимум 100 entries, 4 KiB на запись, 256 KiB суммарно, TTL 7 дней. Время/ID создаются фоном, неизвестные поля отбрасываются. Чтение/запись/clear сериализованы; TTL/count/size prune при чтении и записи. Хранилище журналов не содержит запросов, ключей или переводов. Диагностика очищается до передачи storage helper; ошибка записи журнала не заменяет исходную API-ошибку. UI читает журнал независимо от основной формы и может очистить только журнал.
+The local API log is stored as a separate allowlisted record in protected browser.storage.local: at most 100 entries, 4 KiB per entry, 256 KiB total, TTL 7 days. Time/ID are generated by the background; unknown fields are discarded. Read/write/clear are serialized; TTL/count/size pruning occurs on reads and writes. Log storage contains no requests, keys, or translations. Diagnostics are sanitized before passing to the storage helper; a log-write error does not replace the original API error. The UI reads the log independently of the main form and can clear only the log.
 
-Provider message/upstream message/request ID не входят в сохраняемые поля; API code/type допускаются только из конечного безопасного словаря. Ограниченная model поступает из собственных настроек запроса и очищается от секретов до передачи журналу. При чтении старых записей свободные поля отбрасываются и очищенные записи сохраняются обратно: старый нежелательный текст не возвращается в UI/clipboard.
+Provider message/upstream message/request ID are not among persisted fields; API code/type are allowed only from a finite safe vocabulary. The bounded model comes from the request's own settings and is sanitized for secrets before passing to the log. When old entries are read, free-form fields are discarded and sanitized entries are written back: old unwanted text does not return to UI/clipboard.
 
-Экспорты storage/settings.ts, storage/secrets.ts, cache/translationCache.ts, cache/cacheKey.ts перечислены в PROP-001. getTranslationCache возвращает один instance на background lifetime. dispose закрывает DB/отпускает ссылки. Миграция настройки не обнуляет ключ или переводы. По невозможности session mode сообщение соответствует фактическому браузеру.
+Exports of storage/settings.ts, storage/secrets.ts, cache/translationCache.ts, cache/cacheKey.ts are listed in PROP-001. getTranslationCache returns one instance per background lifetime. dispose closes the DB/releases references. Settings migration does not clear the key or translations. If session mode is unavailable, the message matches the actual browser.
 
-## Ошибки и готовность {#acceptance}
+## Errors and readiness {#acceptance}
 
-Тесты normalization, no-secret settings, session/persistent перехода, удаления обеих копий, cache context invalidation, TTL/LRU/size, concurrent writes, clear и отказа IDB. Секрет отсутствует в cache keys/data и public responses. `@spec` на helpers и tests.
+Tests cover normalization, no-secret settings, session/persistent transition, deletion of both copies, cache context invalidation, TTL/LRU/size, concurrent writes, clear, and IDB failure. Secrets are absent from cache keys/data and public responses. `@spec` on helpers and tests.
 
-## Связи и история {#changelog}
+## Relationships and history {#changelog}
 
-- 2026-10-12: ужесточена allowlist постоянного API-журнала после воспроизведённого сохранения короткого текста страницы; legacy свободные поля санируются при чтении.
+- 2026-10-26: translated into English and updated documentation paths; existing behavior, contracts, and limits preserved.
 
-- 2026-10-08: Codex использует RAM-сессию, сохраняет только несекретную регистрацию и разделяет кэш по проверенному аккаунту.
+- 2026-10-12: tightened the persistent API log allowlist after reproducing storage of short page text; legacy free-form fields are sanitized on read.
 
-- 2026-10-08: нормализация четырёх CLI provider IDs без миграции или удаления прежнего API-ключа.
+- 2026-10-08: Codex uses a RAM session, stores only nonsecret registration, and separates cache by verified account.
+
+- 2026-10-08: normalization of four CLI provider IDs without migration or deletion of the previous API key.
 Related: `spec://modules/translation/FEAT-001-engine#dedup`, `spec://modules/platform/INFRA-001-extension#permissions`.
-- 2026-10-07: bounded local storage и две формы сохранения ключа.
-- 2026-10-07: уточнено включение соседнего текстового контекста batch без transient IDs для коротких неоднозначных фраз.
-- 2026-10-08: совместная local запись ключа/режима, защита от устаревшего UI и явная граница temporary Firefox install.
-- 2026-10-08: отдельный ограниченный локальный журнал очищенных API diagnostics.
-- 2026-10-08: streaming default и совместимая миграция прежних настроек без изменения ключа.
-- 2026-10-08: targetLanguageMode/uiLanguage, browser-based fresh defaults и сохранение прежнего явно заданного target при миграции.
+- 2026-10-07: bounded local storage and two key persistence modes.
+- 2026-10-07: clarified inclusion of neighboring batch text context without transient IDs for short ambiguous phrases.
+- 2026-10-08: joint local key/mode write, protection against stale UI, and explicit temporary Firefox install boundary.
+- 2026-10-08: separate bounded local sanitized API diagnostics log.
+- 2026-10-08: streaming default and compatible migration of previous settings without changing the key.
+- 2026-10-08: targetLanguageMode/uiLanguage, browser-based fresh defaults, and retention of the previous explicitly selected target during migration.
 

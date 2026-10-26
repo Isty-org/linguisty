@@ -1,93 +1,93 @@
 # WAL-PROTOCOL
 
-## 1. Назначение {#purpose}
+## 1. Purpose {#purpose}
 
-`WAL.md` — короткая память незавершённой работы между сессиями.
+`WAL.md` is short-term memory for unfinished work between sessions.
 
-Он хранит checkpoint и следующий шаг для активного `WI-NNN`. Scope и acceptance живут в файле WI, статус и owner — в `BOARD.md`, история реализации — в Git.
+It stores a checkpoint and next step for an active `WI-NNN`. Scope and acceptance live in the WI file, status and owner in `BOARD.md`, and implementation history in Git.
 
-## 2. Когда нужен WAL {#when}
+## 2. When WAL is needed {#when}
 
-Создавай или обновляй WAL-checkpoint, если:
-- сессия заканчивается до завершения WI;
-- работу передают другому исполнителю или агенту;
-- исполнитель переключается на другой WI;
-- предстоит значимый деструктивный шаг;
-- нужно сохранить важный следующий шаг, временный блокер или ожидаемое решение.
+Create or update a WAL checkpoint if:
+- the session ends before the WI is completed;
+- work is handed to another assignee or agent;
+- the assignee switches to another WI;
+- a significant destructive step is imminent;
+- an important next step, temporary blocker, or awaited decision needs to be preserved.
 
-WAL не требуется:
-- для `Backlog`;
-- при старте work item;
-- для задачи, завершённой в одной сессии;
-- для лога мелких действий;
-- после перевода WI в `Done`.
+WAL is not required:
+- for `Backlog`;
+- when starting a work item;
+- for a task completed in one session;
+- as a log of small actions;
+- after moving the WI to `Done`.
 
-## 3. Структура {#structure}
+## 3. Structure {#structure}
 
-WAL содержит три секции:
+WAL contains three sections:
 - `## Active Checkpoints`;
 - `## Cross-work`;
 - `## Decisions Pending`.
 
-Завершённая история хранится в `specs/work/archive/` и Git. Секция `Completed` в новых проектах не используется. Существующие legacy-записи можно сохранить до отдельной миграции.
+Completed history is stored in `specs/work/archive/` and Git. New projects do not use a `Completed` section. Existing legacy entries may be preserved until a separate migration.
 
-## 4. Формат checkpoint {#format}
+## 4. Checkpoint format {#format}
 
 ```md
-### WI-011: Приглашение участника (@handle)
+### WI-011: Invite a member (@handle)
 - Work: [WI-011](work/WI-011-account-invite.md)
 - Updated: YYYY-MM-DD
-- Checkpoint: API и тест успешного сценария готовы.
-- Next: добавить ошибки повторного приглашения и проверить UI.
+- Checkpoint: The API and successful-scenario test are ready.
+- Next: add repeat-invitation errors and check the UI.
 - Blocker: —
 ```
 
-Обязательные поля:
+Required fields:
 - `Work`;
 - `Updated`;
 - `Checkpoint`;
 - `Next`;
 - `Blocker`.
 
-Один WI имеет одну активную секцию WAL.
+One WI has one active WAL section.
 
-## 5. Правила записи {#rules}
+## 5. Writing rules {#rules}
 
-- AI редактирует checkpoint своего `@handle`.
-- Чужие checkpoints используются как read-only контекст.
-- Новая секция добавляется в конец `Active Checkpoints`.
-- Summary не копирует scope, acceptance, список спек и историю коммитов.
-- `Checkpoint` описывает уже достигнутое состояние.
-- `Next` содержит ближайший конкретный шаг.
-- `Blocker` совпадает по смыслу с `BOARD.md`, если WI находится в `Blocked`.
+- AI edits checkpoints for its own `@handle`.
+- Others' checkpoints serve as read-only context.
+- A new section is appended to `Active Checkpoints`.
+- The summary does not copy scope, acceptance, the spec list, or commit history.
+- `Checkpoint` describes the state already achieved.
+- `Next` contains the nearest concrete step.
+- `Blocker` matches the meaning in `BOARD.md` if the WI is `Blocked`.
 
-`specs/.me` требуется перед изменением WAL.
+`specs/.me` is required before changing WAL.
 
-## 6. Возобновление {#resume}
+## 6. Resuming {#resume}
 
-При продолжении работы:
-1. открой файл WI;
-2. проверь статус и owner в `BOARD.md`;
-3. прочитай checkpoint;
-4. выполни `Next`;
-5. обнови checkpoint только при новом handoff или завершении сессии.
+When continuing work:
+1. open the WI file;
+2. check status and owner in `BOARD.md`;
+3. read the checkpoint;
+4. perform `Next`;
+5. update the checkpoint only at a new handoff or session end.
 
-Начало новой сессии само по себе не требует no-op правки WAL.
+Starting a new session alone does not require a no-op WAL edit.
 
-## 7. Завершение {#finish}
+## 7. Completion {#finish}
 
-При `Done`:
-1. перенеси значимые проверки и итог в `Result` файла WI;
-2. удали активную WAL-секцию;
-3. обнови `BOARD.md`;
-4. перенеси WI в архив.
+At `Done`:
+1. move significant checks and the outcome into the WI file's `Result`;
+2. remove the active WAL section;
+3. update `BOARD.md`;
+4. move the WI to the archive.
 
-Если item остаётся `In Progress` или `Blocked`, сохрани один актуальный checkpoint. Старые промежуточные формулировки не накапливаются.
+If the item remains `In Progress` or `Blocked`, preserve one current checkpoint. Do not accumulate old intermediate wording.
 
-## 8. Общие секции {#shared}
+## 8. Shared sections {#shared}
 
-`Cross-work` содержит только live-зависимости, которые влияют на ближайшую работу нескольких WI.
+`Cross-work` contains only live dependencies affecting the imminent work of several WIs.
 
-`Decisions Pending` содержит решения, ожидающие человека. После решения канонический результат переносится в owning spec или WI, а запись удаляется.
+`Decisions Pending` contains decisions awaiting the human. After a decision, its canonical outcome moves to the owning spec or WI, and the entry is removed.
 
-WAL пишет AI, человек верифицирует фактическое состояние.
+AI writes WAL; the human verifies the actual state.

@@ -1,11 +1,11 @@
-# WI-026: Корректный перевод через подписку ChatGPT
+# WI-026: Correct translation through ChatGPT subscription
 
 - Kind: `fix`
 - Canon action: `direct-edit`
 
 ## Outcome
 
-Перевод через подписку запрашивает строгий JSON и читает финальный ответ Responses без промежуточных пояснений; отказ сообщает безопасную причину. Причина конкретного живого сбоя не объявляется установленной без исходного ответа.
+Subscription translation requests strict JSON and reads the final Responses answer without intermediate explanations; failure reports a safe reason. The cause of a specific live failure is not declared established without the original response.
 
 ## Specs
 
@@ -18,16 +18,16 @@
 
 ## Scope
 
-- In: Responses text.format, final_answer/commentary, SSE framing, безопасные коды отказа перевода, regression/lifecycle tests, Chrome/Firefox smoke, обе сборки и пакеты.
-- Out: чтение пользовательских токенов/сырых ответов, изменение общего parser/cache, платные запросы, подмена выбранной модели.
+- In: Responses text.format, final_answer/commentary, SSE framing, safe translation failure codes, regression/lifecycle tests, Chrome/Firefox smoke, both builds and packages.
+- Out: reading user tokens/raw responses, changing shared parser/cache, paid requests, substituting the selected model.
 
 ## Acceptance
 
-- [x] Тесты до исправления воспроизводят отсутствие schema и смешение commentary с правильным JSON.
-- [x] Запрос содержит общую строгую schema в формате Responses; финальный ответ без phase совместим, commentary не смешивается с переводом.
-- [x] Незавершённые/ошибочные/refusal/oversized ответы не принимаются и не попадают в кэш; причины ограничены фиксированным списком.
-- [x] Typecheck/lint, осмысленные тесты, обе сборки, manifest/secret/resource checks и браузерный сценарий пройдены.
-- [x] Готовы обновлённые пакеты; живой сценарий и доступность выбранной пользователем модели описаны по фактам.
+- [x] Tests before the fix reproduce missing schema and commentary mixed with valid JSON.
+- [x] Request contains the shared strict schema in Responses format; final answer without phase remains compatible; commentary is not mixed into translation.
+- [x] Incomplete/failed/refusal/oversized responses are not accepted or cached; reasons limited to a fixed list.
+- [x] Typecheck/lint, meaningful tests, both builds, manifest/secret/resource checks, and browser scenario passed.
+- [x] Updated packages ready; live scenario and availability of the user's chosen model described factually.
 
 ## Dependencies
 
@@ -35,12 +35,12 @@
 
 ## Result
 
-Было → стало: prompt-only запрос и склейка всех assistant messages → общая strict schema в Responses text.format и отделение commentary от final_answer; SSE только LF/CRLF → LF/CRLF/CR через произвольные chunks. Общая ошибка → allowlisted LGT-response/translation код, сохранённый через port, safeError, progress и локализацию, без provider body или исходного текста. Запрос сохраняет выбранную пользователем Luna 6. Parser/cache не изменены; malformed/partial/refusal/oversized ответы не становятся успехом.
+Before → after: prompt-only request and concatenation of all assistant messages → shared strict schema in Responses text.format and commentary separated from final_answer; SSE only LF/CRLF → LF/CRLF/CR across arbitrary chunks. General error → allowlisted LGT-response/translation code preserved through port, safeError, progress, and localization, without provider body or source text. Request preserves the user's selected Luna 6. Parser/cache unchanged; malformed/partial/refusal/oversized responses do not become success.
 
-Три регрессии до правки — FAIL, после — PASS. Проверки 2026-10-09: typecheck/lint, 702 Vitest tests / 47 files, 15 Native fixtures, 9 manifest/hygiene tests, production builds/ZIP обеих платформ, manifest/secret/resource checks. Mozilla linter: 0 errors/notices/warnings. Внутренние manifest версии ZIP отдельно подтверждены как 0.4.4; исправлен оставшийся manifest version override 0.4.3. Chrome/Firefox: 28 файлов, 1 141 227 / 1 141 390 bytes до сжатия, ZIP 440 489 / 440 574 bytes.
+Three regressions before fix — FAIL, after — PASS. Checks on 2026-10-09: typecheck/lint, 702 Vitest tests / 47 files, 15 Native fixtures, 9 manifest/hygiene tests, production builds/ZIP for both platforms, manifest/secret/resource checks. Mozilla linter: 0 errors/notices/warnings. Internal ZIP manifest versions separately confirmed as 0.4.4; lingering manifest version override 0.4.3 fixed. Chrome/Firefox: 28 files, 1 141 227 / 1 141 390 bytes before compression, ZIP 440 489 / 440 574 bytes.
 
-Chromium 152.0.7977.8 и Firefox 157.0.1: по 8 групп PASS на неизменённых пакетах; в каждом 1 340/1 340 узлов, 84 fixture запроса, ошибок 0; повтор 1 340 из кэша / 0 новых запросов. Незавершённый ответ отклонён с LGT-response-completion, исходный DOM и кэш сохранены, pending 0. Auth/callback, 16 языков, secret boundary и reuse вкладки также проверены.
+Chromium 152.0.7977.8 and Firefox 157.0.1: 8 groups PASS each on unmodified packages; each has 1 340/1 340 nodes, 84 fixture requests, 0 errors; repeat 1 340 from cache / 0 new requests. Incomplete response rejected with LGT-response-completion, original DOM and cache preserved, pending 0. Auth/callback, 16 languages, secret boundary, and tab reuse also checked.
 
-Контроль ресурсов: .cache до/между/после 5 652 files / 203 426 930 bytes; новых source duplicates/suspicious=0. Firefox освободил 13 своих процессов / 1 276 989 440 bytes working set, profile removed=true, remainingOwnedProcesses=0; Chrome context/profile закрыты. Оставшихся QA/watch процессов 0. Чужие процессы/кэш сохранены, установка зависимостей не выполнялась. Общий UI chunk 608 946 bytes остаётся в TD-002. Свидетельства: test-results/linguisty-subscription-translation/{chrome,firefox,hygiene-final}.json и docs/QA-SUBSCRIPTION.md.
+Resource checks: .cache before/between/after 5 652 files / 203 426 930 bytes; new source duplicates/suspicious=0. Firefox freed 13 own processes / 1 276 989 440 bytes working set, profile removed=true, remainingOwnedProcesses=0; Chrome context/profile closed. Remaining QA/watch processes 0. Others' processes/cache preserved; no dependency installation. Shared UI chunk 608 946 bytes remains in TD-002. Evidence: test-results/linguisty-subscription-translation/{chrome,firefox,hygiene-final}.json and docs/QA-SUBSCRIPTION.md.
 
-Реальный inference Luna 6 и исходный ответ 22 ошибок не получены: причина конкретного пользовательского сбоя остаётся неподтверждённой. Исправления доказаны отдельно; новая сборка и безопасная диагностика готовы к повторной пользовательской проверке. Подпись Firefox и публикация не выполнялись.
+Real Luna 6 inference and original response from the 22 errors were not obtained: the cause of the specific user failure remains unconfirmed. Fixes proven independently; new build and safe diagnostics ready for another user check. Firefox signing and publication not performed.

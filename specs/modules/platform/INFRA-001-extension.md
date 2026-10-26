@@ -2,65 +2,67 @@
 status: active
 ---
 
-# INFRA-001: Платформы и фоновая координация {#root}
+# INFRA-001: Platforms and background coordination {#root}
 
-Одна кодовая база выпускает самостоятельные сборки Linguisty для Chrome и Firefox. Фон принимает команды, защищает ключи и координирует вкладки.
+One codebase produces independent Linguisty builds for Chrome and Firefox. The background receives commands, protects keys, and coordinates tabs.
 
-## Управление и границы {#governing}
+## Governing specs and scope {#governing}
 
-`spec://common/PROP-000-product#scope.in`, `spec://common/PROP-001-contracts#messages`, `spec://common/PROP-002-quality#resources`. Входит packaging, MV3, messaging, permissions, tab/session lifecycle. Магазинная публикация и подпись Firefox вне этого прохода.
+`spec://common/PROP-000-product#scope.in`, `spec://common/PROP-001-contracts#messages`, `spec://common/PROP-002-quality#resources`. Scope includes packaging, MV3, messaging, permissions, and tab/session lifecycle. Store publication and Firefox signing are outside this pass.
 
-## Окружения и сборка {#build}
+## Environments and build {#build}
 
-Node 22+, WXT 0.21.x, React, TypeScript. WXT browser-specific manifest: Chrome service_worker; Firefox background scripts/event page. Минимум Firefox 142/Chrome 120. Built-in data consent доступен с Firefox desktop 140/Android 142; общий gecko floor 142 устраняет предупреждение Mozilla linter без gecko_android и без заявления поддержки Android. Firefox 140–141 больше не входят в диапазон установки. Required websiteContent, browsingActivity и authenticationInfo отражают отправку текста, ограниченного доменного контекста и API-ключа только выбранному пользователем сервису. Флаг none был бы неверным: отсутствие нашего backend/telemetry не означает отсутствие передачи данных провайдеру. Popup и options без inline исполняемых скриптов; CSP только self. Отдельные `.output/chrome-mv3`, `.output/firefox-mv3` и zip. Firefox gecko ID — `linguisty@isty.local`; это локальный технический идентификатор, не адрес поддержки.
+Node 22+, WXT 0.21.x, React, TypeScript. WXT browser-specific manifest: Chrome service_worker; Firefox background scripts/event page. Minimum Firefox 142/Chrome 120. Built-in data consent is available from Firefox desktop 140/Android 142; the shared gecko floor of 142 removes the Mozilla linter warning without gecko_android or a claim of Android support. Firefox 140–141 are no longer within the installation range. Required websiteContent, browsingActivity, and authenticationInfo reflect transmission of text, limited domain context, and the API key only to the user's selected service. A none flag would be incorrect: absence of our backend/telemetry does not mean no data is sent to the provider. Popup and options have no inline executable scripts; CSP is self only. Separate `.output/chrome-mv3`, `.output/firefox-mv3`, and zip. Firefox gecko ID is `linguisty@isty.local`; this is a local technical identifier, not a support address.
 
-UI использует React nodes и текстовые children. Production-сборка отключает два unused raw-HTML setter React DOM (обычный/custom element): ненулевой dangerouslySetInnerHTML вызывает явную ошибку вместо разбора HTML. Никакого динамического HTML sanitizer или альтернативного HTML parser для этого не добавляется. Build guard проверяет ожидаемую форму upstream кода и останавливает сборку при изменении; исходная dependency на диске не модифицируется. Константное создание инертного script element внутри React сохраняется. Обновление React требует проверки guard и браузерного smoke.
+The UI uses React nodes and textual children. The production build disables two unused React DOM raw-HTML setters (ordinary/custom element): non-null dangerouslySetInnerHTML raises an explicit error instead of parsing HTML. No dynamic HTML sanitizer or alternative HTML parser is added for this. A build guard checks the expected upstream code shape and stops the build if it changes; the source dependency on disk is not modified. React's constant creation of an inert script element is preserved. Updating React requires checking the guard and a browser smoke test.
 
-Корневые `LICENSE` (MIT, Никита Цыжман @tsyzhman) и `THIRD_PARTY_NOTICES.txt` автоматически копируются в корень обеих сборок через WXT public assets hook. В Git хранится один источник каждого текста; в ZIP входят точные копии. Manifest/resource inspection отклоняет отсутствие или изменение этих файлов. OFL-лицензии шрифтов остаются в `fonts/` без изменения.
+Root `LICENSE` (MIT, Nikita Tsyzhman @tsyzhman) and `THIRD_PARTY_NOTICES.txt` are automatically copied into both build roots through the WXT public assets hook. Git stores one source for each text; ZIPs contain exact copies. Manifest/resource inspection rejects missing or changed files. Font OFL licenses remain unchanged in `fonts/`.
 
-## Разрешения {#permissions}
+## Permissions {#permissions}
 
-Для CLI объявлен optional nativeMessaging. Только пользовательское действие options/popup запрашивает его; перед вызовом CLI фон проверяет grant. Content не имеет прямого native канала. Одноразовая регистрация системного host закреплена в spec://modules/platform/INFRA-003-local-cli#acceptance.
+Optional nativeMessaging is declared for CLIs. Only a user action in options/popup requests it; the background checks the grant before invoking a CLI. Content has no direct native channel. One-time system host registration is defined in `spec://modules/platform/INFRA-003-local-cli#acceptance`.
 
-Обязательные activeTab, scripting, storage и declarativeNetRequestWithHostAccess для собственного Codex callback. DNR не получает host access автоматически: доступ остаётся optional и запрашивается кликом только для OpenAI/loopback по INFRA-004. Нет обязательного `<all_urls>` или постоянного content script. `entrypoints/translate.ts` — unlisted script, injected по пользовательской команде. API origins запрашиваются как optional host permissions из options при пользовательском жесте. Произвольные HTTPS endpoints разрешены; HTTP разрешён только localhost/127.0.0.1/[::1] для локального gateway. URL с credentials/query/hash отклоняется. Запрос никогда не следует внешнему redirect с Authorization: redirect error.
+Required activeTab, scripting, storage, and declarativeNetRequestWithHostAccess for the owned Codex callback. DNR does not automatically receive host access: access remains optional and is requested by a click only for OpenAI/loopback under INFRA-004. No required `<all_urls>` or permanent content script. `entrypoints/translate.ts` is an unlisted script injected on the user's command. API origins are requested as optional host permissions from options during a user gesture. Arbitrary HTTPS endpoints are allowed; HTTP is allowed only for localhost/127.0.0.1/[::1] local gateways. URLs with credentials/query/hash are rejected. A request never follows an external redirect with Authorization: redirect error.
 
 ## Runtime {#runtime}
 
-Listener регистрируется синхронно. UI sender проверяется по runtime.id и собственной extension URL; content — runtime.id, tabId, frameId=0, sessionId. GET_SETTINGS возвращает только настройки; secret status — boolean/mode. START injects translate.js один раз и sends CONTENT_COMMAND.start. GET_TAB_STATE после закрытия popup восстанавливает прогресс. URL chrome://, about:, extension pages и закрытые вкладки возвращают RESTRICTED_PAGE/безопасную ошибку. Провайдерный origin проверяется перед запросом. Tab close/nav отменяет очередь и удаляет snapshot; page script отдельно отслеживает SPA и изменившийся DOM.
+The listener is registered synchronously. UI senders are checked by runtime.id and owned extension URL; content by runtime.id, tabId, frameId=0, sessionId. GET_SETTINGS returns settings only; secret status is boolean/mode. START injects translate.js once and sends CONTENT_COMMAND.start. GET_TAB_STATE restores progress after popup closure. URLs chrome://, about:, extension pages, and closed tabs return RESTRICTED_PAGE/a safe error. The provider origin is checked before a request. Tab close/navigation cancels the queue and removes the snapshot; the page script separately tracks SPA and changed DOM.
 
-Фоновый deadline TRANSLATE_BATCH охватывает ограниченные retries и адаптивное дробление по PROP-002. Per-attempt timeout провайдера не обрывает весь batch раньше восстановления. При общем deadline освобождаются batch, preview и abort listeners; UI-команды сохраняют отдельные короткие deadlines.
+The background TRANSLATE_BATCH deadline covers bounded retries and adaptive splitting under PROP-002. A provider per-attempt timeout does not end the entire batch before recovery. At the overall deadline, batch, preview, and abort listeners are released; UI commands retain separate short deadlines.
 
-## Состояние и восстановление {#recovery}
+## State and recovery {#recovery}
 
-Background пересылает cumulative preview текущей batch через CONTENT_COMMAND.batch-progress. Один pending snapshot и один cancelable 100 ms timer на batch; отправка последовательна, без неограниченной очереди frames. После settlement, abort, tab close или dispose pending data очищаются. Preview не хранится в session snapshots; восстановленная сессия повторяет только незавершённую batch.
+The background forwards the current batch's cumulative preview through CONTENT_COMMAND.batch-progress. One pending snapshot and one cancelable 100 ms timer per batch; sending is sequential, without an unbounded frame queue. After settlement, abort, tab close, or dispose, pending data is cleared. Preview is not stored in session snapshots; a restored session retries only the unfinished batch.
 
-В browser.storage.session лежат bounded snapshots settings/sessionId/tabId и safe progress. Ключ хранится отдельным секретным storage helper. После остановки worker фон восстанавливает session settings перед обработкой content batch; in-flight запрос при остановке может быть потерян, но UI не висит бессрочно и страницу можно повторно перевести. Snapshot не содержит HTML/тексты. Откат — удалить unpacked/temp install; настройки не мигрируются разрушительно.
+browser.storage.session contains bounded settings/sessionId/tabId snapshots and safe progress. The key is stored by a separate secret storage helper. After worker termination, the background restores session settings before handling a content batch; an in-flight request may be lost when the worker stops, but the UI does not hang indefinitely and the page can be translated again. A snapshot contains no HTML/texts. Rollback means removing the unpacked/temporary install; settings are not destructively migrated.
 
-Настройки, ключи и кэш не ждут восстановления tab snapshots. Отказ session read/write не блокирует конфигурацию; page/session команды получают безопасную ошибку восстановления и могут повторить его при следующем запросе. Snapshot restore ограничен временем; поздний результат отменённой попытки не заменяет актуальные sessions. Нет бесконечного списка ожидающих сообщений.
+Settings, keys, and cache do not wait for tab snapshot restoration. A failed session read/write does not block configuration; page/session commands receive a safe recovery error and may retry recovery on the next request. Snapshot restore is time-bounded; a late result from a canceled attempt does not replace current sessions. There is no infinite list of pending messages.
 
-## Ошибки и наблюдаемость {#errors}
+## Errors and observability {#errors}
 
-Проверка типов payload, permissions denial, injection unavailable, API key missing, invalid settings, background wake/restart, stale session. Логи не содержат secrets/provider body. Никакой телеметрии. Проверяемые ошибки возвращаются ApiResult.
+Payload type validation, permissions denial, injection unavailable, missing API key, invalid settings, background wake/restart, stale session. Logs contain no secrets/provider body. No telemetry. Handled errors return ApiResult.
 
-Background подключает provider reporter к protected локальному журналу. Один финальный сетевой сбой создаёт одну запись даже при нескольких engine consumers. GET_ERROR_LOG/CLEAR_ERROR_LOG проверяют собственную extension URL отправителя и не зависят от session recovery. Диагностика не попадает в tab state, snapshots или content replies.
+The background connects the provider reporter to the protected local log. One final network failure creates one entry even with multiple engine consumers. GET_ERROR_LOG/CLEAR_ERROR_LOG validate the sender's owned extension URL and do not depend on session recovery. Diagnostics do not enter tab state, snapshots, or content replies.
 
-## Трассировка и готовность {#acceptance}
+## Traceability and readiness {#acceptance}
 
-`@spec` на background controller, entrypoint и manifest config. Оба production manifest валидны; UI→фон→контент→фон работает; key читает только фон; закрытие вкладки очищает состояние; Chrome SW и Firefox event page не смешаны; сборки не содержат development server.
+`@spec` on background controller, entrypoint, and manifest config. Both production manifests are valid; UI→background→content→background works; only the background reads the key; tab closure clears state; Chrome SW and Firefox event page are not mixed; builds contain no development server.
 
-## Связи и история {#changelog}
+## Relationships and history {#changelog}
 
-- 2026-10-20: MIT и сторонние notices включаются в обе сборки и проверяются перед выпуском.
+- 2026-10-26: translated into English and updated documentation paths; existing behavior, contracts, and limits preserved.
 
-- 2026-10-08: возврат Codex OAuth через временное правило собственной вкладки; declarativeNetRequestWithHostAccess требуется при установке, host-доступ запрашивается кнопкой.
+- 2026-10-20: MIT and third-party notices are included in both builds and checked before release.
 
-- 2026-10-08: optional nativeMessaging и keyless CLI branch в фоновом controller.
+- 2026-10-08: Codex OAuth return through a temporary rule for an owned tab; declarativeNetRequestWithHostAccess is required at install, host access is requested by a button.
+
+- 2026-10-08: optional nativeMessaging and a keyless CLI branch in the background controller.
 Related: `spec://modules/storage/INFRA-002-local-data#secrets`, `spec://modules/page/FEAT-002-page-translation#sessions`.
-- 2026-10-07: обе платформы первой версии и security/runtime boundary.
-- 2026-10-07: уточнён Firefox минимум 140 и фактическая provider data transmission по Mozilla built-in consent documentation.
-- 2026-10-07: WI-011 — общий Firefox floor 142 без Android support и production guard неиспользуемых React raw-HTML setters для чистой Mozilla validation.
-- 2026-10-08: конфигурация независима от восстановления snapshots, восстановление ограничено и допускает повторную попытку.
-- 2026-10-08: provider reporter и UI-only локальный журнал diagnostics.
-- 2026-10-08: ограниченная последовательная пересылка preview и освобождение данных при завершении batch.
-- 2026-10-08: общий bounded deadline batch учитывает provider retries и последовательное recovery.
+- 2026-10-07: both first-version platforms and the security/runtime boundary.
+- 2026-10-07: clarified Firefox minimum 140 and actual provider data transmission according to Mozilla built-in consent documentation.
+- 2026-10-07: WI-011 — shared Firefox floor 142 without Android support and production guard for unused React raw-HTML setters for clean Mozilla validation.
+- 2026-10-08: configuration is independent of snapshot restoration; recovery is bounded and can be retried.
+- 2026-10-08: provider reporter and UI-only local diagnostics log.
+- 2026-10-08: bounded sequential preview forwarding and data release on batch completion.
+- 2026-10-08: the overall bounded batch deadline accounts for provider retries and sequential recovery.
 

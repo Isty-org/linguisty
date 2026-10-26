@@ -1,139 +1,139 @@
 ---
 type: reference
 project: Isty
-title: Дизайн-система Isty
+title: Isty Design System
 date: 2026-07-01
 status: canonical
 optional_visual_example: Isty Canonical Design Reference/concepts/index.html
 ---
 
-# Дизайн-система Isty
+# Isty Design System
 
-Этот документ фиксирует новый визуальный язык Isty после ребрендинга. Его задача — дать достаточно конкретики, чтобы по нему можно было собрать лендинг, презентацию, коммерческое предложение, интерфейсную обложку, пост в соцсетях или внутренний экран без потери характера бренда.
+This document records Isty's new visual language after the rebrand. Its purpose is to provide enough detail to build a landing page, presentation, business proposal, interface cover, social media post, or internal screen without losing the brand's character.
 
-Дополнительный визуальный пример лежит рядом с документом:
+An additional visual example sits alongside the document:
 
 `Isty Canonical Design Reference/concepts/index.html`
 
-Архив старых поисковых вариантов вынесен отдельно:
+The archive of earlier exploratory variations is stored separately:
 
 `landing-hero-rebrand/_archive_old_designs/`
 
 ---
 
-## 1. Основная идея
+## 1. Core idea
 
-Стиль Isty называется **Retro Orbit Editorial**.
+Isty's style is called **Retro Orbit Editorial**.
 
-Это редакционная, постерная и интерфейсная система для компании, которая работает со сложными процессами, ИИ-контурами и передачей решений команде. Визуально стиль соединяет:
+It is an editorial, poster, and interface system for a company that works with complex processes, AI systems, and handing solutions over to a team. Visually, the style combines:
 
-- крупную наклонную типографику;
-- фиолетово-шалфейную палитру;
-- темную графитовую базу;
-- светлую бумажную альтернативу;
-- зернистую печатную фактуру;
-- центральную человеческую сцену;
-- строгие UI-панели;
-- орбитальные линии и контуры;
-- ощущение спокойного движения.
+- large italic typography;
+- a violet-and-sage palette;
+- a dark graphite base;
+- a light paper alternative;
+- a grainy print texture;
+- a central human scene;
+- restrained UI panels;
+- orbital lines and contours;
+- a sense of calm movement.
 
-Главная эмоция: **сложный рабочий процесс становится видимым, собранным и живым**.
+The main emotion: **a complex workflow becomes visible, organized, and alive**.
 
-Isty говорит не языком абстрактной AI-фантастики, а языком людей, рабочих обстоятельств и понятной системы. Космос и орбиты используются как метафора исследования, масштаба и навигации. Главными остаются люди, работа, контур процесса и передача результата.
+Isty speaks in the language of people, working circumstances, and an understandable system rather than abstract AI science fiction. Space and orbits serve as metaphors for exploration, scale, and navigation. People, work, the process framework, and handing over the result remain central.
 
 ---
 
-## 2. Бренд-ядро
+## 2. Brand core
 
-### 2.1. Кто мы
+### 2.1. Who we are
 
-**Isty — студия ИИ-автоматизации, которая проектирует рабочие контуры для процессов, интеграций, интерфейсов и передачи решений команде.**
+**Isty is an AI automation studio that designs working systems for processes, integrations, interfaces, and handing solutions over to a team.**
 
-Мы собираем:
+We assemble:
 
-- карты процессов;
-- роли и зоны ответственности;
-- сценарии и исключения;
-- интеграции между сервисами;
-- интерфейсы для команды;
-- журналы событий и статусы;
-- инструкции для передачи;
-- ИИ-ассистентов и автоматизацию там, где это усиливает процесс.
+- process maps;
+- roles and areas of responsibility;
+- scenarios and exceptions;
+- integrations between services;
+- interfaces for the team;
+- event logs and statuses;
+- handover instructions;
+- AI assistants and automation where they strengthen the process.
 
-### 2.2. Обещание
+### 2.2. Promise
 
-Isty помогает бизнесу собрать рабочий контур вокруг людей: роли становятся понятными, рутина уходит в систему, команда видит следующий шаг.
+Isty helps businesses assemble a working system around people: roles become clear, routine work moves into the system, and the team sees its next step.
 
-### 2.3. Смысловые опоры
+### 2.3. Meaning pillars
 
-| Опора | Что означает | Как проявляется визуально |
+| Pillar | Meaning | Visual expression |
 |---|---|---|
-| Легкость | Процесс становится спокойнее и понятнее | крупный слоган, чистая структура, мягкие переходы |
-| Контур | У процесса появляются границы и маршрут | орбитальные линии, сетка, шаги, панели |
-| Люди | Система строится вокруг команды | реальные человеческие сцены, рабочие ситуации |
-| Передача | Результат можно развивать без постоянной зависимости | UI-блоки, шаги, статусы, документация |
-| Исследование | Isty умеет заходить в сложное и неизвестное | космический свет, орбиты, необычные обстоятельства |
+| Ease | The process becomes calmer and clearer | a large slogan, clean structure, soft transitions |
+| Framework | The process gains boundaries and a route | orbital lines, grid, steps, panels |
+| People | The system is built around the team | real human scenes, working situations |
+| Handover | The result can evolve without constant dependency | UI blocks, steps, statuses, documentation |
+| Exploration | Isty can enter complex and unknown territory | space lighting, orbits, unusual circumstances |
 
 ---
 
-## 3. Паттерн первого экрана
+## 3. First-screen pattern
 
-Первый экран в стиле **Retro Orbit Editorial / Violet Sage Orbit** строится вокруг постерности, крупной типографики, человеческой сцены, интерфейсных панелей и ощущения процесса.
+The first screen in **Retro Orbit Editorial / Violet Sage Orbit** is built around a poster aesthetic, large typography, a human scene, interface panels, and a sense of process.
 
-Тексты, длина заголовка, конкретная компоновка, CTA и подписи шагов подбираются под задачу носителя: лендинг, презентацию, коммерческое предложение, продуктовую страницу или внутренний экран.
+Copy, heading length, specific composition, CTA, and step labels are chosen for the format's task: landing page, presentation, business proposal, product page, or internal screen.
 
-В первом экране важно держать:
+The first screen should retain:
 
-1. Смысловую колонку с крупным заголовком и спокойным объяснением.
-2. Центральную постерную сцену с человеком и рабочим контекстом.
-3. UI-панель, которая добавляет ощущение системы, статусов или процесса.
-4. Зону действия: CTA, следующий шаг, короткое пояснение или статус.
-5. Шапку с брендом и навигационными элементами.
+1. A meaning-focused column with a large heading and calm explanation.
+2. A central poster scene with a person and working context.
+3. A UI panel that adds a sense of system, statuses, or process.
+4. An action area: CTA, next step, short explanation, or status.
+5. A header with branding and navigation elements.
 
-Можно менять:
+You may change:
 
-- количество колонок;
-- порядок информационных блоков;
-- длину заголовка и подзаголовка;
-- наличие или форму UI-панели;
-- текст CTA;
-- количество шагов;
-- подписи, метки, статусы и микро-копирайтинг.
+- number of columns;
+- order of information blocks;
+- heading and subheading length;
+- presence or shape of the UI panel;
+- CTA text;
+- number of steps;
+- captions, labels, statuses, and microcopy.
 
-Сохранять:
+Preserve:
 
-- крупный редакционный заголовок;
-- человеческую сцену в центре визуального внимания;
-- сочетание постера и интерфейса;
-- фиолетово-шалфейный акцент;
-- орбитальную или контурную графику;
-- ощущение, что за экраном есть рабочий процесс.
+- a large editorial heading;
+- a human scene at the center of visual attention;
+- the combination of poster and interface;
+- the violet-and-sage accent;
+- orbital or contour graphics;
+- the sense that a working process exists behind the screen.
 
 ---
 
-## 4. Цветовая система
+## 4. Color system
 
-Палитра зафиксирована вокруг двух основных акцентов: violet и sage. Остальные цвета поддерживают печатную фактуру, графитовую глубину и светлую бумажную тему.
+The palette is built around two main accents: violet and sage. The other colors support the print texture, graphite depth, and light paper theme.
 
-### 4.1. Основные токены
+### 4.1. Primary tokens
 
-| Токен | HEX | Роль |
+| Token | HEX | Role |
 |---|---:|---|
-| `violet` | `#b9a6f2` | главный активный цвет, CTA, выбранные состояния, орбитальные акценты |
-| `violet-2` | `#8d71cb` | более глубокий фиолетовый для заголовков, активных линий и плотных состояний |
-| `sage` | `#9eb58f` | живое действие, этапы, подтверждения, мягкие команды |
-| `sage-2` | `#6f8a65` | плотный шалфейный тон для текста, hover и выбранных строк |
-| `ink` | `#121018` | темный графитовый фон |
-| `ink-2` | `#17131d` | основной темный текст и панели |
-| `cream` | `#f5f0e6` | основной светлый текст на темном фоне |
-| `paper` | `#f3ead8` | светлая бумажная поверхность |
-| `paper-2` | `#efe8d8` | правая светлая зона, вторичные поверхности |
-| `paper-shadow` | `#d9cfbd` | общий фон светлой темы |
-| `orange-soft` | `#f0b27a` | очень опциональный пастельный оранжевый для редких вайбовых акцентов |
+| `violet` | `#b9a6f2` | primary active color, CTA, selected states, orbital accents |
+| `violet-2` | `#8d71cb` | deeper violet for headings, active lines, and denser states |
+| `sage` | `#9eb58f` | lively action, stages, confirmations, gentle commands |
+| `sage-2` | `#6f8a65` | dense sage tone for text, hover, and selected rows |
+| `ink` | `#121018` | dark graphite background |
+| `ink-2` | `#17131d` | primary dark text and panels |
+| `cream` | `#f5f0e6` | primary light text on a dark background |
+| `paper` | `#f3ead8` | light paper surface |
+| `paper-2` | `#efe8d8` | light right-hand area, secondary surfaces |
+| `paper-shadow` | `#d9cfbd` | overall light-theme background |
+| `orange-soft` | `#f0b27a` | highly optional pastel orange for occasional atmospheric accents |
 
-### 4.2. Темная тема
+### 4.2. Dark theme
 
-Темная тема дает эффектность, контраст и постерную силу. Она подходит, когда задаче нужен первый визуальный удар, ощущение глубины, вечерний тон, космический слой или плотная презентационная подача.
+The dark theme provides impact, contrast, and poster strength. It suits tasks needing immediate visual impact, a sense of depth, an evening tone, a space layer, or dense presentation.
 
 ```css
 :root {
@@ -147,7 +147,7 @@ Isty помогает бизнесу собрать рабочий контур 
 }
 ```
 
-Фон hero:
+Hero background:
 
 ```css
 linear-gradient(
@@ -158,19 +158,19 @@ linear-gradient(
 );
 ```
 
-Принцип темной темы:
+Dark-theme principle:
 
-- левый и правый края держат графитовую глубину;
-- центральная зона светится фиолетовым;
-- шалфей отвечает за живое действие и активный шаг;
-- кремовый текст работает крупно и спокойно;
-- внешнее свечение у основной CTA не используется.
+- left and right edges retain graphite depth;
+- the central area glows violet;
+- sage represents lively action and the active step;
+- cream text works at a large scale with a calm tone;
+- the primary CTA has no outer glow.
 
-### 4.3. Светлая тема
+### 4.3. Light theme
 
-Светлая тема дает дневную бумажную версию стиля. Она подходит, когда задаче нужны воздух, спокойное чтение, документальность, ощущение открытой рабочей среды или более мягкое доверие.
+The light theme provides a daytime paper version of the style. It suits tasks needing space, calm reading, a documentary feel, an open working environment, or a gentler sense of trust.
 
-Фон hero:
+Hero background:
 
 ```css
 linear-gradient(
@@ -181,52 +181,52 @@ linear-gradient(
 );
 ```
 
-Принцип светлой темы:
+Light-theme principle:
 
-- левый блок остается бумажным и чистым;
-- центр сохраняет фиолетовую сцену;
-- правая зона светлая, с плотностью внутри UI-блоков;
-- CTA получает мягкую тень;
-- текст кнопок спокойнее по весу.
+- the left block stays clean and paper-like;
+- the center retains the violet scene;
+- the right area is light, with density inside UI blocks;
+- the CTA receives a soft shadow;
+- button text uses a calmer weight.
 
-### 4.4. Баланс цвета
+### 4.4. Color balance
 
-Для первого экрана:
+For the first screen:
 
-- 45-55% графит или бумага;
-- 25-35% фиолетовая центральная зона;
-- 10-15% UI-панели и линии;
-- 5-10% шалфейные акценты.
+- 45-55% graphite or paper;
+- 25-35% violet central area;
+- 10-15% UI panels and lines;
+- 5-10% sage accents.
 
-### 4.5. Опциональный оранжевый
+### 4.5. Optional orange
 
-`orange-soft` — спецакцент из ранних визуальных поисков Isty. Он нужен для исключительных случаев, когда экрану требуется немного тёплого ретро-вайба: маленькая метка, тонкий glow, микро-деталь в иллюстрации, редкий градиентный перелив.
+`orange-soft` is a special accent from Isty's early visual explorations. Use it exceptionally when a screen needs a little warm retro atmosphere: a small label, subtle glow, tiny illustration detail, or occasional gradient shimmer.
 
-Правило применения:
+Application rule:
 
-- 1-3% площади экрана;
-- только как атмосферный акцент;
-- рядом с violet, sage, graphite или paper;
-- без роли основного CTA, статуса успеха или системного цвета.
+- 1-3% of screen area;
+- only as an atmospheric accent;
+- alongside violet, sage, graphite, or paper;
+- never as the primary CTA, success status, or system color.
 
-Для внутренних материалов:
+For internal materials:
 
-- больше бумаги и воздуха;
-- меньше постерной плотности;
-- фиолетовый используется для выбранного состояния;
-- шалфей используется для действия, подтверждения и живого статуса.
+- more paper and open space;
+- less poster density;
+- violet indicates the selected state;
+- sage indicates action, confirmation, and live status.
 
 ---
 
-## 5. Типографика
+## 5. Typography
 
-Основная гарнитура: **Onest**.
+Primary typeface: **Onest**.
 
-Техническая гарнитура: **JetBrains Mono**.
+Technical typeface: **JetBrains Mono**.
 
 ### 5.1. Hero H1
 
-Hero H1 — главный визуальный сигнал Isty.
+Hero H1 is Isty's primary visual signal.
 
 ```css
 font-family: Onest, system-ui, sans-serif;
@@ -239,30 +239,30 @@ text-transform: uppercase;
 text-wrap: balance;
 ```
 
-Правила:
+Rules:
 
-- строки короткие;
-- слово-акцент может быть фиолетовым;
-- переносы проектируются вручную;
-- H1 держит постерный масштаб, редакционный характер и ощущение первого визуального удара.
+- keep lines short;
+- an accent word may be violet;
+- design line breaks manually;
+- H1 maintains poster scale, editorial character, and immediate visual impact.
 
-### 5.2. Межстрочный интервал кириллических заголовков
+### 5.2. Line spacing for Cyrillic headings
 
-Крупная кириллица в Onest требует дополнительного запаса между строками. Это особенно заметно в сочетаниях с буквами `Й`, `Д`, `Ц`, `Щ`, `У`, `д`, `р` и `у`.
+Large Cyrillic in Onest requires extra room between lines. This is especially visible in combinations containing the Cyrillic letters `Й`, `Д`, `Ц`, `Щ`, `У`, `д`, `р`, and `у`.
 
-Базовые значения:
+Base values:
 
-- многострочный H1: `line-height: 1.04`;
-- многострочный H2: `line-height: 1.03`;
-- H1 и H2 на mobile: `line-height: 1.06`;
-- рабочий диапазон после визуальной проверки: `1.02–1.08`;
-- наклонный капс начинается с `1.04`.
+- multiline H1: `line-height: 1.04`;
+- multiline H2: `line-height: 1.03`;
+- H1 and H2 on mobile: `line-height: 1.06`;
+- working range after visual checking: `1.02–1.08`;
+- italic uppercase starts at `1.04`.
 
-Значение ниже `1.0` применяется только в однострочной постерной композиции. При появлении второй строки заголовок возвращается к базовому межстрочному интервалу.
+A value below `1.0` is used only in a single-line poster composition. If a second line appears, restore the heading's base line spacing.
 
-Заголовок проверяется с реальным русским текстом на всех целевых ширинах. Между строками сохраняется видимый просвет, диакритика и выносные элементы не соприкасаются с соседней строкой.
+Check the heading with actual Russian text at all target widths. Keep a visible gap between lines; diacritics and ascenders or descenders must not touch the adjacent line.
 
-### 5.3. Подзаголовок
+### 5.3. Subheading
 
 ```css
 font-size: clamp(18px, 1.5vw, 24px);
@@ -270,7 +270,7 @@ line-height: 1.18;
 text-transform: uppercase;
 ```
 
-Подзаголовок держит смысловую плотность. Он должен быть короче обычного абзаца и работать как редакционный лид.
+The subheading keeps the meaning concentrated. It should be shorter than an ordinary paragraph and work as an editorial lead.
 
 ### 5.4. Lead
 
@@ -279,22 +279,22 @@ font-size: 15px;
 line-height: 1.55;
 ```
 
-Lead говорит человечески, без перегруза терминами. Он объясняет, что Isty делает для команды.
+The lead speaks in human terms without excessive terminology. It explains what Isty does for the team.
 
-### 5.5. UI-текст
+### 5.5. UI text
 
-Панели, шаги и подписи:
+Panels, steps, and captions:
 
-- номера: `JetBrains Mono`, `11px`;
-- строки шагов: `13px`;
-- крупная метрика или статус: `24px` для числа/ключа, `13px` для пояснения;
-- навигация: `14px`, вес `600`.
+- numbers: `JetBrains Mono`, `11px`;
+- step rows: `13px`;
+- large metric or status: `24px` for the number/key, `13px` for the explanation;
+- navigation: `14px`, weight `600`.
 
 ---
 
-## 6. Сетка и композиция
+## 6. Grid and composition
 
-Одна из рабочих сеток hero:
+One workable hero grid:
 
 ```css
 grid-template-columns:
@@ -303,14 +303,14 @@ grid-template-columns:
   minmax(250px, 23%);
 ```
 
-Логика:
+Logic:
 
-- левая колонка — смысл;
-- центральная колонка — постер;
-- системная зона — статус, маршрут, метрика или доказательство;
-- зона действия — CTA, следующий шаг или короткое пояснение.
+- the left column carries meaning;
+- the central column is the poster;
+- the system area shows status, route, metric, or evidence;
+- the action area contains a CTA, next step, or short explanation.
 
-### 6.1. Отступы
+### 6.1. Spacing
 
 ```css
 .page {
@@ -323,31 +323,31 @@ grid-template-columns:
 }
 ```
 
-Правила:
+Rules:
 
-- hero должен выглядеть как цельный постерный лист;
-- элементы не должны попадать случайно на границы цветовых зон;
-- центральная карточка должна иметь стабильный размер;
-- UI-панель должна читаться как часть системы: статус, процесс, доказательство или следующий шаг.
+- the hero should look like one complete poster sheet;
+- elements must not accidentally fall on color-zone boundaries;
+- the central card must have a stable size;
+- the UI panel must read as part of a system: status, process, evidence, or next step.
 
 ### 6.2. Mobile
 
-На мобильном:
+On mobile:
 
-- заголовок идет первым;
-- CTA поднимается выше постера;
-- постер остается крупным;
-- UI-панель уходит ниже;
-- цветовой акцент переносится в зону постера;
-- текстовая зона остается спокойной и читаемой.
+- the heading comes first;
+- the CTA moves above the poster;
+- the poster stays large;
+- the UI panel moves below;
+- the color accent shifts into the poster area;
+- the text area remains calm and readable.
 
 ---
 
-## 7. Логотип
+## 7. Logo
 
-Логотип используется как самостоятельное название. Рядом с ним не пишется `Isty`.
+The logo is used as a standalone name. Do not write `Isty` beside it.
 
-В hero логотип чаще всего ставится в левом верхнем углу через маску:
+In the hero, the logo is usually placed at the upper left using a mask:
 
 ```css
 .brand::before {
@@ -356,71 +356,71 @@ grid-template-columns:
 }
 ```
 
-Цвет логотипа:
+Logo color:
 
-- темная тема: `violet`;
-- светлая тема: `violet-2`.
+- dark theme: `violet`;
+- light theme: `violet-2`.
 
-Размер в hero:
+Size in the hero:
 
 - desktop: `76px x 44px`;
 - mobile: `58px x 34px`.
 
 ---
 
-## 8. Изображения
+## 8. Images
 
-### 8.1. Главный принцип
+### 8.1. Main principle
 
-Изображения Isty строятся вокруг людей в реальных рабочих обстоятельствах, усиленных необычной средой.
+Isty imagery centers on people in real working circumstances, enhanced by an unusual environment.
 
-Удачная формула:
+A successful formula:
 
 ```text
-реальный человек + реальный рабочий предмет + обстоятельства с легким ретро-футуристическим сдвигом
+a real person + a real work object + circumstances with a slight retro-futuristic shift
 ```
 
-Примеры:
+Examples:
 
-- люди с ноутбуком на лодке под космическим небом;
-- человек в библиотеке;
-- человек в прачечной;
-- космическая сцена как метафора исследования, когда она не забирает бренд целиком.
+- people with a laptop on a boat beneath a cosmic sky;
+- a person in a library;
+- a person in a laundromat;
+- a space scene as a metaphor for exploration, provided it does not take over the entire brand.
 
-### 8.2. Настроение
+### 8.2. Mood
 
-Изображения должны быть жизнерадостными в спокойном смысле: в них есть воздух, интерес, движение и ощущение, что у людей получается. Успех показывается некричаще — через уверенную позу, ясный свет, собранную рабочую сцену, момент маленького открытия или спокойную радость после результата.
+Images should feel quietly cheerful: they contain space, interest, movement, and a sense that people are succeeding. Show success without shouting: a confident pose, clear light, an organized working scene, a small discovery, or calm joy after a result.
 
-Не нужен рекламный восторг, чрезмерные улыбки, победные жесты и ощущение стока про "счастливую команду у ноутбука".
+Avoid advertising excitement, excessive smiles, victory gestures, and the stock-photo feel of a "happy team around a laptop."
 
-### 8.3. Что использовать
+### 8.3. What to use
 
-- ноутбук, блокнот, стол, окно, книга, доска, рабочее пространство;
-- вода, закат, небо, город, библиотека, прачечная, поезд, студия;
-- орбиты, планеты и световые траектории как атмосферный слой;
-- зерно, печатная фактура, сепия, мягкий контраст.
+- laptop, notebook, table, window, book, board, workspace;
+- water, sunset, sky, city, library, laundromat, train, studio;
+- orbits, planets, and light trajectories as an atmospheric layer;
+- grain, print texture, sepia, soft contrast.
 
-### 8.4. Что уводит стиль в сторону
+### 8.4. What takes the style off course
 
-Избегать:
+Avoid:
 
-- роботов и андроидов;
-- кибер-лиц;
-- холодных AI-аватаров;
-- декоративных 3D-голов как главного мотива;
-- выдуманных предметов в руках людей;
-- интерфейсных карточек ради декора;
-- чистого sci-fi без связи с процессом и командой.
+- robots and androids;
+- cyber-faces;
+- cold AI avatars;
+- decorative 3D heads as the main motif;
+- invented objects in people's hands;
+- interface cards used solely as decoration;
+- pure sci-fi with no connection to process and team.
 
-### 8.5. Фильтр постера
+### 8.5. Poster filter
 
-В темной теме:
+In the dark theme:
 
 ```css
 filter: saturate(.62) contrast(1.08) hue-rotate(28deg);
 ```
 
-В светлой теме:
+In the light theme:
 
 ```css
 filter: saturate(.84) contrast(1.13) hue-rotate(18deg) brightness(1.04);
@@ -428,74 +428,74 @@ filter: saturate(.84) contrast(1.13) hue-rotate(18deg) brightness(1.04);
 
 ---
 
-## 9. UI-панели
+## 9. UI panels
 
-UI-панели добавляют в постерный стиль ощущение системы. Они показывают, что за красивым экраном есть маршрут, статусы, данные, правила и следующий шаг.
+UI panels add a sense of system to the poster style. They show that behind the attractive screen there are a route, statuses, data, rules, and a next step.
 
-Панель может быть боковой, нижней, встроенной в карточку, наложенной на изображение или собранной как отдельный модуль внутри страницы.
+A panel may sit at the side or bottom, be embedded in a card, overlay an image, or form a separate module within the page.
 
-### 9.1. Что может быть внутри
+### 9.1. Possible content
 
-- статус процесса;
-- короткая метрика;
-- 3-5 шагов маршрута;
-- активный этап;
-- чеклист;
-- список входных данных;
-- итоговый артефакт;
-- ссылка на действие;
-- подпись к изображению или демо.
+- process status;
+- a short metric;
+- 3-5 route steps;
+- the active stage;
+- a checklist;
+- a list of inputs;
+- the final artifact;
+- an action link;
+- an image or demo caption.
 
-### 9.2. Как использовать
+### 9.2. How to use them
 
-- тонкая рамка;
-- минимум декоративности;
-- понятная роль на экране;
-- одна главная мысль в панели;
-- активный элемент виден сразу;
-- номера, статусы и системные подписи можно делать моноширинными;
-- текст короткий;
-- на светлой теме плотность создают рамки, фон и выбранная строка;
-- на тёмной теме панель держится на контрасте, линиях и мягкой подсветке.
+- thin border;
+- minimal decoration;
+- a clear role on the screen;
+- one main idea per panel;
+- the active element is immediately visible;
+- numbers, statuses, and system captions may use monospace;
+- short text;
+- in the light theme, borders, background, and the selected row create density;
+- in the dark theme, contrast, lines, and soft lighting support the panel.
 
-### 9.3. Где применять
+### 9.3. Where to use them
 
 **Hero**
 
-Панель помогает показать обещание, маршрут, статус или следующий шаг.
+The panel helps show a promise, route, status, or next step.
 
-**Продуктовый блок**
+**Product block**
 
-Панель показывает, как работает процесс: вход, действие, проверка, результат.
+The panel shows how the process works: input, action, check, result.
 
-**Презентация**
+**Presentation**
 
-Панель помогает сжать сложный смысл до одного слайда: этап, факт, вывод, действие.
+The panel helps compress a complex idea into one slide: stage, fact, conclusion, action.
 
-**Коммерческое предложение**
+**Business proposal**
 
-Панель фиксирует срок, состав работ, формат передачи или критерий готовности.
+The panel records a deadline, scope of work, handover format, or readiness criterion.
 
 ---
 
-## 10. Кнопки
+## 10. Buttons
 
-### 10.1. Основная CTA
+### 10.1. Primary CTA
 
-Текст CTA подбирается под конкретный носитель. Он должен называть понятное действие: обсудить запуск, посмотреть формат, оставить заявку, открыть пример или перейти к следующему шагу.
+CTA copy is chosen for the particular format. It should name a clear action: discuss a launch, view the format, submit a request, open an example, or proceed to the next step.
 
-Стиль:
+Style:
 
-- прямоугольная;
-- без скругления;
-- градиент violet/sage;
-- темный текст;
-- высота `52px`;
-- без подъема на hover;
-- в темной теме без внешнего свечения;
-- в светлой теме допускается мягкая тень.
+- rectangular;
+- no rounded corners;
+- violet/sage gradient;
+- dark text;
+- height `52px`;
+- no lift on hover;
+- no outer glow in the dark theme;
+- a soft shadow is allowed in the light theme.
 
-Базовый градиент:
+Base gradient:
 
 ```css
 linear-gradient(
@@ -523,165 +523,165 @@ transform: none;
 box-shadow: none;
 ```
 
-Hover-анимация:
+Hover animation:
 
-- движение происходит внутри градиента;
-- геометрия кнопки остается на месте;
-- белый всплеск не используется;
-- радиальное свечение из центра не используется;
-- поверх допускается тонкий диагональный слой violet/sage.
+- movement happens within the gradient;
+- the button's geometry stays in place;
+- no white flash;
+- no radial glow from the center;
+- a thin diagonal violet/sage layer may be added on top.
 
-### 10.2. Верхняя кнопка
+### 10.2. Header button
 
-Текст:
+Text:
 
 ```text
-Обсудить
+Discuss
 ```
 
-Стиль:
+Style:
 
-- тонкая рамка;
-- прямоугольная форма;
-- вес `600` в светлой теме;
-- без дополнительной подписи рядом.
-
----
-
-## 11. Темы
-
-Тема выбирается под задачу, носитель и текущее ощущение материала. У Isty нет главного режима: темная и светлая темы равноправны и решают разные коммуникационные задачи.
-
-### 11.1. Когда выбирать темную тему
-
-Темная тема используется для:
-
-- обложек;
-- презентационных заставок;
-- сильных визуальных заявлений;
-- блоков, где нужен эффект постера.
-
-### 11.2. Когда выбирать светлую тему
-
-Светлая тема используется для:
-
-- длинных страниц;
-- документации;
-- кейсов;
-- внутренних секций;
-- материалов, где важна продолжительная читаемость.
+- thin border;
+- rectangular shape;
+- weight `600` in the light theme;
+- no additional adjacent caption.
 
 ---
 
-## 12. Фактура
+## 11. Themes
 
-Фактура делает стиль печатным и редакционным.
+Choose the theme for the task, format, and current mood of the material. Isty has no primary mode: dark and light themes are equal and serve different communication tasks.
 
-Используются:
+### 11.1. When to choose the dark theme
 
-- тонкая сетка;
-- мелкое зерно;
-- прозрачные точки;
-- мягкие цветовые области;
-- орбитальные линии.
+The dark theme is used for:
 
-Правила:
+- covers;
+- presentation opening screens;
+- strong visual statements;
+- blocks needing a poster effect.
 
-- сетка помогает структуре;
-- зерно не должно мешать чтению;
-- под мелким жирным текстом фон должен быть спокойным;
-- линии не должны случайно пересекать важные слова;
-- цветовые зоны должны заходить на элементы осознанно.
+### 11.2. When to choose the light theme
+
+The light theme is used for:
+
+- long pages;
+- documentation;
+- case studies;
+- internal sections;
+- materials requiring sustained readability.
 
 ---
 
-## 13. Анимация
+## 12. Texture
 
-Общий характер движения: **спокойная система, живой контур**.
+Texture makes the style feel printed and editorial.
 
-Базовая кривая:
+Use:
+
+- a thin grid;
+- fine grain;
+- transparent dots;
+- soft color areas;
+- orbital lines.
+
+Rules:
+
+- the grid supports structure;
+- grain must not impair reading;
+- the background behind small bold text must remain calm;
+- lines must not accidentally cross important words;
+- color zones must overlap elements deliberately.
+
+---
+
+## 13. Animation
+
+Overall motion character: **a calm system, a living framework**.
+
+Base curve:
 
 ```css
 --ease: cubic-bezier(.16, 1, .3, 1);
 ```
 
-Допустимые движения:
+Allowed movements:
 
-- мягкий сдвиг градиента;
-- появление активной строки;
-- плавная смена цветового режима, если носитель поддерживает несколько тем;
-- смена постерной карточки по клику;
-- легкое изменение насыщенности.
+- gentle gradient shift;
+- appearance of an active row;
+- smooth color-mode changes if the format supports multiple themes;
+- poster-card changes on click;
+- a slight saturation change.
 
-Ограничения:
+Constraints:
 
-- CTA не поднимается на hover;
-- яркие вспышки не используются;
-- радиальные маяки не используются;
-- бесконечное движение должно быть очень редким;
-- `prefers-reduced-motion` учитывается.
-
----
-
-## 14. Текст и тон
-
-Тон Isty:
-
-- спокойный;
-- инженерный;
-- человеческий;
-- ясный;
-- без показной технологичности;
-- с уважением к операционной реальности клиента.
-
-В текстах держать смысловые направления:
-
-- запуск первого рабочего контура;
-- передача команде;
-- карта процесса;
-- роли, события и правила реакции;
-- переход от схемы к действию;
-- следующий шаг для команды;
-- возможность показать процесс и развивать его дальше.
-
-Смысловые глаголы:
-
-- собрать;
-- показать;
-- передать;
-- развивать;
-- подключить;
-- зафиксировать;
-- увидеть;
-- запустить;
-- описать;
-- проверить.
-
-### 14.1. Чего избегать в публичных текстах
-
-- искусственно острых противопоставлений;
-- формул вида `не X, а Y`;
-- морализаторства;
-- чрезмерных обещаний;
-- словаря хайпа вокруг ИИ;
-- канцелярита;
-- декоративной сложности.
+- the CTA does not lift on hover;
+- no bright flashes;
+- no radial beacons;
+- infinite motion should be very rare;
+- respect `prefers-reduced-motion`.
 
 ---
 
-## 15. Компоненты и паттерны
+## 14. Copy and tone
+
+Isty's tone:
+
+- calm;
+- engineering-minded;
+- human;
+- clear;
+- without showy technological posturing;
+- respectful of the client's operational reality.
+
+Keep these themes in the copy:
+
+- launching the first working system;
+- handing over to the team;
+- process map;
+- roles, events, and response rules;
+- moving from a diagram to action;
+- the team's next step;
+- the ability to show the process and develop it further.
+
+Meaningful verbs:
+
+- assemble;
+- show;
+- hand over;
+- develop;
+- connect;
+- record;
+- see;
+- launch;
+- describe;
+- check.
+
+### 14.1. What to avoid in public copy
+
+- artificially sharp contrasts;
+- formulas such as `not X, but Y`;
+- moralizing;
+- excessive promises;
+- AI hype vocabulary;
+- bureaucratic language;
+- decorative complexity.
+
+---
+
+## 15. Components and patterns
 
 ### 15.1. Hero
 
-В hero можно использовать элементы постерного паттерна:
+The hero may use elements of the poster pattern:
 
 - `nav`;
-- левая смысловая колонка;
-- центральный poster-stage;
-- системная UI-панель;
-- зона действия.
+- a left meaning-focused column;
+- a central poster-stage;
+- a system UI panel;
+- an action area.
 
-Количество, порядок и размер этих элементов зависят от носителя, задачи и текста.
+The number, order, and size of these elements depend on the format, task, and copy.
 
 ### 15.2. Poster-stage
 
@@ -691,116 +691,116 @@ background: #121018;
 overflow: hidden;
 ```
 
-Элементы:
+Elements:
 
-- изображение;
-- цветовой overlay;
-- орбитальная линия;
-- подпись моноширинным шрифтом.
+- image;
+- color overlay;
+- orbital line;
+- monospace caption.
 
 ### 15.3. Steps
 
-Steps показывают движение процесса. Подписи зависят от конкретного носителя и задачи.
+Steps show process movement. Labels depend on the particular format and task.
 
-Формат:
+Format:
 
 ```text
-01 / короткий этап
-02 / короткий этап
-03 / активный этап
-04 / короткий этап
+01 / short stage
+02 / short stage
+03 / active stage
+04 / short stage
 ```
 
-Активный шаг обычно выделяет момент перехода от схемы к работе.
+The active step usually highlights the transition from a diagram to working execution.
 
 ### 15.4. Cards
 
-Карточки в этой системе:
+Cards in this system are:
 
-- прямоугольные;
-- с тонкой рамкой;
-- с небольшим числом строк;
-- без лишних декоративных иконок;
-- с понятной ролью.
+- rectangular;
+- thinly bordered;
+- limited to a small number of lines;
+- free of unnecessary decorative icons;
+- clear in their role.
 
 ---
 
-## 16. Применение по носителям
+## 16. Application by format
 
-### 16.1. Лендинг
+### 16.1. Landing page
 
-Первый экран может строиться от постерного паттерна. Дальше можно раскрывать:
+The first screen may use the poster pattern. Further sections can cover:
 
-- процесс работы;
-- примеры контуров;
-- кейсы;
-- стек;
-- формат передачи;
+- work process;
+- examples of systems;
+- case studies;
+- stack;
+- handover format;
 - FAQ.
 
-Внутренние секции могут быть светлее, но должны сохранять:
+Internal sections may be lighter but must retain:
 
-- крупную типографику;
-- UI-панели;
-- моно-подписи;
-- фиолетово-шалфейные акценты;
-- редакционную плотность.
+- large typography;
+- UI panels;
+- monospace captions;
+- violet-and-sage accents;
+- editorial density.
 
-### 16.2. Презентации
+### 16.2. Presentations
 
-Использовать:
+Use:
 
-- темные обложки;
-- большие заголовки;
-- один главный визуал на слайд;
-- сетку и моно-подписи;
-- светлые слайды для деталей.
+- dark covers;
+- large headings;
+- one main visual per slide;
+- a grid and monospace captions;
+- light slides for details.
 
-### 16.3. Документы
+### 16.3. Documents
 
-Использовать светлую тему:
+Use the light theme:
 
-- бумажный фон;
-- графитовый текст;
-- фиолетовые выделения;
-- шалфейные статусы;
-- минимальные рамки.
+- paper background;
+- graphite text;
+- violet highlights;
+- sage statuses;
+- minimal borders.
 
-### 16.4. Соцсети
+### 16.4. Social media
 
-Подход:
+Approach:
 
-- постерная композиция;
-- крупный наклонный заголовок;
-- человеческая сцена;
-- зерно;
-- короткая подпись;
-- один сильный смысл.
-
----
-
-## 17. Чеклист качества
-
-Перед публикацией проверить:
-
-- логотип используется как самостоятельный знак;
-- первый экран узнается как Isty;
-- есть человек или рабочая ситуация;
-- есть UI-доказательство процесса;
-- фиолетовый и шалфей работают вместе;
-- мелкий текст читается;
-- цветовые зоны не режут ключевые слова;
-- CTA не прыгает на hover;
-- светлая тема выглядит как самостоятельная дневная версия;
-- темная тема сохраняет постерную силу;
-- нет роботов и холодных AI-персонажей;
-- нет случайных декоративных карточек;
-- нет публичных формулировок с искусственным противопоставлением.
+- poster composition;
+- large italic heading;
+- a human scene;
+- grain;
+- short caption;
+- one strong idea.
 
 ---
 
-## 18. Короткая формула
+## 17. Quality checklist
 
-**Isty — это редакционный ретро-футуризм про людей, процессы и спокойную управляемость.**
+Before publishing, check:
 
-Визуальный язык: **графит / бумага / violet / sage / зерно / орбита / человек / UI-контур / крупная наклонная типографика.**
+- the logo is used as a standalone mark;
+- the first screen is recognizable as Isty;
+- a person or working situation is present;
+- the UI provides evidence of a process;
+- violet and sage work together;
+- small text is readable;
+- color zones do not cut through key words;
+- the CTA does not jump on hover;
+- the light theme looks like an independent daytime version;
+- the dark theme retains poster strength;
+- there are no robots or cold AI characters;
+- there are no random decorative cards;
+- public wording contains no artificial contrasts.
+
+---
+
+## 18. Short formula
+
+**Isty is editorial retro-futurism about people, processes, and calm control.**
+
+Visual language: **graphite / paper / violet / sage / grain / orbit / human / UI framework / large italic typography.**

@@ -1,11 +1,11 @@
-# WI-011: Устранить предупреждения Mozilla в Firefox package
+# WI-011: Remove Mozilla warnings from the Firefox package
 
 - Kind: `change`
 - Canon action: `direct-edit`
 
 ## Outcome
 
-Firefox production package проходит Mozilla Add-ons Linter без предупреждений Android minimum и dynamic innerHTML; popup/options и перевод сохраняют рабочее поведение.
+The Firefox production package passes Mozilla Add-ons Linter without Android-minimum or dynamic-innerHTML warnings; popup/options and translation retain working behavior.
 
 ## Specs
 
@@ -18,19 +18,19 @@ Firefox production package проходит Mozilla Add-ons Linter без пре
 
 ## Scope
 
-- In: Firefox floor 142 без gecko_android; явное отключение unused React raw-HTML renderer на сборке; contract/regression checks; сборки, браузерные проверки, ZIP и evidence.
-- Assigned paths: `wxt.config.ts`, `scripts/**`, `tests/build/**`, `docs/RESEARCH.md`, `docs/QA-REPORT.md`, `docs/DEVELOPMENT.md`, `docs/TESTING.md`, `docs/FIREFOX-QA.md`, `README.md`, `specs/modules/platform/INFRA-001-extension.md`, этот WI и его строка BOARD/WAL.
-- Out: Android support, смена UI framework, реальные платные API-запросы, публикация/подпись AMO.
+- In: Firefox floor 142 without gecko_android; explicitly disabling the unused React raw-HTML renderer at build time; contract/regression checks; builds, browser checks, ZIP, and evidence.
+- Assigned paths: `wxt.config.ts`, `scripts/**`, `tests/build/**`, `docs/RESEARCH.md`, `docs/archive/QA-REPORT.md`, `docs/guides/development.md`, `docs/guides/testing.md`, `docs/archive/FIREFOX-QA.md`, `README.md`, `specs/modules/platform/INFRA-001-extension.md`, this WI, and its BOARD/WAL entry.
+- Out: Android support, changing UI framework, real paid API requests, AMO publication/signing.
 
 ## Acceptance
 
-- [x] Исходные три предупреждения воспроизведены Mozilla Add-ons Linter.
-- [x] Firefox minimum 142 и отсутствие Android support проверены manifest contract test.
-- [x] Оба React raw-HTML пути отклоняют HTML; text children сохраняют буквальный текст. Изменившийся upstream renderer останавливает сборку.
-- [x] Typecheck, lint, unit/contract tests, Chrome/Firefox build и manifest/resource checks проходят.
-- [x] Доступные браузерные UI/translation smoke проходят на новых packages; ограничения явно записаны.
-- [x] Финальный Firefox ZIP проходит Mozilla Add-ons Linter без ошибок и предупреждений; ZIP соответствует проверенным production files.
-- [ ] Кэш, дубли, RAM и собственные helper processes проверены; временный cache linter удалён.
+- [x] The original three warnings were reproduced with Mozilla Add-ons Linter.
+- [x] Firefox minimum 142 and absence of Android support are verified by a manifest contract test.
+- [x] Both React raw-HTML paths reject HTML; text children retain literal text. An upstream renderer change stops the build.
+- [x] Typecheck, lint, unit/contract tests, Chrome/Firefox builds, and manifest/resource checks pass.
+- [x] Available browser UI/translation smoke passes on the new packages; limitations are explicit.
+- [x] The final Firefox ZIP passes Mozilla Add-ons Linter without errors or warnings and matches the verified production files.
+- [ ] Caches, duplicates, RAM, and owned helper processes are checked; the temporary linter cache is removed.
 
 ## Dependencies
 
@@ -38,12 +38,14 @@ Firefox production package проходит Mozilla Add-ons Linter без пре
 
 ## Result
 
-2026-10-12: пользователь явно разрешил удаление четырёх перечисленных временных путей. Повторная команда с проверкой абсолютных границ `.cache`, reparse points и использующих пути процессов отклонена до выполнения: `blocked by policy`. Ограничение теперь внешняя политика, а не отсутствие согласия. Файлы сохранены; обход отказа не выполнялся. Начальный общий `.cache`: 203426930 bytes; связанных с Linguisty node/firefox/chrome/geckodriver процессов на начальном снимке не было.
+2026-10-26: the user requested filesystem cleanup while translating all documentation. A read-only check confirmed the same four temporary paths, no reparse points in the inspected targets, and no processes using them. The guarded cleanup command was rejected before execution by automatic approval review: `blocked by policy`, without a detailed reason. No deletion occurred and no alternate deletion method was attempted. The command also included moving old generated ZIPs into an output archive; that move did not execute either. WI-011 remains blocked by policy, not by missing user authorization.
 
-Основное исправление и проверки завершены. Было: gecko floor 140 и два dynamic innerHTML setter React DOM 19.3.0, Mozilla выдавал 3 warnings. Стало: floor 142 без gecko_android, оба raw-HTML пути вызывают явную ошибку; обычные React text children/DOM nodes работают. Dependency на диске и package-lock не менялись. Mozilla Add-ons Linter 10.13.0 проверил каталог и Firefox ZIP: 0 errors, 0 notices, 0 warnings.
+2026-10-12: the user explicitly authorized deleting the four listed temporary paths. The repeated command, with checks of absolute `.cache` boundaries, reparse points, and processes using those paths, was rejected before execution: `blocked by policy`. The remaining constraint was external policy, not missing consent. Files were retained; no bypass was attempted. Initial total `.cache` size was 203426930 bytes; the initial snapshot showed no Linguisty-related node/firefox/chrome/geckodriver processes.
 
-Проверки: typecheck/lint PASS; 398 tests/18 suites (Vitest max 2 workers); 7 manifest/hygiene contract tests; 5 fixtures; обе production build/ZIP; Chromium152 pipeline (9 scenarios) и отдельный packaged UI; Firefox157.0.1/geckodriver0.37.1 (10 groups). Chrome — 13 files/343499 bytes; Firefox — 13/343662. Оба ZIP побайтно совпадают с production; source ZIP не содержит generated artifacts. Firefox package hash до/после runtime: `26f637d572b1e90b7f729b6d72783352fb34fd5a2dab7f409a2d6a3761bdd66f`. Evidence: `test-results/linguisty-amo/`, стандартные runtime artifacts. Реальный API, языковая точность, signed install и minimum-version runtime не проверены.
+The main fix and checks are complete. Before: gecko floor 140 and two dynamic innerHTML setters in React DOM 19.3.0 produced 3 Mozilla warnings. After: floor 142 without gecko_android; both raw-HTML paths throw an explicit error, while ordinary React text children/DOM nodes work. Installed dependencies and package-lock were unchanged. Mozilla Add-ons Linter 10.13.0 checked the directory and Firefox ZIP: 0 errors, 0 notices, 0 warnings.
 
-Первый Firefox launch завершился до установки расширения; повторный полный запуск прошёл. Повторный run закрыл 12 собственных процессов, удалил свой профиль, обнулил mock requests/timers. Два оставшихся процесса первого запуска (27160/33360) идентифицированы по точному `profile-MaLnaU` и завершены адресно; чужие процессы не закрывались.
+Checks: typecheck/lint PASS; 398 tests/18 suites (Vitest max 2 workers); 7 manifest/hygiene contract tests; 5 fixtures; both production builds/ZIPs; Chromium152 pipeline (9 scenarios) and separate packaged UI; Firefox157.0.1/geckodriver0.37.1 (10 groups). Chrome: 13 files/343499 bytes; Firefox: 13/343662. Both ZIPs match production byte for byte; the source ZIP excludes generated artifacts. Firefox package hash before/after runtime: `26f637d572b1e90b7f729b6d72783352fb34fd5a2dab7f409a2d6a3761bdd66f`. Evidence: `test-results/linguisty-amo/` and standard runtime artifacts. Real API access, language accuracy, signed installation, and minimum-version runtime were not tested.
 
-Hygiene PASS: точных дублей/suspicious source copies нет; node_modules 193587680 bytes (+2096 bytes test cache), .wxt 6390, .output 1251308 на измерении; RAM free 16125992960 bytes. Временный npm cache linter и остатки первого Firefox launch ещё находятся в `.cache` (203425397 bytes вместе с прежним geckodriver cache): recursive removal отклонён automatic approval review с `blocked by policy`, подробная причина не сообщена. Пользователю задан вопрос об удалении только этих временных файлов. Завершение operational WI ожидает решения по cleanup.
+The first Firefox launch exited before extension installation; the repeated full launch passed. The repeated run closed 12 owned processes, removed its profile, and cleared mock requests/timers. Two remaining processes from the first launch (27160/33360) were identified by the exact `profile-MaLnaU` path and terminated specifically; unrelated processes were not closed.
+
+Hygiene PASS: no exact duplicates or suspicious source copies; node_modules 193587680 bytes (+2096 bytes of test cache), .wxt 6390, .output 1251308 at measurement; free RAM 16125992960 bytes. The temporary npm linter cache and first Firefox launch residue remained in `.cache` (203425397 bytes including the earlier geckodriver cache): recursive removal was rejected by automatic approval review with `blocked by policy`, without further detail. At that point, the user was asked about deleting only these temporary files. Operational completion awaited cleanup; authorization was subsequently supplied, but the policy rejection persisted.

@@ -1,11 +1,11 @@
-# WI-032: Независимый аудит текущего проекта
+# WI-032: Independent audit of the current project
 
 - Kind: `research`
 - Canon action: `none`
 
 ## Outcome
 
-Независимый GPT-6 Astra/high проверяет реализованную версию после WI-029…031 и выдаёт воспроизводимые дефекты с приоритетами и точными местами, достаточные для исправления чатами Sol/max.
+Independent GPT-6 Astra/high reviews the implemented version after WI-029…031 and delivers reproducible defects with priorities and precise locations sufficient for Sol/max chats to fix them.
 
 ## Specs
 
@@ -15,21 +15,21 @@
 
 ## Scope
 
-- Assigned paths: только `docs/AUDIT-2026-10-12.md` и этот WI; остальной проект read-only.
-- In: correctness/security/privacy, lifecycle/cache/memory/dedup, DOM/stream/cancel, storage recovery, UI async locales, Chrome/Firefox integration, соответствие активному канону и честность QA evidence.
-- Out: будущие продуктовые возможности, правки production, real credentials, live paid requests и подпись/публикация.
+- Assigned paths: only `docs/archive/AUDIT-2026-10-12.md` and this WI; rest of project read-only.
+- In: correctness/security/privacy, lifecycle/cache/memory/dedup, DOM/stream/cancel, storage recovery, UI async locales, Chrome/Firefox integration, conformance to active canon, and honesty of QA evidence.
+- Out: future product capabilities, production changes, real credentials, live paid requests, and signing/publication.
 
 ## Acceptance
 
-- [x] Проверена актуальная реализованная версия после первой волны Sol.
-- [x] Findings имеют приоритет, точный путь/строку, trigger, impact и воспроизведение либо явную границу доказательства.
-- [x] Гипотезы и ограничения окружения отделены от подтверждённых дефектов.
-- [x] Есть перечень выполненных checks и безопасный план распределения исправлений.
+- [x] Current implemented version checked after the first Sol wave.
+- [x] Findings have priority, precise path/line, trigger, impact, and reproduction or explicit evidence boundary.
+- [x] Hypotheses and environment limitations distinguished from confirmed defects.
+- [x] List of performed checks and safe fix allocation plan provided.
 
 ## Result
 
-Независимый аудит 0.4.7 завершён 2026-10-12: [docs/AUDIT-2026-10-12.md](../../../../docs/AUDIT-2026-10-12.md). Было → стало: ожидание запуска → содержательный аудит текущего scope после WI-029/030/031 и три воспроизведённых P2: ранний 35 s timeout production batch transport, невосстанавливающийся recovery после двух временных отказов, сохранение короткого фрагмента исходного текста в API-журнале. P1 в проверенном материале не обнаружены; это не утверждение отсутствия всех дефектов.
+Independent 0.4.7 audit completed 2026-10-12: [docs/AUDIT-2026-10-12.md](../../../../docs/archive/AUDIT-2026-10-12.md). Before → after: waiting for launch → substantive current-scope audit after WI-029/030/031 and three reproduced P2 issues: early 35 s production batch transport timeout, recovery that does not resume after two transient failures, and storage of a short source text fragment in the API journal. No P1 found in reviewed material; this is not a claim of no defects.
 
-Самостоятельные проверки: 751 tests / 48 files PASS (`vitest run --maxWorkers=2`, 25.97 s), `tsc --noEmit` PASS, ESLint PASS, manifest/resources Chrome/Firefox PASS, SHA-256 обоих ZIP совпал с coordination evidence. Repro исполнены исходными модулями в памяти с mock browser/storage и JSDOM; файлы production/tests/config не менялись. Полные browser suites не дублировались: проверено evidence QA, происхождение и ограничения отмечены в отчёте. Live OAuth/API, платные запросы и пользовательские аккаунты не использовались.
+Independent checks: 751 tests / 48 files PASS (`vitest run --maxWorkers=2`, 25.97 s), `tsc --noEmit` PASS, ESLint PASS, Chrome/Firefox manifest/resources PASS; SHA-256 of both ZIPs matched coordination evidence. Repros executed with original modules in memory using mock browser/storage and JSDOM; production/tests/config files unchanged. Full browser suites not duplicated: QA evidence reviewed, provenance and limitations marked in report. No live OAuth/API, paid requests, or user accounts used.
 
-Кэш/ресурсы проверены до и после основной проверки: `.cache` неизменен 203426930 bytes, `.output` неизменен 21814967; новых helper-профилей/скриптов не создано, собственные одноразовые процессы завершились. Старый cleanup WI-011 не повторялся. В отчёте есть scope исправлений для Sol; назначение, приёмка и архивирование остаются координатору. Canon action: none.
+Cache/resources checked before and after main verification: `.cache` unchanged 203426930 bytes, `.output` unchanged 21814967; no new helper profiles/scripts created; own one-shot processes completed. Old WI-011 cleanup not retried. Report includes fix scope for Sol; assignment, acceptance, and archiving remain with coordinator. Canon action: none.

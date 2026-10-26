@@ -1,11 +1,11 @@
-# WI-021: Перевод через установленный CLI
+# WI-021: Translation through an installed CLI
 
 - Kind: `change`
 - Canon action: `new-spec`
 
 ## Outcome
 
-Пользователь выбирает Codex, Claude Code, Antigravity CLI или Grok Build и переводит страницу через собственный установленный CLI из интерфейса Linguisty.
+The user selects Codex, Claude Code, Antigravity CLI, or Grok Build and translates a page through their own installed CLI from the Linguisty interface.
 
 ## Specs
 
@@ -16,22 +16,22 @@
 
 ## Scope
 
-- In: Native Messaging, четыре CLI-адаптера, одноразовая установка соединителя Windows, UI без API-ключа, существующие кэш/дедупликация, отмена/лимиты, документация и проверки.
-- Out: установка сторонних CLI, перенос их токенов, запросы к платным моделям, наш сервер, управление существующими пользовательскими чатами и процессами.
+- In: Native Messaging, four CLI adapters, one-time Windows connector installation, UI without an API key, existing cache/deduplication, cancellation/limits, documentation, and checks.
+- Out: installing third-party CLIs, moving their tokens, paid model requests, our server, managing existing user chats and processes.
 
 ## Acceptance
 
-- [x] CLI можно выбрать, сохранить и использовать без API-ключа; старые API-настройки продолжают работать.
-- [x] Соединитель запускается браузером, ограничивает очередь/вход/выход, завершает принадлежащие ему процессы при отмене/timeout/disconnect.
-- [x] Четыре адаптера проверены детерминированными ответами; неустановленный CLI и соединитель дают понятные ошибки.
-- [x] Проверка подключения не вызывает модель и прямо сообщает предел проверки.
-- [x] Установка Windows, typecheck, lint, осмысленные тесты, обе сборки, manifests/secrets, браузерный smoke и hygiene фактически проверены.
-- [x] Реальные модельные ответы и отсутствующие CLI отмечены непроверенными.
+- [x] CLI can be selected, saved, and used without an API key; old API settings continue working.
+- [x] Connector launched by browser, bounds queue/input/output, terminates processes it owns on cancellation/timeout/disconnect.
+- [x] Four adapters checked with deterministic responses; missing CLI and connector give clear errors.
+- [x] Connection test does not invoke a model and explicitly states its scope.
+- [x] Windows installation, typecheck, lint, meaningful tests, both builds, manifests/secrets, browser smoke, and hygiene actually checked.
+- [x] Real model responses and missing CLIs marked unverified.
 
 ## Result
 
-Завершено 2026-10-08 для проекта @tsyzhman с использованием Codex. Четыре CLI adapters, bounded stdio Native Messaging host, Windows installer, keyless options/popup на 16 UI локалях и пакеты 0.3.0. API-ключ при CLI переводе не читается и не передаётся; прежний ключ сохраняется для возвращения к API.
+Completed 2026-10-08 for @tsyzhman's project using Codex. Four CLI adapters, bounded stdio Native Messaging host, Windows installer, keyless options/popup in 16 UI locales, and 0.3.0 packages. API key is not read or transmitted during CLI translation; previous key preserved for returning to API.
 
-Проверки: typecheck/lint PASS, 589 unit PASS, 15 native PASS, 8 manifest checker PASS, Chrome API/UI/native 16 PASS, Firefox API 14 PASS и native 5 checks PASS, обе сборки/manifests/secrets PASS, Mozilla 0/0/0, hygiene PASS. Собственные helper процессы/temp workspaces отсутствуют; чужой кэш и процессы сохранены. Vite UI size warning остаётся в TD-002.
+Checks: typecheck/lint PASS, 589 unit PASS, 15 native PASS, 8 manifest checker PASS, Chrome API/UI/native 16 PASS, Firefox API 14 PASS and native 5 checks PASS, both builds/manifests/secrets PASS, Mozilla 0/0/0, hygiene PASS. No own helper processes/temp workspaces; others' cache and processes preserved. Vite UI size warning remains in TD-002.
 
-Существенные пределы: реальные модели/аккаунты/языковая точность не проверены; Claude/Antigravity CLI не обнаружены. Chrome native transport использовал отдельную test copy только с изменённым permission declaration; физический optional prompt не подтверждён. Firefox штатный optional prompt проверен в неизменённом пакете. Доказательства и пакеты: docs/QA-CLI.md; установка: docs/LOCAL-CLI.md.
+Material limitations: real models/accounts/language accuracy not checked; Claude/Antigravity CLI not found. Chrome native transport used a separate test copy with only its permission declaration changed; physical optional prompt not confirmed. Firefox standard optional prompt checked in an unmodified package. Evidence and packages: docs/archive/QA-CLI.md; installation: docs/LOCAL-CLI.md.

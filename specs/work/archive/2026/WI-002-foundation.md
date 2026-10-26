@@ -1,11 +1,11 @@
-# WI-002: Общие контракты и сборка
+# WI-002: Shared contracts and build
 
 - Kind: `implement`
 - Canon action: `none`
 
 ## Outcome
 
-Общий контракт доступен всем исполнителям, одна установка зависимостей и конфигурация выпускают две browser targets.
+The shared contract is available to all implementers; one dependency installation and configuration produce two browser targets.
 
 ## Specs
 
@@ -16,8 +16,8 @@
 ## Scope
 
 - In: package/lock, TypeScript/WXT/Vitest/ESLint, shared contracts/constants/errors/messaging, entrypoint skeleton.
-- Out: provider, storage, DOM, UI реализация.
-- Owned paths: корневые конфиги, `src/shared/**`, package/lock.
+- Out: provider, storage, DOM, and UI implementation.
+- Owned paths: root configurations, `src/shared/**`, package/lock.
 
 ## Dependencies
 
@@ -25,12 +25,11 @@
 
 ## Acceptance
 
-- [x] Зависимости установлены один раз, prepare/typecheck shared foundation проходят.
-- [x] Shared types и imports совпадают со спецификацией; нет дублированных contracts.
-- [x] WXT знает Chrome и Firefox MV3, activeTab/script injection и optional API origins.
-- [x] Конфигурация ограничивает test workers и исключает производные папки.
+- [x] Dependencies are installed once; shared foundation prepare/typecheck pass.
+- [x] Shared types and imports match the specification; there are no duplicate contracts.
+- [x] WXT supports Chrome and Firefox MV3, activeTab/script injection, and optional API origins.
+- [x] Configuration limits test workers and excludes derived folders.
 
 ## Result
 
-2026-10-07: общие contracts/constants/errors/messaging, WXT/TS/ESLint/Vitest configs и два entrypoint skeleton созданы. npm install и wxt prepare выполнены. Foundation typecheck/lint прошли. npm audit сначала обнаружил 4 уязвимых пакета; Vitest обновлён до 5.0.3 и sharp до 0.35.5, повторный audit: 0 vulnerabilities. Одна node_modules, 184.62 MiB на этапе foundation, .wxt ~0.01 MiB, доступная RAM 14.87 GiB. Шесть исполнителей запущены gpt-6.1-sol/max, непроверенная интеграция не объявлена готовой. Minimum Firefox 140 с корректными declarations provider data transmission.
-
+2026-10-07: created shared contracts/constants/errors/messaging, WXT/TS/ESLint/Vitest configs, and two entrypoint skeletons. Ran npm install and wxt prepare. Foundation typecheck/lint passed. npm audit initially found 4 vulnerable packages; Vitest was updated to 5.0.3 and sharp to 0.35.5; repeat audit: 0 vulnerabilities. One node_modules, 184.62 MiB at the foundation stage, .wxt ~0.01 MiB, available RAM 14.87 GiB. Six implementers were launched with gpt-6.1-sol/max; unverified integration was not declared ready. Minimum Firefox 140 with correct provider data transmission declarations.

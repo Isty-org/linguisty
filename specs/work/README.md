@@ -1,4 +1,4 @@
-# Work items Linguisty
+# Linguisty work items
 
-Scope, acceptance, зависимости и результат — в отдельном WI. Доска содержит только status/owner/priority. Исполнитель заполняет Result своего файла; координатор принимает, архивирует в `archive/2026/` и обновляет доску. Правила: [WORK-ITEM-PROTOCOL](../protocols/WORK-ITEM-PROTOCOL.md).
+Each WI holds its scope, acceptance criteria, dependencies, and result. The board contains only status/owner/priority. Contributors fill in their file's Result; the coordinator accepts it, archives it in `archive/2026/`, and updates the board. Rules: [WORK-ITEM-PROTOCOL](../protocols/WORK-ITEM-PROTOCOL.md).
 
